@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://bb5x0sqcx7xgi"]
+
+[ext_resource type="Texture2D" uid="uid://cvvfdt7c30pd3" path="res://prototypes/poi-overworld/sprites/980.jpg" id="1_ehlxd"]
+[ext_resource type="Script" uid="uid://cj7vbl3tm0g7l" path="res://prototypes/poi-overworld/HardCodedPoiOverworldController.cs" id="1_r0edm"]
+[ext_resource type="Texture2D" uid="uid://tkaqplqourqg" path="res://prototypes/poi-overworld/sprites/10847340.png" id="3_8b0h6"]
+
+[node name="HardCodedPoiOverworld" type="Node2D" unique_id=596938505 node_paths=PackedStringArray("BackgroundContainer", "PoiContainer")]
+script = ExtResource("1_r0edm")
+BackgroundContainer = NodePath("Overworld/Background")
+PoiContainer = NodePath("Overworld/Background/PoiContainer")
+
+[node name="Overworld" type="Node2D" parent="." unique_id=1593641848]
+
+[node name="Background" type="Sprite2D" parent="Overworld" unique_id=1685113695]
+position = Vector2(960, 540)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_ehlxd")
+
+[node name="PoiContainer" type="Node2D" parent="Overworld/Background" unique_id=1532247287]
+scale = Vector2(4, 4)
+
+[node name="TextureButton" type="TextureButton" parent="Overworld/Background/PoiContainer" unique_id=753790414]
+visible = false
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 1900.0
+offset_bottom = 1900.0
+scale = Vector2(0.1, 0.1)
+texture_normal = ExtResource("3_8b0h6")
