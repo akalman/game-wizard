@@ -1,16 +1,6 @@
 [gd_scene format=3 uid="uid://d1qc4vitqeoaa"]
 
-[ext_resource type="Texture2D" uid="uid://cgcas5esr8y7r" path="res://prototypes/visual-novel-dialog/sprites/char-a-right-facing.png" id="1_7mo0c"]
-[ext_resource type="Script" uid="uid://c7icyewl6r4l0" path="res://prototypes/visual-novel-dialog/DialogController.cs" id="1_dpm8y"]
-[ext_resource type="Texture2D" uid="uid://cdq4fqqd27rlv" path="res://prototypes/visual-novel-dialog/sprites/char-b-left-facing.png" id="3_k7k86"]
-
-[sub_resource type="Gradient" id="Gradient_w8dcu"]
-colors = PackedColorArray(0.3137255, 0.3137255, 0.5019608, 1, 0.3764706, 0.3137255, 0.5019608, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_7mo0c"]
-gradient = SubResource("Gradient_w8dcu")
-width = 60
-height = 60
+[ext_resource type="Script" uid="uid://c7icyewl6r4l0" path="res://prototypes/visual-novel-dialog/HardCodedDialogController.cs" id="1_dpm8y"]
 
 [sub_resource type="Gradient" id="Gradient_dpm8y"]
 colors = PackedColorArray(0.3137255, 0.3137255, 0.5019608, 1, 0.4392157, 0.3137255, 0.5019608, 1)
@@ -26,39 +16,11 @@ LeftCharactersContainer = NodePath("LeftCharacters")
 RightCharactersContainer = NodePath("RightCharacters")
 DialogContainer = NodePath("DiaogBox")
 
-[node name="DialogBox" type="Sprite2D" parent="." unique_id=605563589]
-visible = false
-position = Vector2(960, 900)
-scale = Vector2(32, 6)
-texture = SubResource("GradientTexture2D_7mo0c")
-
-[node name="Label" type="Label" parent="DialogBox" unique_id=873674533]
-offset_right = 40.0
-offset_bottom = 23.0
-scale = Vector2(0.1, 0.555)
-text = "Test Test Test Test Test 
-Test Test Test
-Test Test Test Test Test 
-Test Test Test"
-metadata/_edit_group_ = true
-
 [node name="LeftCharacters" type="Node2D" parent="." unique_id=731622533]
 position = Vector2(0, 360)
 
-[node name="Sprite2D" type="Sprite2D" parent="LeftCharacters" unique_id=749416334]
-visible = false
-position = Vector2(360, 0)
-scale = Vector2(0.36, 0.36)
-texture = ExtResource("1_7mo0c")
-
 [node name="RightCharacters" type="Node2D" parent="." unique_id=1131431362]
 position = Vector2(1920, 360)
-
-[node name="Sprite2D" type="Sprite2D" parent="RightCharacters" unique_id=1139270332]
-visible = false
-position = Vector2(-360, 1)
-scale = Vector2(0.36, 0.36)
-texture = ExtResource("3_k7k86")
 
 [node name="DiaogBox" type="Node2D" parent="." unique_id=627118992]
 position = Vector2(0, 720)

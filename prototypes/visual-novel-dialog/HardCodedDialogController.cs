@@ -2,7 +2,7 @@ using System;
 using Godot;
 using System.Collections.Generic;
 
-public partial class DialogController : Node2D
+public partial class HardCodedDialogController : Node2D
 {
 	[Export]
 	public Node2D LeftCharactersContainer { get; set; }

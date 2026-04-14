@@ -1,4 +1,4 @@
-# Hard-coded Visual Novel Dialog
+# Visual Novel Dialog
 
 ## Resource Credits
 
