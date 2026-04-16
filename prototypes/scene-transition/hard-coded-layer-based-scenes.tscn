@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://1w1jjf824vye"]
+
+[ext_resource type="Script" uid="uid://dxhopwporbr0n" path="res://prototypes/scene-transition/HardCodedLayerBasedSceneController.cs" id="1_5bui6"]
+[ext_resource type="PackedScene" uid="uid://bb5x0sqcx7xgi" path="res://prototypes/poi-overworld/hard-coded-poi-overworld.tscn" id="2_mgbve"]
+[ext_resource type="PackedScene" uid="uid://d1qc4vitqeoaa" path="res://prototypes/visual-novel-dialog/hard-coded-visual-novel-dialog.tscn" id="3_xonuk"]
+
+[node name="HardCodedLayerBasedScenes" type="Node2D" unique_id=2000461363 node_paths=PackedStringArray("SceneContainer")]
+script = ExtResource("1_5bui6")
+SceneContainer = NodePath("Container")
+SourceScene = ExtResource("2_mgbve")
+TargetScene = ExtResource("3_xonuk")
+
+[node name="Container" type="Container" parent="." unique_id=2135625876]
+offset_right = 40.0
+offset_bottom = 40.0

@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://fetepqokcdiv"]
+
+[ext_resource type="Script" uid="uid://cdlmmobu4xkt3" path="res://prototypes/scene-modules/scene-templates/DialogCutsceneController.cs" id="1_4iyja"]
+[ext_resource type="Texture2D" uid="uid://biwhmo6c303wm" path="res://prototypes/scene-modules/sprites/dialog-title-theme.png" id="1_sdo4y"]
+[ext_resource type="Texture2D" uid="uid://v1lcajavqvie" path="res://prototypes/scene-modules/sprites/char-a-profile.png" id="2_sdo4y"]
+[ext_resource type="Texture2D" uid="uid://tgan8u5iib5a" path="res://prototypes/scene-modules/sprites/dialog-theme.png" id="3_jqmoq"]
+[ext_resource type="Texture2D" uid="uid://c3ux2mn04lwss" path="res://prototypes/scene-modules/sprites/char-b-profile.png" id="4_2joyh"]
+[ext_resource type="Texture2D" uid="uid://dqj24ushh62te" path="res://prototypes/scene-modules/sprites/char-c-profile.png" id="5_54406"]
+
+[node name="DialogCutscene" type="Node2D" unique_id=1912881759 node_paths=PackedStringArray("MenuBar", "LeftCharactersContainer", "RightCharactersContainer", "DialogBox")]
+script = ExtResource("1_4iyja")
+MenuBar = NodePath("TopLevelRegions/MarginContainer/RichTextLabel")
+LeftCharactersContainer = NodePath("TopLevelRegions/CharacterArea/LeftCharacters")
+RightCharactersContainer = NodePath("TopLevelRegions/CharacterArea/RightCharacters")
+DialogBox = NodePath("TopLevelRegions/MarginContainer2/MarginContainer2/RichTextLabel")
+
+[node name="TopLevelRegions" type="VBoxContainer" parent="." unique_id=1896278006]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="TopLevelRegions" unique_id=1176862993]
+layout_mode = 2
+
+[node name="MenuBar" type="TextureRect" parent="TopLevelRegions/MarginContainer" unique_id=891956645]
+layout_mode = 2
+texture = ExtResource("1_sdo4y")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TopLevelRegions/MarginContainer" unique_id=2053280756]
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 0.8, 0.53333336, 1)
+theme_override_font_sizes/normal_font_size = 64
+text = "Menu Bar"
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CharacterArea" type="HBoxContainer" parent="TopLevelRegions" unique_id=1912287442]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LeftCharacters" type="HBoxContainer" parent="TopLevelRegions/CharacterArea" unique_id=644645655]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = -432
+
+[node name="TextureRect" type="TextureRect" parent="TopLevelRegions/CharacterArea/LeftCharacters" unique_id=1255750270]
+visible = false
+layout_mode = 2
+texture = ExtResource("2_sdo4y")
+expand_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="TopLevelRegions/CharacterArea/LeftCharacters" unique_id=649027630]
+visible = false
+layout_mode = 2
+texture = ExtResource("4_2joyh")
+expand_mode = 2
+
+[node name="RightCharacters" type="HBoxContainer" parent="TopLevelRegions/CharacterArea" unique_id=849455480]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = -432
+alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="TopLevelRegions/CharacterArea/RightCharacters" unique_id=848179681]
+visible = false
+z_index = 1
+layout_direction = 3
+layout_mode = 2
+texture = ExtResource("5_54406")
+expand_mode = 2
+flip_h = true
+
+[node name="TextureRect2" type="TextureRect" parent="TopLevelRegions/CharacterArea/RightCharacters" unique_id=371805806]
+visible = false
+layout_direction = 3
+layout_mode = 2
+texture = ExtResource("4_2joyh")
+expand_mode = 2
+flip_h = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="TopLevelRegions" unique_id=486850535]
+layout_mode = 2
+
+[node name="Dialog Box" type="TextureRect" parent="TopLevelRegions/MarginContainer2" unique_id=829513544]
+layout_mode = 2
+texture = ExtResource("3_jqmoq")
+
+[node name="MarginContainer2" type="MarginContainer" parent="TopLevelRegions/MarginContainer2" unique_id=80785446]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TopLevelRegions/MarginContainer2/MarginContainer2" unique_id=2032973665]
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 0.8, 0.53333336, 1)
+theme_override_font_sizes/normal_font_size = 38
+text = "Dialogue Text"
+shortcut_keys_enabled = false

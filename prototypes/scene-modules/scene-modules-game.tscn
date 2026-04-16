@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dfu5dwt6w5uj7"]
+
+[ext_resource type="Script" uid="uid://30iojjxisrxn" path="res://prototypes/scene-modules/SceneModulesGameController.cs" id="1_32sxl"]
+
+[node name="SceneModulesGame" type="Node2D" unique_id=101561883]
+script = ExtResource("1_32sxl")
