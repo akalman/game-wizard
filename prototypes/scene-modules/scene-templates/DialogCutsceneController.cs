@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Prototypes.SceneModules.SceneTemplates;
 
-public partial class DialogCutsceneController : SceneTemplateController<GWDialog, GWDialogCommands>
+public partial class DialogCutsceneController : SceneTemplateController<GWDialog>
 {
     [Export] public RichTextLabel MenuBar { get; set; }
     [Export] public HBoxContainer LeftCharactersContainer { get; set; }
@@ -18,9 +18,10 @@ public partial class DialogCutsceneController : SceneTemplateController<GWDialog
 
     private IDictionary<string, GWDialogFrame> Frames { get; set; } = new Dictionary<string, GWDialogFrame>();
     private IDictionary<string, GWDialogCharacter> Characters { get; set; } = new Dictionary<string, GWDialogCharacter>();
-    
-    public override void ConfigUpdated()
+
+    protected override void ConfigUpdated()
     {
+        GD.PushWarning("in dialog config update");
         foreach (var (_, character) in CurrentCharacters)
         {
             character.QueueFree();
@@ -46,7 +47,7 @@ public partial class DialogCutsceneController : SceneTemplateController<GWDialog
         TransitionToFrame(Config.InitialFrameId);
     }
 
-    public override void ReceiveCommand(GWDialogCommands command)
+    public override bool ReceiveCommand(string command)
     {
         foreach (var edge in CurrentFrame.Edges)
         {
@@ -54,15 +55,16 @@ public partial class DialogCutsceneController : SceneTemplateController<GWDialog
             {
                 if (edge.DestinationFrame == "_exit")
                 {
-                    QueueFree();
-                    return;
+                    GameController.TransitionScene(Config.TerminalEdge);
+                    return true;
                 }
 
                 TransitionToFrame(edge.DestinationFrame);
-                return;
+                return true;
             }
         }
         GD.PushWarning("did not find appropriate edge for command.");
+        return false;
     }
 
     private void TransitionToFrame(string destinationFrameId)
@@ -80,8 +82,8 @@ public partial class DialogCutsceneController : SceneTemplateController<GWDialog
         {
             foreach (var characterId in CurrentFrame.State.LeftCharacterIds)
             {
-                CurrentCharacters[characterId].QueueFree();
-                CurrentCharacters.Remove(characterId);
+                CurrentCharacters[$"left.${characterId}"].QueueFree();
+                CurrentCharacters.Remove($"left.${characterId}");
             }
 
             foreach (var characterId in destinationFrame.State.LeftCharacterIds)
@@ -92,7 +94,7 @@ public partial class DialogCutsceneController : SceneTemplateController<GWDialog
                     Texture = GD.Load<Texture2D>(character.SpritePath),
                     ExpandMode = TextureRect.ExpandModeEnum.FitWidth,
                 };
-                CurrentCharacters[characterId] = sprite;
+                CurrentCharacters[$"left.${characterId}"] = sprite;
                 LeftCharactersContainer.AddChild(sprite);
             }
         }
@@ -103,8 +105,8 @@ public partial class DialogCutsceneController : SceneTemplateController<GWDialog
         {
             foreach (var characterId in CurrentFrame.State.RightCharacterIds)
             {
-                CurrentCharacters[characterId].QueueFree();
-                CurrentCharacters.Remove(characterId);
+                CurrentCharacters[$"right.${characterId}"].QueueFree();
+                CurrentCharacters.Remove($"right.${characterId}");
             }
 
             var zindex = 0;
@@ -118,7 +120,7 @@ public partial class DialogCutsceneController : SceneTemplateController<GWDialog
                     FlipH = true,
                     ZIndex = zindex
                 };
-                CurrentCharacters[characterId] = sprite;
+                CurrentCharacters[$"right.${characterId}"] = sprite;
                 RightCharactersContainer.AddChild(sprite);
                 zindex -= 1;
             }

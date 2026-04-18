@@ -13,6 +13,5 @@ public struct GWModuleScene
 {
     public string ModuleSceneId { get; set; }
     public string ModuleScenePath { get; set; }
-    public string ModuleSceneStructName { get; set; }
-    public string ModuleSceneCommands { get; set; }
+    public string[] ModuleSceneCommands { get; set; }
 }

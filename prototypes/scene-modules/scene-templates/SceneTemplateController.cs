@@ -1,34 +1,30 @@
 using Godot;
-using Prototypes.SceneModules.DataModel;
 using System;
-using System.Collections.Generic;
 
 namespace Prototypes.SceneModules.SceneTemplates;
 
-public abstract partial class SceneTemplateController<T, U> : Node2D
+public abstract partial class SceneTemplateController<T> : Node2D, SceneTemplateController where T : class
 {
-	private T _config;
-
 	[Export]
-	public T Config
-	{
-		get => _config;
-		set { _config = value; if (IsReady) ConfigUpdated(); }
-	}
+	protected T Config { get; set; }
 
     [Export]
     public SceneModulesGameController GameController { get; set; }
     
-    private bool IsReady { get; set; }
-
-	public override void _Ready()
-	{
-        IsReady = true;
+    public void SetConfig(Object config)
+    {
+	    Config = config as T;
         ConfigUpdated();
-	}
+    }
 
-	public abstract void ConfigUpdated();
+	protected abstract void ConfigUpdated();
+	public abstract bool ReceiveCommand(string command);
 
-	public abstract void ReceiveCommand(U command);
+}
 
+public interface SceneTemplateController
+{
+	public SceneModulesGameController GameController { get; set; }
+	public void SetConfig(Object config);
+	public bool ReceiveCommand(string command);
 }
