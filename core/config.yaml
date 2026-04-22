@@ -1,0 +1,10 @@
+module-id: core
+templates:
+- template-id: dialog-cutscene
+  scene-path: res://core/dialog-cutscene/dialog-cutscene.tscn
+  inputs: [ advance, skip ]
+  edge-types: [ complete ]
+- template-id: landmark-overworld
+  scene-path: res://core/landmark-overworld/landmark-overworld.tscn
+  inputs: [ ]
+  edge-types: [ navigate ]

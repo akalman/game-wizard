@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://s3uovlit44j"]
+
+[ext_resource type="Script" uid="uid://c86lyp72t2xnr" path="res://engine/GWGameController.cs" id="1_qqfvf"]
+
+[node name="BasicVisualNovel" type="Node2D" unique_id=450401069]
+script = ExtResource("1_qqfvf")
+GameConfig = "res://examples/basic-visual-novel/basic-visual-novel.yaml"

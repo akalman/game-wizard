@@ -1,6 +1,6 @@
 using System;
-using Godot;
 using System.Collections.Generic;
+using Godot;
 
 public partial class HardCodedDialogController : Node2D
 {
@@ -72,7 +72,7 @@ public partial class HardCodedDialogController : Node2D
 		{
 			{ "left-characters", new Region()
 			{
-				Node = LeftCharactersContainer, 
+				Node = LeftCharactersContainer,
 				Direction = Vector2.Right,
                 State = new Dictionary<string, string>()
 				{
@@ -81,7 +81,7 @@ public partial class HardCodedDialogController : Node2D
 			} },
 			{ "right-characters", new Region()
 			{
-				Node = RightCharactersContainer, 
+				Node = RightCharactersContainer,
 				Direction = Vector2.Left,
                 State = new Dictionary<string, string>()
 				{
@@ -90,7 +90,7 @@ public partial class HardCodedDialogController : Node2D
 			} },
 			{ "dialog", new Region()
 			{
-				Node = DialogContainer, 
+				Node = DialogContainer,
 				Direction = Vector2.Zero,
                 State = new Dictionary<string, string>(),
 			} },
@@ -194,5 +194,5 @@ public partial class HardCodedDialogController : Node2D
         public Node2D Node { get; set; }
         public IDictionary<string, string> State { get; set; }
 	}
-    
+
 }

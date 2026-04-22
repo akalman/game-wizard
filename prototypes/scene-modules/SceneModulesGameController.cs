@@ -1,8 +1,8 @@
-using Godot;
-using Prototypes.SceneModules.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
+using Prototypes.SceneModules.DataModel;
 using Prototypes.SceneModules.SceneTemplates;
 
 namespace Prototypes.SceneModules;
@@ -207,7 +207,7 @@ public partial class SceneModulesGameController : Node2D
 			}
 		}
 	};
-    
+
 	private IDictionary<string, SceneTemplateController> LoadedScenes { get; } = new Dictionary<string, SceneTemplateController>();
 	private IList<string> SceneFocusStack { get; } = new List<string>();
 
@@ -220,29 +220,29 @@ public partial class SceneModulesGameController : Node2D
 	{
 		ProcessCommands();
 	}
-    
+
     public void TransitionScene(string edge)
     {
 	    GD.PushWarning($"transitioning along edge {edge}");
 	    var currentSceneId = SceneFocusStack[0];
         var targetSceneId = Edges[currentSceneId][edge];
-        
+
 	    GD.PushWarning($"checking to see if edge is terminal");
         if (targetSceneId == null || targetSceneId == string.Empty)
 		{
 	    	GD.PushWarning($"edge is terminal");
             (LoadedScenes[SceneFocusStack[0]] as Node).QueueFree();
 			SceneFocusStack.RemoveAt(0);
-            
+
             if (SceneFocusStack.Count <= 0)
 			{
 	    		GD.PushWarning($"game over");
 				GetTree().Quit();
 			}
-            
+
             return;
 		}
-        
+
         var targetScene = Scenes[targetSceneId];
         if (!targetScene.IsOverlay)
 		{
@@ -252,10 +252,10 @@ public partial class SceneModulesGameController : Node2D
 			}
 			SceneFocusStack.Clear();
 		}
-        
+
         LoadScene(targetSceneId);
     }
-    
+
     private void ProcessCommands()
 	{
 		foreach (var sceneId in SceneFocusStack)
@@ -275,21 +275,21 @@ public partial class SceneModulesGameController : Node2D
 			}
 		}
 	}
-    
+
     private void LoadScene(string sceneId)
 	{
 	    GD.PushWarning($"loading scene {sceneId}");
 		var scene = Scenes[sceneId];
 		var template = Templates[scene.Template];
         var packedScene = GD.Load<PackedScene>(template.ModuleScenePath);
-		
+
 		var instantiatedScene = packedScene.Instantiate() as SceneTemplateController;
 		LoadedScenes[sceneId] = instantiatedScene;
 
 		instantiatedScene.GameController = this;
 		instantiatedScene.SetConfig(YamlProxy[scene.ConfigPath]);
 		(instantiatedScene as CanvasItem).ZIndex = SceneFocusStack.Count;
-        
+
         AddChild(instantiatedScene as Node);
         SceneFocusStack.Insert(0, sceneId);
 	}

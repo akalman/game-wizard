@@ -1,8 +1,7 @@
+using System.Collections.Generic;
 using Godot;
-using System;
 using Prototypes.SceneModules.DataModel;
 using Prototypes.SceneModules.SceneTemplates;
-using System.Collections.Generic;
 
 public partial class LandmarkOverworldController :   SceneTemplateController<GWOverworld>
 {
@@ -88,12 +87,12 @@ public partial class LandmarkOverworldController :   SceneTemplateController<GWO
 		// 	}
 		// }
 	}
-	
+
 	private void HandleButtonPressed(string destination)
 	{
 		GameController.TransitionScene(destination);
 	}
-	
+
 	private async void Reactivate()
 	{
 		await ToSignal(GetTree().CreateTimer(1.0), SceneTreeTimer.SignalName.Timeout);

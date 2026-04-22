@@ -1,5 +1,5 @@
-using Godot;
 using System.Collections.Generic;
+using Godot;
 using Godot.Collections;
 
 public partial class HardCodedPoiOverworldController : Node2D
@@ -16,7 +16,7 @@ public partial class HardCodedPoiOverworldController : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		POIs = 
+		POIs =
 		[
 			new OverworldPoi {
 				Location = Vector2.Left * 0.2f + Vector2.Up * 0.2f,

@@ -1,0 +1,15 @@
+overworld-id: world-map
+map:
+  texture-path: res://examples/basic-visual-novel/sprites/world-map.jpg
+  scaling-type: fit-width
+landmarks:
+  - landmark-id: start-dialog-landmark
+    texture-path: res://examples/basic-visual-novel/sprites/world-map-landmark-a.png
+    edge: start-dialog
+    size: ( 200 200 )
+    offset: ( -0.6 -0.4 )
+  - landmark-id: exit-game-landmark
+    texture-path: res://examples/basic-visual-novel/sprites/world-map-landmark-b.png
+    edge: exit-game
+    size: ( 200 200 )
+    offset: ( 0.4 0.6 )

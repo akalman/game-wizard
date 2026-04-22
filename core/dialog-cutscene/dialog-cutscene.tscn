@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://dcabuh48qlp48"]
+
+[ext_resource type="Texture2D" uid="uid://biwhmo6c303wm" path="res://prototypes/scene-modules/sprites/dialog-title-theme.png" id="1_glq4r"]
+[ext_resource type="Script" uid="uid://djhdnx1cxpp16" path="res://core/dialog-cutscene/GWDialogCutsceneController.cs" id="1_r2roe"]
+[ext_resource type="Texture2D" uid="uid://tgan8u5iib5a" path="res://prototypes/scene-modules/sprites/dialog-theme.png" id="2_r2roe"]
+
+[node name="DialogCutscene" type="Node2D" unique_id=796078526 node_paths=PackedStringArray("MenuBar", "LeftCharactersContainer", "RightCharactersContainer", "DialogBox")]
+script = ExtResource("1_r2roe")
+MenuBar = NodePath("TopLevelRegions/MenuBarRegion/MenuBarText")
+LeftCharactersContainer = NodePath("TopLevelRegions/CharacterArea/LeftCharacters")
+RightCharactersContainer = NodePath("TopLevelRegions/CharacterArea/RightCharacters")
+DialogBox = NodePath("TopLevelRegions/DialogBoxContainer/DialogBoxTextContainer/DialogBoxText")
+
+[node name="TopLevelRegions" type="VBoxContainer" parent="." unique_id=947715457]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuBarRegion" type="MarginContainer" parent="TopLevelRegions" unique_id=1210470582]
+layout_mode = 2
+
+[node name="MenuBar" type="TextureRect" parent="TopLevelRegions/MenuBarRegion" unique_id=1704421871]
+layout_mode = 2
+texture = ExtResource("1_glq4r")
+
+[node name="MenuBarText" type="RichTextLabel" parent="TopLevelRegions/MenuBarRegion" unique_id=400349341]
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 0.8, 0.53333336, 1)
+theme_override_font_sizes/normal_font_size = 64
+text = "Menu Bar"
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="@VScrollBar@24554" type="VScrollBar" parent="TopLevelRegions/MenuBarRegion/MenuBarText" unique_id=1133278111]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+max_value = 88.0
+step = 1.0
+page = 88.0
+
+[node name="@Timer@24555" type="Timer" parent="TopLevelRegions/MenuBarRegion/MenuBarText" unique_id=817110334]
+wait_time = 0.05
+
+[node name="CharacterArea" type="HBoxContainer" parent="TopLevelRegions" unique_id=1986644590]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LeftCharacters" type="HBoxContainer" parent="TopLevelRegions/CharacterArea" unique_id=711332397]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = -432
+
+[node name="RightCharacters" type="HBoxContainer" parent="TopLevelRegions/CharacterArea" unique_id=486689489]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = -432
+alignment = 2
+
+[node name="DialogBoxContainer" type="MarginContainer" parent="TopLevelRegions" unique_id=1562626844]
+layout_mode = 2
+
+[node name="DialogBox" type="TextureRect" parent="TopLevelRegions/DialogBoxContainer" unique_id=1873911240]
+layout_mode = 2
+texture = ExtResource("2_r2roe")
+
+[node name="DialogBoxTextContainer" type="MarginContainer" parent="TopLevelRegions/DialogBoxContainer" unique_id=1189171551]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="DialogBoxText" type="RichTextLabel" parent="TopLevelRegions/DialogBoxContainer/DialogBoxTextContainer" unique_id=1190792778]
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 0.8, 0.53333336, 1)
+theme_override_font_sizes/normal_font_size = 38
+text = "Dialogue Text"
+shortcut_keys_enabled = false
+
+[node name="@VScrollBar@24556" type="VScrollBar" parent="TopLevelRegions/DialogBoxContainer/DialogBoxTextContainer/DialogBoxText" unique_id=1638944080]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+max_value = 53.0
+step = 1.0
+page = 53.0
+
+[node name="@Timer@24557" type="Timer" parent="TopLevelRegions/DialogBoxContainer/DialogBoxTextContainer/DialogBoxText" unique_id=969892642]
+wait_time = 0.05

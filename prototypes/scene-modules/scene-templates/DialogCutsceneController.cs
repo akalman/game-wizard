@@ -1,8 +1,7 @@
-using Godot;
-using Prototypes.SceneModules.DataModel;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
+using Prototypes.SceneModules.DataModel;
 
 namespace Prototypes.SceneModules.SceneTemplates;
 
