@@ -57,7 +57,7 @@ public partial class GWDialogCutsceneController : GWTemplateController<GWDialogC
             {
                 if (string.IsNullOrEmpty(edge.DestinationFrame))
                 {
-                    GameController.TransitionScene("complete", Config.CompleteEdge);
+                    GameController.TransitionScreen("complete", Config.CompleteEdge);
                     return true;
                 }
 

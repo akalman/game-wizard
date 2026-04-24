@@ -1,8 +1,8 @@
 namespace GameWizard.Engine.Schema;
 
-public class GWState
+public class GWScreen
 {
-    public string StateId { get; set; }
+    public string ScreenId { get; set; }
     public string Template { get; set; }
     public string Config { get; set; }
     public bool IsOverlay { get; set; }

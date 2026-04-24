@@ -1,11 +1,11 @@
 modules: [ core ]
-states:
-- state-id: world-map
+screens:
+- screen-id: world-map
   template: core.landmark-overworld
-  config: res://examples/basic-visual-novel/states/world-map.yaml
-- state-id: repeatable-dialog-cutscene
+  config: res://examples/basic-visual-novel/screens/world-map.yaml
+- screen-id: repeatable-dialog-cutscene
   template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/states/repeatable-dialog-cutscene.yaml
+  config: res://examples/basic-visual-novel/screens/repeatable-dialog-cutscene.yaml
   is-overlay: true
   halts-inputs: true
 edges:
@@ -19,4 +19,4 @@ edges:
 - source: repeatable-dialog-cutscene
   type: complete
   edge: end-dialog
-initial-state: world-map
+initial-screen: world-map

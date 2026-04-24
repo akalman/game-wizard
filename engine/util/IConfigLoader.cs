@@ -1,6 +1,6 @@
 namespace GameWizard.Engine.Util;
 
-public interface ConfigLoader
+public interface IConfigLoader
 {
     public T Load<T>(string path);
 }

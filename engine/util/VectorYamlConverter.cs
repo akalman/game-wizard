@@ -20,6 +20,7 @@ public class VectorYamlConverter : IYamlTypeConverter
 
     public void WriteYaml(IEmitter emitter, object value, Type type, ObjectSerializer serializer)
     {
-        throw new NotImplementedException();
+        var vector = value is Vector2 ? (Vector2)value : default;
+        emitter.Emit(new Scalar($"( {vector.X} {vector.Y} )"));
     }
 }

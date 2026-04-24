@@ -1,4 +1,3 @@
-using System;
 using GameWizard.Engine.Util;
 using Godot;
 
@@ -9,7 +8,7 @@ public abstract partial class GWTemplateController<T> : Node2D, GWTemplateContro
     public GWGameController GameController { get; set; }
     protected T Config { get; set; }
 
-    public void SetConfig(ConfigLoader loader, string path)
+    public void SetConfig(IConfigLoader loader, string path)
     {
         Config = loader.Load<T>(path);
         ConfigUpdated();
@@ -22,6 +21,6 @@ public abstract partial class GWTemplateController<T> : Node2D, GWTemplateContro
 public interface GWTemplateController
 {
     public GWGameController GameController { get; set; }
-    public void SetConfig(ConfigLoader loader, string path);
+    public void SetConfig(IConfigLoader loader, string path);
     public bool ReceiveInput(string command);
 }

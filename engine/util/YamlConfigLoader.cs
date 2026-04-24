@@ -4,7 +4,7 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace GameWizard.Engine.Util;
 
-public class YamlConfigLoader : ConfigLoader
+public class YamlConfigLoader : IConfigLoader
 {
     public IDeserializer Deserializer { get; set; } = new DeserializerBuilder()
         .WithNamingConvention(HyphenatedNamingConvention.Instance)
@@ -16,7 +16,6 @@ public class YamlConfigLoader : ConfigLoader
     {
         var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
         var configText = file.GetAsText();
-        GD.PushWarning(configText);
         return Deserializer.Deserialize<T>(configText);
     }
 }

@@ -66,6 +66,6 @@ public partial class GWLandmarkOverworldController : GWTemplateController<GWLand
 
     private void HandleButtonPressed(string destination)
     {
-        GameController.TransitionScene("navigate", destination);
+        GameController.TransitionScreen("navigate", destination);
     }
 }

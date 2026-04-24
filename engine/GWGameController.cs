@@ -10,83 +10,83 @@ public partial class GWGameController : Node2D
 {
     [Export(PropertyHint.File, "*.yaml")] public string GameConfig { get; set; }
 
-    public YamlConfigLoader ConfigLoader { get; set; } = new YamlConfigLoader();
+    public IConfigLoader ConfigLoader { get; set; } = new YamlConfigLoader();
 
     public GWGame Game { get; set; }
 
     private IDictionary<string, GWTemplate> Templates { get; set; } = new Dictionary<string, GWTemplate>();
-    private IDictionary<string, GWState> States { get; set; } = new Dictionary<string, GWState>();
+    private IDictionary<string, GWScreen> Screens { get; set; } = new Dictionary<string, GWScreen>();
     private IDictionary<string, string> Edges { get; set; } = new Dictionary<string, string>();
 
-    private IDictionary<string, Node2D> LoadedStates { get; } = new Dictionary<string, Node2D>();
-    private IList<string> StateFocusStack { get; } = new List<string>();
+    private IDictionary<string, Node2D> LoadedScenes { get; } = new Dictionary<string, Node2D>();
+    private IList<string> ScreenFocusStack { get; } = new List<string>();
 
     public override void _Ready()
     {
         InitializeGame();
-        LoadScene(Game.InitialState);
+        LoadScreen(Game.InitialScreen);
     }
 
     public override void _Process(double delta)
     {
-        ProcessCommands();
+        ProcessInputs();
     }
 
-    public void TransitionScene(string edgeType, string edge)
+    public void TransitionScreen(string edgeType, string edge)
     {
         // validate the transition
-        var currentSceneId = StateFocusStack[0];
-        var currentScene = States[currentSceneId];
-        var currentTemplate = Templates[currentScene.Template];
+        var currentScreenId = ScreenFocusStack[0];
+        var currentScreen = Screens[currentScreenId];
+        var currentTemplate = Templates[currentScreen.Template];
 
         if (!currentTemplate.EdgeTypes.Contains(edgeType))
         {
             GD.PushError(
-                $"Received invalid edge type {edgeType} for current scene template {currentTemplate.TemplateId}.  Expected one of {currentTemplate.EdgeTypes}.");
+                $"Received invalid edge type {edgeType} for current screen template {currentTemplate.TemplateId}.  Expected one of {currentTemplate.EdgeTypes}.");
             GetTree().Quit();
             return;
         }
 
         // if the edge is terminal, pop off stack and close game if stack now empty
-        var targetSceneId = Edges[$"{currentSceneId}.{edgeType}.{edge}"];
+        var targetScreenId = Edges[$"{currentScreenId}.{edgeType}.{edge}"];
 
-        if (string.IsNullOrEmpty(targetSceneId))
+        if (string.IsNullOrEmpty(targetScreenId))
         {
-            LoadedStates[StateFocusStack[0]].QueueFree();
-            StateFocusStack.RemoveAt(0);
+            LoadedScenes[ScreenFocusStack[0]].QueueFree();
+            ScreenFocusStack.RemoveAt(0);
 
-            if (StateFocusStack.Count <= 0) GetTree().Quit();
+            if (ScreenFocusStack.Count <= 0) GetTree().Quit();
             return;
         }
 
-        // if the target scene isn't an overlay, clear out current scenes
-        var targetScene = States[targetSceneId];
+        // if the target screen isn't an overlay, clear out current scenes
+        var targetScreen = Screens[targetScreenId];
 
-        if (!targetScene.IsOverlay)
+        if (!targetScreen.IsOverlay)
         {
-            foreach (var (_, scene) in LoadedStates)
+            foreach (var (_, scene) in LoadedScenes)
             {
                 scene.QueueFree();
             }
 
-            LoadedStates.Clear();
-            StateFocusStack.Clear();
+            LoadedScenes.Clear();
+            ScreenFocusStack.Clear();
         }
 
         // load destination scene
-        LoadScene(targetSceneId);
+        LoadScreen(targetScreenId);
     }
 
-    private void ProcessCommands()
+    private void ProcessInputs()
     {
-        // don't bother processing if there are no states loaded
-        if (StateFocusStack.Count <= 0) return;
+        // don't bother processing if there are no screens loaded
+        if (ScreenFocusStack.Count <= 0) return;
 
-        foreach (var sceneId in StateFocusStack)
+        foreach (var screenId in ScreenFocusStack)
         {
-            var state = States[sceneId];
-            var template = Templates[state.Template];
-            var scene = LoadedStates[sceneId];
+            var screen = Screens[screenId];
+            var template = Templates[screen.Template];
+            var scene = LoadedScenes[screenId];
             var controller = scene as GWTemplateController;
 
             foreach (var input in template.Inputs)
@@ -100,30 +100,30 @@ public partial class GWGameController : Node2D
                 }
             }
 
-            // if this state halts inputs don't process any further
-            if (state.HaltsInputs)
+            // if this screen halts inputs don't process any further
+            if (screen.HaltsInputs)
             {
                 return;
             }
         }
     }
 
-    private void LoadScene(string stateId)
+    private void LoadScreen(string screenId)
     {
-        var state = States[stateId];
-        var template = Templates[state.Template];
+        var screen = Screens[screenId];
+        var template = Templates[screen.Template];
         var packedScene = GD.Load<PackedScene>(template.ScenePath);
 
-        var instantiatedScene = packedScene.Instantiate() as Node2D;
-        if (instantiatedScene == null)
+        var scene = packedScene.Instantiate() as Node2D;
+        if (scene == null)
         {
             GD.PushError($"Loaded scene for template {template.TemplateId} is not a Node2D scene.");
             GetTree().Quit();
             return;
         }
 
-        var instantiatedController = instantiatedScene as GWTemplateController;
-        if (instantiatedController == null)
+        var controller = scene as GWTemplateController;
+        if (controller == null)
         {
             GD.PushError(
                 $"Loaded scene for template {template.TemplateId} has no GWTemplateController implementation at the root.");
@@ -131,14 +131,14 @@ public partial class GWGameController : Node2D
             return;
         }
 
-        LoadedStates[stateId] = instantiatedScene;
+        LoadedScenes[screenId] = scene;
 
-        instantiatedController.GameController = this;
-        instantiatedController.SetConfig(ConfigLoader, state.Config);
-        instantiatedScene.ZIndex = StateFocusStack.Count;
+        controller.GameController = this;
+        controller.SetConfig(ConfigLoader, screen.Config);
+        scene.ZIndex = ScreenFocusStack.Count;
 
-        AddChild(instantiatedScene);
-        StateFocusStack.Insert(0, stateId);
+        AddChild(scene);
+        ScreenFocusStack.Insert(0, screenId);
     }
 
     private void InitializeGame()
@@ -154,9 +154,9 @@ public partial class GWGameController : Node2D
             }
         }
 
-        foreach (var state in Game.States)
+        foreach (var screen in Game.Screens)
         {
-            States[state.StateId] = state;
+            Screens[screen.ScreenId] = screen;
         }
 
         foreach (var edge in Game.Edges)
