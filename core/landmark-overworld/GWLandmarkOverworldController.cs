@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GameWizard.Engine;
+using GameWizard.Engine.Util;
 using Godot;
 
 namespace GameWizard.Core;
@@ -9,7 +10,8 @@ public partial class GWLandmarkOverworldController : GWTemplateController<GWLand
     [Export] public Control BackgroundContainer { get; set; }
     [Export] public Control LandmarkContainer { get; set; }
 
-    public IDictionary<string, TextureButton> Buttons { get; set; }
+    private IDictionary<string, GWLandmarkOverworldLandmark> Landmarks { get; set; } = new Dictionary<string, GWLandmarkOverworldLandmark>();
+    private IDictionary<string, TextureButton> Buttons { get; set; } = new Dictionary<string, TextureButton>();
 
     protected override void ConfigUpdated()
     {
@@ -23,8 +25,6 @@ public partial class GWLandmarkOverworldController : GWTemplateController<GWLand
             sprite.QueueFree();
         }
 
-        Buttons = new Dictionary<string, TextureButton>();
-
         var newBackground = new TextureRect
         {
             Texture = GD.Load<Texture2D>(Config.Map.TexturePath),
@@ -36,6 +36,8 @@ public partial class GWLandmarkOverworldController : GWTemplateController<GWLand
 
         foreach (var landmark in Config.Landmarks)
         {
+            Landmarks[landmark.LandmarkId] = landmark;
+
             var container = new CenterContainer
             {
                 UseTopLeft = true,
@@ -56,7 +58,11 @@ public partial class GWLandmarkOverworldController : GWTemplateController<GWLand
             LandmarkContainer.AddChild(container);
             Buttons[landmark.Edge] = button;
             button.Pressed += () => HandleButtonPressed(landmark.Edge);
+
+            button.Visible = GWConditionEvaluator.Evaluate(State, landmark.Conditions);
         }
+
+        State.StateUpdated += RefreshVisibility;
     }
 
     public override bool ReceiveInput(string command)
@@ -67,5 +73,15 @@ public partial class GWLandmarkOverworldController : GWTemplateController<GWLand
     private void HandleButtonPressed(string destination)
     {
         GameController.TransitionScreen("navigate", destination);
+    }
+
+    private void RefreshVisibility()
+    {
+        foreach (var landmarkId in Landmarks.Keys)
+        {
+            var landmark = Landmarks[landmarkId];
+            var button = Buttons[landmark.Edge];
+            button.Visible = GWConditionEvaluator.Evaluate(State, landmark.Conditions);
+        }
     }
 }

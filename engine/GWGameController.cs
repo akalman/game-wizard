@@ -53,7 +53,7 @@ public partial class GWGameController : Node2D
 
         // find conditional destination
         var edges = Edges[$"{currentScreenId}.{edgeType}.{edgeId}"];
-        var edge = edges.FirstOrDefault(FulfillsCondition);
+        var edge = edges.FirstOrDefault(edge => GWConditionEvaluator.Evaluate(State, edge.Conditions));
         if (edge == null)
         {
             GD.PushError($"Did not find valid conditional destination for {currentScreenId}.{edgeType}.{edgeId}.");
@@ -158,6 +158,7 @@ public partial class GWGameController : Node2D
         LoadedScenes[screenId] = scene;
 
         controller.GameController = this;
+        controller.State = State;
         controller.SetConfig(ConfigLoader, screen.Config);
         scene.ZIndex = ScreenFocusStack.Count;
 
@@ -194,27 +195,5 @@ public partial class GWGameController : Node2D
 
             Edges[edgeKey].Add(edge);
         }
-    }
-
-    private bool FulfillsCondition(GWEdge edge)
-    {
-        if (edge.Condition == null) return true;
-
-        if (edge.Condition.Type != GWEdgeConditionType.Flag)
-        {
-            GD.PushError(
-                $"Received unexpected state type {edge.Condition.Type} in edge {edge.Source}.{edge.Type}.{edge.Edge}");
-            GetTree().Quit();
-        }
-
-        var actual = State.Read(edge.Condition.Name);
-        switch (edge.Condition.Comparator)
-        {
-            case GWEdgeConditionComparator.Equals:
-                if (actual == edge.Condition.Target) return true;
-                break;
-        }
-
-        return false;
     }
 }

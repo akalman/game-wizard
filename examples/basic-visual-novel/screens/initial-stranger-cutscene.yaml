@@ -1,0 +1,18 @@
+dialog-id: initial-stranger-cutscene
+initial-frame-id: conv-01
+complete-edge: success
+
+characters:
+  - character-id: mc
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+
+frames:
+  - frame-id: conv-01
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ ]
+      dialog-text: |
+        [b]You:[/b] Got stranger flag.
+    edges:
+      - input: advance
+      - input: skip

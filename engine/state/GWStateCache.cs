@@ -13,6 +13,10 @@ public class GWStateCache
     public IDictionary<string, string> Flags { get; set; } = new Dictionary<string, string>();
     public bool IsStateLoaded { get; set; } = false;
 
+    public delegate void GWStateUpdatedHandler();
+
+    public event GWStateUpdatedHandler StateUpdated;
+
     public GWStateCache(GWState stateDefinition)
     {
         foreach (var flag in stateDefinition.Flags)
@@ -80,6 +84,8 @@ public class GWStateCache
             default:
                 throw new NotImplementedException();
         }
+
+        StateUpdated?.Invoke();
     }
 
     private void ClearLoadedState()

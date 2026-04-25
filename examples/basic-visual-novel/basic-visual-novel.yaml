@@ -1,39 +1,264 @@
 modules: [ core ]
+initial-screen: initial-cutscene
+
+
+state:
+  flags:
+  # track dialog progress for each NPC.
+  - flag-id: shopkeep-progress
+    values: [ unseen, open, success, fail ]
+    initial-value: unseen
+  - flag-id: enthusiast-progress
+    values: [ unseen, open, success, fail ]
+    initial-value: unseen
+  - flag-id: stranger-progress
+    values: [ unseen, open, success, fail ]
+    initial-value: unseen
+
+
 screens:
+- screen-id: initial-cutscene
+  template: core.dialog-cutscene
+  config: res://examples/basic-visual-novel/screens/initial-cutscene.yaml
+  is-overlay: true
+  halts-inputs: true
 - screen-id: world-map
   template: core.landmark-overworld
   config: res://examples/basic-visual-novel/screens/world-map.yaml
-- screen-id: repeatable-dialog-cutscene
+
+# have an initial and revisit cutscene for each NPC to support different dialog.
+- screen-id: initial-shopkeep-cutscene
   template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/repeatable-dialog-cutscene.yaml
+  config: res://examples/basic-visual-novel/screens/initial-shopkeep-cutscene.yaml
   is-overlay: true
   halts-inputs: true
+- screen-id: revisit-shopkeep-cutscene
+  template: core.dialog-cutscene
+  config: res://examples/basic-visual-novel/screens/revisit-shopkeep-cutscene.yaml
+  is-overlay: true
+  halts-inputs: true
+- screen-id: initial-enthusiast-cutscene
+  template: core.dialog-cutscene
+  config: res://examples/basic-visual-novel/screens/initial-enthusiast-cutscene.yaml
+  is-overlay: true
+  halts-inputs: true
+- screen-id: revisit-enthusiast-cutscene
+  template: core.dialog-cutscene
+  config: res://examples/basic-visual-novel/screens/revisit-enthusiast-cutscene.yaml
+  is-overlay: true
+  halts-inputs: true
+- screen-id: initial-stranger-cutscene
+  template: core.dialog-cutscene
+  config: res://examples/basic-visual-novel/screens/initial-stranger-cutscene.yaml
+  is-overlay: true
+  halts-inputs: true
+- screen-id: revisit-stranger-cutscene
+  template: core.dialog-cutscene
+  config: res://examples/basic-visual-novel/screens/revisit-stranger-cutscene.yaml
+  is-overlay: true
+  halts-inputs: true
+
+# separate screen for each ending
+- screen-id: win-cutscene
+  template: core.dialog-cutscene
+  config: res://examples/basic-visual-novel/screens/win-cutscene.yaml
+- screen-id: lose-cutscene
+  template: core.dialog-cutscene
+  config: res://examples/basic-visual-novel/screens/lose-cutscene.yaml
+
+
 edges:
-- source: world-map
-  type: navigate
-  edge: start-dialog
-  condition:
-    type: flag
-    name: seen-dialog
-    comparator: equals
-    target: yes
-- source: world-map
-  type: navigate
-  edge: start-dialog
-  destination: repeatable-dialog-cutscene
-- source: world-map
-  type: navigate
-  edge: exit-game
-- source: repeatable-dialog-cutscene
+- source: initial-cutscene
   type: complete
   edge: end-dialog
+  destination: world-map
+
+# edge to initial cutscene if we haven't met the NPC, then update state away from "unseen".
+- source: world-map
+  type: navigate
+  edge: shopkeep-location
+  conditions:
+  - type: flag
+    name: shopkeep-progress
+    comparator: one-of
+    targets: [ unseen ]
+  destination: initial-shopkeep-cutscene
+- source: initial-shopkeep-cutscene
+  type: complete
+  edge: success
   effects:
   - type: set-flag
-    target: seen-dialog
-    value: yes
-state:
-  flags:
-  - flag-id: seen-dialog
-    values: [ yes, no ]
-    initial-value: no
-initial-screen: world-map
+    target: shopkeep-progress
+    value: success
+- source: initial-shopkeep-cutscene
+  type: complete
+  edge: fail
+  effects:
+  - type: set-flag
+    target: shopkeep-progress
+    value: fail
+- source: initial-shopkeep-cutscene
+  type: complete
+  edge: open
+  effects:
+  - type: set-flag
+    target: shopkeep-progress
+    value: open
+
+# if we've met the NPC go to revisit.
+# we can do this for any state since the world map will remove the button for a location when the associated state is "success" or "fail".
+- source: world-map
+  type: navigate
+  edge: shopkeep-location
+  destination: revisit-shopkeep-cutscene
+
+# repeat state update edges for revisit cutscene.
+- source: revisit-shopkeep-cutscene
+  type: complete
+  edge: success
+  effects:
+  - type: set-flag
+    target: shopkeep-progress
+    value: success
+- source: revisit-shopkeep-cutscene
+  type: complete
+  edge: fail
+  effects:
+  - type: set-flag
+    target: shopkeep-progress
+    value: fail
+- source: revisit-shopkeep-cutscene
+  type: complete
+  edge: open
+
+# repeat above edge for other two NPCs.
+
+# enthusiast
+- source: world-map
+  type: navigate
+  edge: enthusiast-location
+  conditions:
+  - type: flag
+    name: enthusiast-progress
+    comparator: one-of
+    targets: [ unseen ]
+  destination: initial-enthusiast-cutscene
+- source: initial-enthusiast-cutscene
+  type: complete
+  edge: success
+  effects:
+  - type: set-flag
+    target: enthusiast-progress
+    value: success
+- source: initial-enthusiast-cutscene
+  type: complete
+  edge: fail
+  effects:
+  - type: set-flag
+    target: enthusiast-progress
+    value: fail
+- source: initial-enthusiast-cutscene
+  type: complete
+  edge: open
+  effects:
+  - type: set-flag
+    target: enthusiast-progress
+    value: open
+- source: world-map
+  type: navigate
+  edge: enthusiast-location
+  destination: revisit-enthusiast-cutscene
+- source: revisit-enthusiast-cutscene
+  type: complete
+  edge: success
+  effects:
+  - type: set-flag
+    target: enthusiast-progress
+    value: success
+- source: revisit-enthusiast-cutscene
+  type: complete
+  edge: fail
+  effects:
+  - type: set-flag
+    target: enthusiast-progress
+    value: fail
+- source: revisit-enthusiast-cutscene
+  type: complete
+  edge: open
+
+# stranger
+- source: world-map
+  type: navigate
+  edge: stranger-location
+  conditions:
+  - type: flag
+    name: stranger-progress
+    comparator: one-of
+    targets: [ unseen ]
+  destination: initial-stranger-cutscene
+- source: initial-stranger-cutscene
+  type: complete
+  edge: success
+  effects:
+  - type: set-flag
+    target: stranger-progress
+    value: success
+- source: initial-stranger-cutscene
+  type: complete
+  edge: fail
+  effects:
+  - type: set-flag
+    target: stranger-progress
+    value: fail
+- source: initial-stranger-cutscene
+  type: complete
+  edge: open
+  effects:
+  - type: set-flag
+    target: stranger-progress
+    value: open
+- source: world-map
+  type: navigate
+  edge: stranger-location
+  destination: revisit-stranger-cutscene
+- source: revisit-stranger-cutscene
+  type: complete
+  edge: success
+  effects:
+  - type: set-flag
+    target: stranger-progress
+    value: success
+- source: revisit-stranger-cutscene
+  type: complete
+  edge: fail
+  effects:
+  - type: set-flag
+    target: stranger-progress
+    value: fail
+- source: revisit-stranger-cutscene
+  type: complete
+  edge: open
+
+# end game is available from the world map once all flags are success or fail.
+# if they're all success, go to win cutscene, otherwise lose cutscene.
+- source: world-map
+  type: navigate
+  edge: ending
+  conditions:
+  - type: flag
+    name: shopkeep-progress
+    comparator: one-of
+    targets: [ success ]
+  - type: flag
+    name: enthusiast-progress
+    comparator: one-of
+    targets: [ success ]
+  - type: flag
+    name: stranger-progress
+    comparator: one-of
+    targets: [ success ]
+  destination: win-cutscene
+- source: world-map
+  type: navigate
+  edge: ending
+  destination: lose-cutscene
