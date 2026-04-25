@@ -94,7 +94,7 @@ public partial class GWDialogCutsceneController : GWTemplateController<GWDialogC
                 var sprite = new TextureRect
                 {
                     Texture = GD.Load<Texture2D>(character.SpritePath),
-                    ExpandMode = TextureRect.ExpandModeEnum.FitWidth,
+                    ExpandMode = TextureRect.ExpandModeEnum.FitWidthProportional,
                 };
                 CurrentCharacters[$"left.${characterId}"] = sprite;
                 LeftCharactersContainer.AddChild(sprite);
@@ -118,7 +118,7 @@ public partial class GWDialogCutsceneController : GWTemplateController<GWDialogC
                 var sprite = new TextureRect
                 {
                     Texture = GD.Load<Texture2D>(character.SpritePath),
-                    ExpandMode = TextureRect.ExpandModeEnum.FitWidth,
+                    ExpandMode = TextureRect.ExpandModeEnum.FitWidthProportional,
                     FlipH = true,
                     ZIndex = zindex
                 };

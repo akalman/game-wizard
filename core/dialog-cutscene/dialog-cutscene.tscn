@@ -33,22 +33,8 @@ texture = ExtResource("1_glq4r")
 layout_mode = 2
 theme_override_colors/default_color = Color(1, 0.8, 0.53333336, 1)
 theme_override_font_sizes/normal_font_size = 64
-text = "Menu Bar"
-shortcut_keys_enabled = false
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="@VScrollBar@24554" type="VScrollBar" parent="TopLevelRegions/MenuBarRegion/MenuBarText" unique_id=1133278111]
-visible = false
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-max_value = 88.0
-step = 1.0
-page = 88.0
-
-[node name="@Timer@24555" type="Timer" parent="TopLevelRegions/MenuBarRegion/MenuBarText" unique_id=817110334]
-wait_time = 0.05
 
 [node name="CharacterArea" type="HBoxContainer" parent="TopLevelRegions" unique_id=1986644590]
 layout_mode = 2
@@ -83,17 +69,9 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 theme_override_colors/default_color = Color(1, 0.8, 0.53333336, 1)
 theme_override_font_sizes/normal_font_size = 38
-text = "Dialogue Text"
+theme_override_font_sizes/bold_font_size = 38
+theme_override_font_sizes/bold_italics_font_size = 38
+theme_override_font_sizes/italics_font_size = 38
+theme_override_font_sizes/mono_font_size = 38
+bbcode_enabled = true
 shortcut_keys_enabled = false
-
-[node name="@VScrollBar@24556" type="VScrollBar" parent="TopLevelRegions/DialogBoxContainer/DialogBoxTextContainer/DialogBoxText" unique_id=1638944080]
-visible = false
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-max_value = 53.0
-step = 1.0
-page = 53.0
-
-[node name="@Timer@24557" type="Timer" parent="TopLevelRegions/DialogBoxContainer/DialogBoxTextContainer/DialogBoxText" unique_id=969892642]
-wait_time = 0.05
