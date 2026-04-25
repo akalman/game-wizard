@@ -4,8 +4,8 @@ frames:
 - id: dialog-choice
   options:
   - id: success
-    label: Success
+    label: "\"That's a really nice shop you've got here.\""
   - id: fail
-    label: Fail
+    label: "\"Just give me the flag or I'm leaving a bad review.\""
   - id: open
-    label: Open
+    label: "\"I need to think about this. Be right back.\""

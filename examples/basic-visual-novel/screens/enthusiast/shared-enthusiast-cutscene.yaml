@@ -5,14 +5,51 @@ complete-edge: complete
 characters:
   - character-id: mc
     sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+  - character-id: enthusiast
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
 
 frames:
   - frame-id: conv-01
     state:
       left-character-ids: [ mc ]
-      right-character-ids: [ ]
+      right-character-ids: [ enthusiast ]
       dialog-text: |
-        [b]You:[/b] Shared enthusiast Cutscene.
+        [b]Flag Enthusiast:[/b] OK so here's the deal! I will
+        ask you ONE question about flags, and your answer will
+        determine if you are WORTHY of flag ownership!
+    edges:
+      - input: advance
+        destination-frame: conv-02
+      - input: skip
+  - frame-id: conv-02
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ enthusiast ]
+      dialog-text: |
+        [b]You:[/b] One question? That's it?
+    edges:
+      - input: advance
+        destination-frame: conv-03
+      - input: skip
+  - frame-id: conv-03
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ enthusiast ]
+      dialog-text: |
+        [b]Flag Enthusiast:[/b] One question is all I NEED!
+        You can tell EVERYTHING about a person by how they
+        feel about flags! It's basically a personality test!
+    edges:
+      - input: advance
+        destination-frame: conv-04
+      - input: skip
+  - frame-id: conv-04
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ enthusiast ]
+      dialog-text: |
+        [b]Flag Enthusiast:[/b] Here it is: What is the BEST
+        thing about flags?
     edges:
       - input: advance
       - input: skip

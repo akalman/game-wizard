@@ -5,6 +5,8 @@ complete-edge: complete
 characters:
   - character-id: mc
     sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+  - character-id: enthusiast
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
 
 frames:
   - frame-id: conv-01
@@ -12,7 +14,78 @@ frames:
       left-character-ids: [ mc ]
       right-character-ids: [ ]
       dialog-text: |
-        [b]You:[/b] Initial enthusiast Cutscene.
+        [b]You:[/b] There's someone over here surrounded by...
+        are those all flags? That's like a hundred flags. Why
+        does one person need that many flags.
+    edges:
+      - input: advance
+        destination-frame: conv-02
+      - input: skip
+  - frame-id: conv-02
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ enthusiast ]
+      dialog-text: |
+        [b]Flag Enthusiast:[/b] HELLO!! Do you like FLAGS?!
+        I LOVE flags!! I have 247 of them!! Each one is
+        special and unique and I have named every single one!!
+    edges:
+      - input: advance
+        destination-frame: conv-03
+      - input: skip
+  - frame-id: conv-03
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ enthusiast ]
+      dialog-text: |
+        [b]You:[/b] Oh god.
+    edges:
+      - input: advance
+        destination-frame: conv-04
+      - input: skip
+  - frame-id: conv-04
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ enthusiast ]
+      dialog-text: |
+        [b]Flag Enthusiast:[/b] This one is Gerald! This one is
+        Flag McFlagface! This one is just called "The Incident"
+        and I don't like to talk about why!
+    edges:
+      - input: advance
+        destination-frame: conv-05
+      - input: skip
+  - frame-id: conv-05
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ enthusiast ]
+      dialog-text: |
+        [b]You:[/b] Look, I actually need a flag. It's kind of
+        an emergency. A me-from-the-future kind of emergency.
+    edges:
+      - input: advance
+        destination-frame: conv-06
+      - input: skip
+  - frame-id: conv-06
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ enthusiast ]
+      dialog-text: |
+        [b]Flag Enthusiast:[/b] Oh I could NEVER just give away
+        one of my flags! They're my CHILDREN! Well, not literally.
+        That would be weird. They're rectangles.
+    edges:
+      - input: advance
+        destination-frame: conv-07
+      - input: skip
+  - frame-id: conv-07
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ enthusiast ]
+      dialog-text: |
+        [b]Flag Enthusiast:[/b] BUT! If you can prove to me that
+        you truly APPRECIATE flags, I might be willing to part
+        with one. Maybe. It'll be hard. I'll probably cry.
     edges:
       - input: advance
       - input: skip

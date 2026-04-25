@@ -5,14 +5,64 @@ complete-edge: complete
 characters:
   - character-id: mc
     sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+  - character-id: stranger
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
 
 frames:
   - frame-id: conv-01
     state:
       left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]Stranger:[/b] ...
+    edges:
+      - input: advance
+        destination-frame: conv-02
+      - input: skip
+  - frame-id: conv-02
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]Stranger:[/b] YES!! "I'M LATE! I'M LATE!" THAT'S
+        THE LINE!! YOU SAID IT!! OH MY GOD!!
+    edges:
+      - input: advance
+        destination-frame: conv-03
+      - input: skip
+  - frame-id: conv-03
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]Stranger:[/b] Do you know how LONG I've been standing
+        at this corner?! WEEKS! And nobody ever says the line!!
+        They just say "sorry" or "ow" like ANIMALS!!
+    edges:
+      - input: advance
+        destination-frame: conv-04
+      - input: skip
+  - frame-id: conv-04
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]Stranger:[/b] Here! Take this flag! You've earned it!
+        You are a person of CULTURE and TASTE and PROPER
+        CORNER-COLLISION ETIQUETTE!
+    edges:
+      - input: advance
+        destination-frame: conv-05
+      - input: skip
+  - frame-id: conv-05
+    state:
+      left-character-ids: [ mc ]
       right-character-ids: [ ]
       dialog-text: |
-        [b]You:[/b] Success stranger Cutscene.
+        [b]You:[/b] Got a flag because I said "I'm late" after
+        bumping into someone. Sure. This is the reality I'm
+        trying to save. Ok. Now they can finally go to school
+        I guess.
     edges:
       - input: advance
       - input: skip

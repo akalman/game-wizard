@@ -5,14 +5,63 @@ complete-edge: complete
 characters:
   - character-id: mc
     sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+  - character-id: shopkeep
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
 
 frames:
   - frame-id: conv-01
     state:
       left-character-ids: [ mc ]
-      right-character-ids: [ ]
+      right-character-ids: [ shopkeep ]
       dialog-text: |
-        [b]You:[/b] Shared Shopkeep Cutscene.
+        [b]Shopkeep:[/b] So here's the situation. I've got one
+        premium flag left. It's my finest flag. It's a rectangle.
+        A really good one though.
+    edges:
+      - input: advance
+        destination-frame: conv-02
+      - input: skip
+  - frame-id: conv-02
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ shopkeep ]
+      dialog-text: |
+        [b]You:[/b] How much?
+    edges:
+      - input: advance
+        destination-frame: conv-03
+      - input: skip
+  - frame-id: conv-03
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ shopkeep ]
+      dialog-text: |
+        [b]Shopkeep:[/b] That depends entirely on you! I accept
+        three forms of payment: compliments, correct answers to
+        riddles, and also just asking nicely. I'm very lonely out
+        here.
+    edges:
+      - input: advance
+        destination-frame: conv-04
+      - input: skip
+  - frame-id: conv-04
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ shopkeep ]
+      dialog-text: |
+        [b]You:[/b] Ok so what do I need to do exactly?
+    edges:
+      - input: advance
+        destination-frame: conv-05
+      - input: skip
+  - frame-id: conv-05
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ shopkeep ]
+      dialog-text: |
+        [b]Shopkeep:[/b] Just pick one of the options! That's how
+        these things work right? You pick an option and then
+        something happens? I dunno, I just sell flags.
     edges:
       - input: advance
       - input: skip

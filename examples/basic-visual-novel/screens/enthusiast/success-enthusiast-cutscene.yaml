@@ -5,14 +5,64 @@ complete-edge: complete
 characters:
   - character-id: mc
     sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+  - character-id: enthusiast
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
 
 frames:
   - frame-id: conv-01
     state:
       left-character-ids: [ mc ]
+      right-character-ids: [ enthusiast ]
+      dialog-text: |
+        [b]Flag Enthusiast:[/b] ...
+    edges:
+      - input: advance
+        destination-frame: conv-02
+      - input: skip
+  - frame-id: conv-02
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ enthusiast ]
+      dialog-text: |
+        [b]Flag Enthusiast:[/b] That... that is the most
+        BEAUTIFUL answer I have EVER heard. You GET it.
+        You really GET flags.
+    edges:
+      - input: advance
+        destination-frame: conv-03
+      - input: skip
+  - frame-id: conv-03
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ enthusiast ]
+      dialog-text: |
+        [b]Flag Enthusiast:[/b] I'm not crying! My eyes are
+        just flapping in the wind! Like a flag! Which is
+        BEAUTIFUL as you CORRECTLY identified!
+    edges:
+      - input: advance
+        destination-frame: conv-04
+      - input: skip
+  - frame-id: conv-04
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ enthusiast ]
+      dialog-text: |
+        [b]Flag Enthusiast:[/b] Here! Take Gerald! He's my
+        favorite but I know he'd want to be with someone who
+        truly understands the flapping arts!
+    edges:
+      - input: advance
+        destination-frame: conv-05
+      - input: skip
+  - frame-id: conv-05
+    state:
+      left-character-ids: [ mc ]
       right-character-ids: [ ]
       dialog-text: |
-        [b]You:[/b] Success enthusiast Cutscene.
+        [b]You:[/b] I got... Gerald. Cool. I have a flag named
+        Gerald now. This is my life. I'm collecting named
+        rectangles to save reality.
     edges:
       - input: advance
       - input: skip

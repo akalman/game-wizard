@@ -5,14 +5,63 @@ complete-edge: complete
 characters:
   - character-id: mc
     sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+  - character-id: enthusiast
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
 
 frames:
   - frame-id: conv-01
     state:
       left-character-ids: [ mc ]
+      right-character-ids: [ enthusiast ]
+      dialog-text: |
+        [b]Flag Enthusiast:[/b] ...
+    edges:
+      - input: advance
+        destination-frame: conv-02
+      - input: skip
+  - frame-id: conv-02
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ enthusiast ]
+      dialog-text: |
+        [b]Flag Enthusiast:[/b] Cloth... on a stick? CLOTH?!
+        ON A STICK?!?!
+    edges:
+      - input: advance
+        destination-frame: conv-03
+      - input: skip
+  - frame-id: conv-03
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ enthusiast ]
+      dialog-text: |
+        [b]Flag Enthusiast:[/b] Gerald is NOT "cloth on a stick"!
+        Gerald is a SYMBOL! Gerald is ART! Gerald has a BACKSTORY
+        and a FAVORITE COLOR and it's CRIMSON!
+    edges:
+      - input: advance
+        destination-frame: conv-04
+      - input: skip
+  - frame-id: conv-04
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ enthusiast ]
+      dialog-text: |
+        [b]Flag Enthusiast:[/b] I would NEVER give a flag to
+        someone like you! NEVER! Now if you'll excuse me I need
+        to go apologize to my flags for making them hear that!
+    edges:
+      - input: advance
+        destination-frame: conv-05
+      - input: skip
+  - frame-id: conv-05
+    state:
+      left-character-ids: [ mc ]
       right-character-ids: [ ]
       dialog-text: |
-        [b]You:[/b] Fail enthusiast Cutscene.
+        [b]You:[/b] I feel like I should feel bad but also that
+        person definitely has too many flags. Anyway. No flag
+        from here I guess. Future me is going to be annoyed.
     edges:
       - input: advance
       - input: skip

@@ -5,6 +5,8 @@ complete-edge: end-dialog
 characters:
   - character-id: mc
     sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+  - character-id: future-mc
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
 
 frames:
   - frame-id: conv-01
@@ -12,7 +14,77 @@ frames:
       left-character-ids: [ mc ]
       right-character-ids: [ ]
       dialog-text: |
-        [b]You:[/b] lose cutscene.
+        [b]You:[/b] Ok so I talked to everyone and I definitely
+        did not get all three flags. Some of those conversations
+        did not go great.
+    edges:
+      - input: advance
+        destination-frame: conv-02
+      - input: skip
+  - frame-id: conv-02
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ future-mc ]
+      dialog-text: |
+        [b]Future You:[/b] Yeah I can see that. I'm literally
+        flickering right now. That's not a good sign for the
+        whole "reality staying intact" thing.
+    edges:
+      - input: advance
+        destination-frame: conv-03
+      - input: skip
+  - frame-id: conv-03
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ future-mc ]
+      dialog-text: |
+        [b]You:[/b] In my defense, one of those people had 247
+        named flags and I panicked.
+    edges:
+      - input: advance
+        destination-frame: conv-04
+      - input: skip
+  - frame-id: conv-04
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ future-mc ]
+      dialog-text: |
+        [b]Future You:[/b] Well this is awkward. Reality is
+        going to collapse now. The good news is it'll be quick.
+        The bad news is everything. Everything is the bad news.
+    edges:
+      - input: advance
+        destination-frame: conv-05
+      - input: skip
+  - frame-id: conv-05
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ future-mc ]
+      dialog-text: |
+        [b]You:[/b] So... no coffee then?
+    edges:
+      - input: advance
+        destination-frame: conv-06
+      - input: skip
+  - frame-id: conv-06
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ future-mc ]
+      dialog-text: |
+        [b]Future You:[/b] No coffee. No anything. It was nice
+        being us though. For the like twenty minutes it lasted.
+        Bye, me.
+    edges:
+      - input: advance
+        destination-frame: conv-07
+      - input: skip
+  - frame-id: conv-07
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ ]
+      dialog-text: |
+        [b]You:[/b] Well. That's the end of everything I guess.
+        Should have been nicer to people. Lesson l-
     edges:
       - input: advance
       - input: skip

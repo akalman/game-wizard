@@ -4,8 +4,8 @@ frames:
 - id: dialog-choice
   options:
   - id: success
-    label: Success
+    label: "\"I'm late! I'm late!\""
   - id: fail
-    label: Fail
+    label: "\"You are already dead.\""
   - id: open
-    label: Open
+    label: "\"La-li-lu-le-lo.\""

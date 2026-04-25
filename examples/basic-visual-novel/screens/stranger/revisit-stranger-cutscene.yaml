@@ -5,6 +5,8 @@ complete-edge: complete
 characters:
   - character-id: mc
     sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+  - character-id: stranger
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
 
 frames:
   - frame-id: conv-01
@@ -12,7 +14,41 @@ frames:
       left-character-ids: [ mc ]
       right-character-ids: [ ]
       dialog-text: |
-        [b]You:[/b] Revisit stranger Cutscene.
+        [b]You:[/b] Ok, the corner person. Let me just—
+    edges:
+      - input: advance
+        destination-frame: conv-02
+      - input: skip
+  - frame-id: conv-02
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]BONK.[/b]
+    edges:
+      - input: advance
+        destination-frame: conv-03
+      - input: skip
+  - frame-id: conv-03
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]Stranger:[/b] Good, you're back. Very committed
+        crash this time. Really felt that one in my ribs. Now
+        are you ready to say the line?
+    edges:
+      - input: advance
+        destination-frame: conv-04
+      - input: skip
+  - frame-id: conv-04
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]You:[/b] I'm going to be honest, I walked away last
+        time and still have no idea what the line is. But let's
+        do this.
     edges:
       - input: advance
       - input: skip

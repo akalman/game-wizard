@@ -4,8 +4,8 @@ frames:
 - id: dialog-choice
   options:
   - id: success
-    label: Success
+    label: "\"They flap around in the wind and it's honestly pretty beautiful.\""
   - id: fail
-    label: Fail
+    label: "\"I dunno, they're just pieces of cloth on a stick.\""
   - id: open
-    label: Open
+    label: "\"That's a really deep question. I need to reflect on this.\""

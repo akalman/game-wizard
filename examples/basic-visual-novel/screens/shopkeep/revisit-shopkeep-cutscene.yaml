@@ -5,14 +5,41 @@ complete-edge: complete
 characters:
   - character-id: mc
     sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+  - character-id: shopkeep
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
 
 frames:
   - frame-id: conv-01
     state:
       left-character-ids: [ mc ]
-      right-character-ids: [ ]
+      right-character-ids: [ shopkeep ]
       dialog-text: |
-        [b]You:[/b] Revisit Shopkeep Cutscene.
+        [b]Shopkeep:[/b] Oh hey it's you again! The spacetime
+        collapse person! Have you decided yet? The flags aren't
+        getting any cheaper. Well actually they are. Nobody buys
+        flags.
+    edges:
+      - input: advance
+        destination-frame: conv-02
+      - input: skip
+  - frame-id: conv-02
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ shopkeep ]
+      dialog-text: |
+        [b]You:[/b] Yeah I'm back. Still need that flag.
+    edges:
+      - input: advance
+        destination-frame: conv-03
+      - input: skip
+  - frame-id: conv-03
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ shopkeep ]
+      dialog-text: |
+        [b]Shopkeep:[/b] Well you know the deal! Let's get
+        right to it then. I respect a returning customer.
+        You're actually my only customer.
     edges:
       - input: advance
       - input: skip

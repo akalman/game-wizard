@@ -5,6 +5,8 @@ complete-edge: complete
 characters:
   - character-id: mc
     sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+  - character-id: shopkeep
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
 
 frames:
   - frame-id: conv-01
@@ -12,7 +14,66 @@ frames:
       left-character-ids: [ mc ]
       right-character-ids: [ ]
       dialog-text: |
-        [b]You:[/b] Initial Shopkeep Cutscene.
+        [b]You:[/b] Oh look, a little shop in the middle of nowhere.
+        I'm sure this is a normal and reasonably priced establishment.
+    edges:
+      - input: advance
+        destination-frame: conv-02
+      - input: skip
+  - frame-id: conv-02
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ shopkeep ]
+      dialog-text: |
+        [b]Shopkeep:[/b] Welcome welcome WELCOME to my shop! I sell
+        flags! And only flags! Business is... not great if I'm
+        being honest.
+    edges:
+      - input: advance
+        destination-frame: conv-03
+      - input: skip
+  - frame-id: conv-03
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ shopkeep ]
+      dialog-text: |
+        [b]You:[/b] Wait, you sell flags? Like, actual flags?
+    edges:
+      - input: advance
+        destination-frame: conv-04
+      - input: skip
+  - frame-id: conv-04
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ shopkeep ]
+      dialog-text: |
+        [b]Shopkeep:[/b] What other kind of flag is there? You want
+        a flag or not? I got flags of all shapes and sizes. Rectangles,
+        mostly. Some triangles if you're feeling adventurous.
+    edges:
+      - input: advance
+        destination-frame: conv-05
+      - input: skip
+  - frame-id: conv-05
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ shopkeep ]
+      dialog-text: |
+        [b]You:[/b] I actually do need a flag. A future version of
+        myself told me I have to collect three of them or reality
+        collapses.
+    edges:
+      - input: advance
+        destination-frame: conv-06
+      - input: skip
+  - frame-id: conv-06
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ shopkeep ]
+      dialog-text: |
+        [b]Shopkeep:[/b] Oh yeah that happens like twice a week around
+        here. Very good for the flag economy though. Lots of desperate
+        buyers.
     edges:
       - input: advance
       - input: skip

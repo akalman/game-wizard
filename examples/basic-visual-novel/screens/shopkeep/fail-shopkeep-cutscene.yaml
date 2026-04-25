@@ -5,14 +5,54 @@ complete-edge: complete
 characters:
   - character-id: mc
     sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+  - character-id: shopkeep
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
 
 frames:
   - frame-id: conv-01
     state:
       left-character-ids: [ mc ]
+      right-character-ids: [ shopkeep ]
+      dialog-text: |
+        [b]Shopkeep:[/b] A bad review?! A BAD REVIEW?! Do you
+        have ANY idea how hard it is to run a flag shop in this
+        economy?!
+    edges:
+      - input: advance
+        destination-frame: conv-02
+      - input: skip
+  - frame-id: conv-02
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ shopkeep ]
+      dialog-text: |
+        [b]Shopkeep:[/b] I have ZERO stars on Yelp! Not because
+        of bad reviews, because nobody has EVER reviewed me! And
+        you want to make it NEGATIVE?!
+    edges:
+      - input: advance
+        destination-frame: conv-03
+      - input: skip
+  - frame-id: conv-03
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ shopkeep ]
+      dialog-text: |
+        [b]Shopkeep:[/b] No flag for you! Get out of my shop!
+        And take your collapsing spacetime with you! I hope
+        reality implodes! At least then I won't have to pay rent!
+    edges:
+      - input: advance
+        destination-frame: conv-04
+      - input: skip
+  - frame-id: conv-04
+    state:
+      left-character-ids: [ mc ]
       right-character-ids: [ ]
       dialog-text: |
-        [b]You:[/b] Fail Shopkeep Cutscene.
+        [b]You:[/b] Well that could have gone better. Probably
+        shouldn't have threatened a small business owner. Future
+        me is going to be really disappointed.
     edges:
       - input: advance
       - input: skip
