@@ -12,6 +12,14 @@ edges:
 - source: world-map
   type: navigate
   edge: start-dialog
+  condition:
+    type: flag
+    name: seen-dialog
+    comparator: equals
+    target: yes
+- source: world-map
+  type: navigate
+  edge: start-dialog
   destination: repeatable-dialog-cutscene
 - source: world-map
   type: navigate
@@ -19,4 +27,13 @@ edges:
 - source: repeatable-dialog-cutscene
   type: complete
   edge: end-dialog
+  effects:
+  - type: set-flag
+    target: seen-dialog
+    value: yes
+state:
+  flags:
+  - flag-id: seen-dialog
+    values: [ yes, no ]
+    initial-value: no
 initial-screen: world-map

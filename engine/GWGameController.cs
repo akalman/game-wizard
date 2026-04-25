@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using GameWizard.Engine.Schema;
+using GameWizard.Engine.State;
 using GameWizard.Engine.Util;
 using Godot;
 
@@ -11,12 +13,13 @@ public partial class GWGameController : Node2D
     [Export(PropertyHint.File, "*.yaml")] public string GameConfig { get; set; }
 
     public IConfigLoader ConfigLoader { get; set; } = new YamlConfigLoader();
+    public GWStateCache State { get; set; }
 
     public GWGame Game { get; set; }
 
     private IDictionary<string, GWTemplate> Templates { get; set; } = new Dictionary<string, GWTemplate>();
     private IDictionary<string, GWScreen> Screens { get; set; } = new Dictionary<string, GWScreen>();
-    private IDictionary<string, string> Edges { get; set; } = new Dictionary<string, string>();
+    private IDictionary<string, IList<GWEdge>> Edges { get; set; } = new Dictionary<string, IList<GWEdge>>();
 
     private IDictionary<string, Node2D> LoadedScenes { get; } = new Dictionary<string, Node2D>();
     private IList<string> ScreenFocusStack { get; } = new List<string>();
@@ -24,6 +27,7 @@ public partial class GWGameController : Node2D
     public override void _Ready()
     {
         InitializeGame();
+        State.Create();
         LoadScreen(Game.InitialScreen);
     }
 
@@ -32,7 +36,7 @@ public partial class GWGameController : Node2D
         ProcessInputs();
     }
 
-    public void TransitionScreen(string edgeType, string edge)
+    public void TransitionScreen(string edgeType, string edgeId)
     {
         // validate the transition
         var currentScreenId = ScreenFocusStack[0];
@@ -47,9 +51,29 @@ public partial class GWGameController : Node2D
             return;
         }
 
-        // if the edge is terminal, pop off stack and close game if stack now empty
-        var targetScreenId = Edges[$"{currentScreenId}.{edgeType}.{edge}"];
+        // find conditional destination
+        var edges = Edges[$"{currentScreenId}.{edgeType}.{edgeId}"];
+        var edge = edges.FirstOrDefault(FulfillsCondition);
+        if (edge == null)
+        {
+            GD.PushError($"Did not find valid conditional destination for {currentScreenId}.{edgeType}.{edgeId}.");
+            GetTree().Quit();
+        }
 
+        // apply effects
+        foreach (var effect in edge.Effects)
+        {
+            switch (effect.Type)
+            {
+                case GWEdgeEffectType.SetFlag:
+                    State.Write(effect.Target, effect.Value);
+                    break;
+            }
+        }
+
+        var targetScreenId = edge.Destination;
+
+        // if the edge is terminal, pop off stack and close game if stack now empty
         if (string.IsNullOrEmpty(targetScreenId))
         {
             LoadedScenes[ScreenFocusStack[0]].QueueFree();
@@ -144,6 +168,7 @@ public partial class GWGameController : Node2D
     private void InitializeGame()
     {
         Game = ConfigLoader.Load<GWGame>(GameConfig);
+        State = new GWStateCache(Game.State);
 
         foreach (var moduleId in Game.Modules)
         {
@@ -161,7 +186,35 @@ public partial class GWGameController : Node2D
 
         foreach (var edge in Game.Edges)
         {
-            Edges[$"{edge.Source}.{edge.Type}.{edge.Edge}"] = edge.Destination;
+            var edgeKey = $"{edge.Source}.{edge.Type}.{edge.Edge}";
+            if (!Edges.ContainsKey(edgeKey))
+            {
+                Edges[edgeKey] = new List<GWEdge>();
+            }
+
+            Edges[edgeKey].Add(edge);
         }
+    }
+
+    private bool FulfillsCondition(GWEdge edge)
+    {
+        if (edge.Condition == null) return true;
+
+        if (edge.Condition.Type != GWEdgeConditionType.Flag)
+        {
+            GD.PushError(
+                $"Received unexpected state type {edge.Condition.Type} in edge {edge.Source}.{edge.Type}.{edge.Edge}");
+            GetTree().Quit();
+        }
+
+        var actual = State.Read(edge.Condition.Name);
+        switch (edge.Condition.Comparator)
+        {
+            case GWEdgeConditionComparator.Equals:
+                if (actual == edge.Condition.Target) return true;
+                break;
+        }
+
+        return false;
     }
 }
