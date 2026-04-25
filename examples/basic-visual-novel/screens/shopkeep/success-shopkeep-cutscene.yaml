@@ -1,0 +1,18 @@
+dialog-id: success-shopkeep-cutscene
+initial-frame-id: conv-01
+complete-edge: complete
+
+characters:
+  - character-id: mc
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+
+frames:
+  - frame-id: conv-01
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ ]
+      dialog-text: |
+        [b]You:[/b] Success Shopkeep Cutscene.
+    edges:
+      - input: advance
+      - input: skip

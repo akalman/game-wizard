@@ -1,0 +1,11 @@
+menu-id: shopkeep-dialog-choice
+initial-frame: dialog-choice
+frames:
+- id: dialog-choice
+  options:
+  - id: success
+    label: Success
+  - id: fail
+    label: Fail
+  - id: open
+    label: Open

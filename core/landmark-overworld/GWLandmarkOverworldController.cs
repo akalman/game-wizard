@@ -13,6 +13,11 @@ public partial class GWLandmarkOverworldController : GWTemplateController<GWLand
     private IDictionary<string, GWLandmarkOverworldLandmark> Landmarks { get; set; } = new Dictionary<string, GWLandmarkOverworldLandmark>();
     private IDictionary<string, TextureButton> Buttons { get; set; } = new Dictionary<string, TextureButton>();
 
+    public override void _ExitTree()
+    {
+        if (State is not null) State.StateUpdated -= RefreshVisibility;
+    }
+
     protected override void ConfigUpdated()
     {
         foreach (var background in BackgroundContainer.GetChildren())

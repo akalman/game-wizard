@@ -14,6 +14,7 @@ public class YamlConfigLoader : IConfigLoader
 
     public T Load<T>(string path)
     {
+        GD.PushWarning($"loading yaml at {path}.");
         var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
         var configText = file.GetAsText();
         return Deserializer.Deserialize<T>(configText);

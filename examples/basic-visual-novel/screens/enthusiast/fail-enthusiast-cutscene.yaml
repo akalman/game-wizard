@@ -1,6 +1,6 @@
-dialog-id: initial-enthusiast-cutscene
+dialog-id: fail-enthusiast-cutscene
 initial-frame-id: conv-01
-complete-edge: success
+complete-edge: complete
 
 characters:
   - character-id: mc
@@ -12,7 +12,7 @@ frames:
       left-character-ids: [ mc ]
       right-character-ids: [ ]
       dialog-text: |
-        [b]You:[/b] Got enthusiast flag.
+        [b]You:[/b] Fail enthusiast Cutscene.
     edges:
       - input: advance
       - input: skip

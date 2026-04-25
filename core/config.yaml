@@ -8,3 +8,8 @@ templates:
   scene-path: res://core/landmark-overworld/landmark-overworld.tscn
   inputs: [ ]
   edge-types: [ navigate ]
+
+- template-id: menu
+  scene-path: res://core/menu/menu.tscn
+  inputs: [ select, cancel ]
+  edge-types: [ terminal-select, closed ]

@@ -1,6 +1,6 @@
-dialog-id: initial-shopkeep-cutscene
+dialog-id: fail-shopkeep-cutscene
 initial-frame-id: conv-01
-complete-edge: success
+complete-edge: complete
 
 characters:
   - character-id: mc
@@ -12,7 +12,7 @@ frames:
       left-character-ids: [ mc ]
       right-character-ids: [ ]
       dialog-text: |
-        [b]You:[/b] Got shopkeep flag.
+        [b]You:[/b] Fail Shopkeep Cutscene.
     edges:
       - input: advance
       - input: skip
