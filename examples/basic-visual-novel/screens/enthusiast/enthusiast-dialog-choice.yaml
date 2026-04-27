@@ -1,0 +1,11 @@
+menu-id: enthusiast-dialog-choice
+initial-frame: dialog-choice
+frames:
+- id: dialog-choice
+  options:
+  - id: success
+    label: "\"They flap around in the wind and it's honestly pretty beautiful.\""
+  - id: fail
+    label: "\"I dunno, they're just pieces of cloth on a stick.\""
+  - id: open
+    label: "\"That's a really deep question. I need to reflect on this.\""

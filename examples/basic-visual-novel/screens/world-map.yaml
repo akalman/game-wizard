@@ -1,15 +1,58 @@
 overworld-id: world-map
 map:
-  texture-path: res://examples/basic-visual-novel/sprites/world-map.jpg
+  texture-path: res://examples/basic-visual-novel/sprites/world-map.png
   scaling-type: fit-width
 landmarks:
-  - landmark-id: start-dialog-landmark
-    texture-path: res://examples/basic-visual-novel/sprites/world-map-landmark-a.png
-    edge: start-dialog
-    size: ( 200 200 )
-    offset: ( -0.6 -0.4 )
-  - landmark-id: exit-game-landmark
-    texture-path: res://examples/basic-visual-novel/sprites/world-map-landmark-b.png
-    edge: exit-game
-    size: ( 200 200 )
-    offset: ( 0.4 0.6 )
+
+# create a landmark for each NPC to interact with.
+# only show the landmark if the state for that NPC is unconcluded.
+- landmark-id: shopkeep-landmark
+  texture-path: res://examples/basic-visual-novel/sprites/world-map-landmark-a.png
+  edge: shopkeep-location
+  size: ( 200 200 )
+  offset: ( -0.6 -0.4 )
+  conditions:
+  - type: flag
+    name: shopkeep-progress
+    comparator: one-of
+    targets: [ unseen, open ]
+- landmark-id: enthusiast-landmark
+  texture-path: res://examples/basic-visual-novel/sprites/world-map-landmark-a.png
+  edge: enthusiast-location
+  size: ( 200 200 )
+  offset: ( 0.6 -0.4 )
+  conditions:
+  - type: flag
+    name: enthusiast-progress
+    comparator: one-of
+    targets: [ unseen, open ]
+- landmark-id: stranger-landmark
+  texture-path: res://examples/basic-visual-novel/sprites/world-map-landmark-a.png
+  edge: stranger-location
+  size: ( 200 200 )
+  offset: ( -0.6 0.4 )
+  conditions:
+  - type: flag
+    name: stranger-progress
+    comparator: one-of
+    targets: [ unseen, open ]
+
+# create a new landmark that only shows up once all the NPCs have concluded.
+- landmark-id: ending-landmark
+  texture-path: res://examples/basic-visual-novel/sprites/world-map-landmark-a.png
+  edge: ending
+  size: ( 200 200 )
+  offset: ( 0.6 0.4 )
+  conditions:
+  - type: flag
+    name: shopkeep-progress
+    comparator: one-of
+    targets: [ success, fail ]
+  - type: flag
+    name: enthusiast-progress
+    comparator: one-of
+    targets: [ success, fail ]
+  - type: flag
+    name: stranger-progress
+    comparator: one-of
+    targets: [ success, fail ]

@@ -1,0 +1,92 @@
+dialog-id: fail-stranger-cutscene
+initial-frame-id: conv-01
+complete-edge: complete
+
+characters:
+  - character-id: mc
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+  - character-id: stranger
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+
+frames:
+  - frame-id: conv-01
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]Stranger:[/b] ...what?
+    edges:
+      - input: advance
+        destination-frame: conv-02
+      - input: skip
+  - frame-id: conv-02
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]Stranger:[/b] That's... ok I need a minute. I need
+        to go process that. Stay right here. I'll be back. I
+        just need to go around the corner and think about what
+        you just said to me.
+    edges:
+      - input: advance
+        destination-frame: conv-03
+      - input: skip
+  - frame-id: conv-03
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ ]
+      dialog-text: |
+        [b]You:[/b] Ok. I'll just wait here I guess. They
+        seemed pretty shaken up. Maybe I should have just
+        said the line.
+    edges:
+      - input: advance
+        destination-frame: conv-04
+      - input: skip
+  - frame-id: conv-04
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ ]
+      dialog-text: |
+        [b]You:[/b] ...they've been gone for a while. Let me
+        go check around the corner.
+    edges:
+      - input: advance
+        destination-frame: conv-05
+      - input: skip
+  - frame-id: conv-05
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ ]
+      dialog-text: |
+        [b]You:[/b] Oh. Oh no. They're dead. They are actually
+        dead. On the ground. Behind the corner. What.
+    edges:
+      - input: advance
+        destination-frame: conv-06
+      - input: skip
+  - frame-id: conv-06
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ ]
+      dialog-text: |
+        [b]You:[/b] Did... did I do that?! Was it the thing I
+        said?! That's not how that's supposed to work!! It's
+        just a THING PEOPLE SAY!
+    edges:
+      - input: advance
+        destination-frame: conv-07
+      - input: skip
+  - frame-id: conv-07
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ ]
+      dialog-text: |
+        [b]You:[/b] Ok I need to leave. Right now. Before
+        someone sees me standing next to a dead stranger behind
+        a corner. No flag. No nothing. I'm just going to walk
+        away very quickly and never speak of this again.
+    edges:
+      - input: advance
+      - input: skip

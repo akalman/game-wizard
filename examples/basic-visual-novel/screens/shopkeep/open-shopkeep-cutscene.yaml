@@ -1,0 +1,45 @@
+dialog-id: open-shopkeep-cutscene
+initial-frame-id: conv-01
+complete-edge: complete
+
+characters:
+  - character-id: mc
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+  - character-id: shopkeep
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+
+frames:
+  - frame-id: conv-01
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ shopkeep ]
+      dialog-text: |
+        [b]Shopkeep:[/b] Sure, take your time! It's not like
+        the fabric of reality is at stake or anything! Oh wait,
+        it literally is. You told me that.
+    edges:
+      - input: advance
+        destination-frame: conv-02
+      - input: skip
+  - frame-id: conv-02
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ shopkeep ]
+      dialog-text: |
+        [b]Shopkeep:[/b] I'll be right here! Standing behind
+        this counter! Like I always am! Forever!
+    edges:
+      - input: advance
+        destination-frame: conv-03
+      - input: skip
+  - frame-id: conv-03
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ ]
+      dialog-text: |
+        [b]You:[/b] Ok I'll come back later. Maybe I should go
+        talk to the other people first and figure out how this
+        whole "picking options" thing works.
+    edges:
+      - input: advance
+      - input: skip

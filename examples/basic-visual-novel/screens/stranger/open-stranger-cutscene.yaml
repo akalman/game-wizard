@@ -1,0 +1,68 @@
+dialog-id: open-stranger-cutscene
+initial-frame-id: conv-01
+complete-edge: complete
+
+characters:
+  - character-id: mc
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+  - character-id: stranger
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+
+frames:
+  - frame-id: conv-01
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]Stranger:[/b] What did you just say to me?
+    edges:
+      - input: advance
+        destination-frame: conv-02
+      - input: skip
+  - frame-id: conv-02
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]Stranger:[/b] How do you know about that?! WHO SENT
+        YOU?! I KNEW they were watching! I KNEW the corner was
+        compromised!
+    edges:
+      - input: advance
+        destination-frame: conv-03
+      - input: skip
+  - frame-id: conv-03
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]You:[/b] I don't— I literally just said sounds! I
+        was guessing! I don't know what any of this is!
+    edges:
+      - input: advance
+        destination-frame: conv-04
+      - input: skip
+  - frame-id: conv-04
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]Stranger:[/b] Leave. NOW. And don't come back until
+        you've lost their trail. I can't be seen with you while
+        they're listening. Go. Walk around. Act natural. Come
+        back when you're CLEAN.
+    edges:
+      - input: advance
+        destination-frame: conv-05
+      - input: skip
+  - frame-id: conv-05
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ ]
+      dialog-text: |
+        [b]You:[/b] I don't know who "they" are. I don't know
+        what trail I'm losing. But sure. I'll go walk around
+        and come back and pretend that accomplished something.
+    edges:
+      - input: advance
+      - input: skip

@@ -1,0 +1,121 @@
+dialog-id: initial-stranger-cutscene
+initial-frame-id: conv-01
+complete-edge: complete
+
+characters:
+  - character-id: mc
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+  - character-id: stranger
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+
+frames:
+  - frame-id: conv-01
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ ]
+      dialog-text: |
+        [b]You:[/b] Ok let me just go around this corner and—
+    edges:
+      - input: advance
+        destination-frame: conv-02
+      - input: skip
+  - frame-id: conv-02
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]BONK.[/b]
+    edges:
+      - input: advance
+        destination-frame: conv-03
+      - input: skip
+  - frame-id: conv-03
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]You:[/b] OW! Oh god I'm so sorry I didn't see you
+        there I— my toast! I dropped my toast!
+    edges:
+      - input: advance
+        destination-frame: conv-04
+      - input: skip
+  - frame-id: conv-04
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]Stranger:[/b] No. No no no. Stop. You didn't say
+        the line.
+    edges:
+      - input: advance
+        destination-frame: conv-05
+      - input: skip
+  - frame-id: conv-05
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]You:[/b] ...the line? What line? I just physically
+        collided with you.
+    edges:
+      - input: advance
+        destination-frame: conv-06
+      - input: skip
+  - frame-id: conv-06
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]Stranger:[/b] When you crash into someone at a corner
+        you have to SAY THE LINE. Everyone knows this. It's like
+        the most important part. The crash means nothing without
+        the line.
+    edges:
+      - input: advance
+        destination-frame: conv-07
+      - input: skip
+  - frame-id: conv-07
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]You:[/b] I genuinely have no idea what you're talking
+        about.
+    edges:
+      - input: advance
+        destination-frame: conv-08
+      - input: skip
+  - frame-id: conv-08
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]Stranger:[/b] Ok look. I'll give you a flag if you
+        do this right. But you have to say the line. I've been
+        standing at this corner ALL DAY waiting for someone to
+        crash into me and say it.
+    edges:
+      - input: advance
+        destination-frame: conv-09
+      - input: skip
+  - frame-id: conv-09
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]You:[/b] That's... honestly kind of sad.
+    edges:
+      - input: advance
+        destination-frame: conv-10
+      - input: skip
+  - frame-id: conv-10
+    state:
+      left-character-ids: [ mc ]
+      right-character-ids: [ stranger ]
+      dialog-text: |
+        [b]Stranger:[/b] It's not SAD it's TRADITION. Now. Let's
+        try this again.
+    edges:
+      - input: advance
+      - input: skip
