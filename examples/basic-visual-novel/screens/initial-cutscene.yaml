@@ -1,122 +1,62 @@
-dialog-id: initial-cutscene
-initial-frame-id: conv-01
-complete-edge: end-dialog
+id: initial-cutscene
+initial-block: conversation
+terminal-block: end-conversation
 
 characters:
-  - character-id: mc
+  - id: mc
     sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
-  - character-id: future-mc
+  - id: future-mc
     sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
 
-frames:
-  - frame-id: conv-01
-    state:
-      left-character-ids: [ mc ]
-      right-character-ids: [ ]
-      dialog-text: |
+blocks:
+- id: conversation
+  updates:
+  - type: core.dialog-cutscene.add-left-character
+    character: mc
+  - type: core.dialog-cutscene.set-text
+    text: |
         [b]You:[/b] Oh boy I sure do love walking outside in the
         outdoors outside to get coffee in the outside because there's
         coffee.
-    edges:
-      - input: advance
-        destination-frame: conv-02
-      - input: skip
-  - frame-id: conv-02
-    state:
-      left-character-ids: [ mc ]
-      right-character-ids: [ ]
-      dialog-text: |
+  - type: core.dialog-cutscene.set-text
+    text: |
         [b]You:[/b] OH SHIT! AHH THE SUN ITS SO BRIGHT!
-    edges:
-      - input: advance
-        destination-frame: conv-03
-      - input: skip
-  - frame-id: conv-03
-    state:
-      left-character-ids: [ mc ]
-      right-character-ids: [ ]
-      dialog-text: |
+  - type: core.dialog-cutscene.set-text
+    text: |
         [b]You:[/b] Oh wait that isn't the sun.  What
         is that? It looks like... me???
-    edges:
-      - input: advance
-        destination-frame: conv-04
-      - input: skip
-  - frame-id: conv-04
-    state:
-      left-character-ids: [ mc ]
-      right-character-ids: [ future-mc ]
-      dialog-text: |
+  - type: core.dialog-cutscene.add-right-character
+    character: future-mc
+  - type: core.dialog-cutscene.set-text
+    text: |
         [b]You?:[/b] Hello.  It's me, you from the future.
         Listen.  You really fucked up.  I was not supposed to come
         back in time.  Nice going.  Now if you don't perfectly
         recreate my actions we're going to collapse spacetime and
         destroy reality.
-    edges:
-      - input: advance
-        destination-frame: conv-05
-      - input: skip
-  - frame-id: conv-05
-    state:
-      left-character-ids: [ mc ]
-      right-character-ids: [ future-mc ]
-      dialog-text: |
+  - type: core.dialog-cutscene.set-text
+    text: |
         [b]You:[/b] Uhh, but I haven't done anything?
-    edges:
-      - input: advance
-        destination-frame: conv-06
-      - input: skip
-  - frame-id: conv-06
-    state:
-      left-character-ids: [ mc ]
-      right-character-ids: [ future-mc ]
-      dialog-text: |
+  - type: core.dialog-cutscene.set-text
+    text: |
         [b]Future You:[/b] Don't worry. You will. But I'm here to make
         sure you don't, watch: "Hey. Don't."
-    edges:
-      - input: advance
-        destination-frame: conv-07
-      - input: skip
-  - frame-id: conv-07
-    state:
-      left-character-ids: [ mc ]
-      right-character-ids: [ future-mc ]
-      dialog-text: |
+  - type: core.dialog-cutscene.set-text
+    text: |
         [b]You:[/b] Uhh...
-    edges:
-      - input: advance
-        destination-frame: conv-08
-      - input: skip
-  - frame-id: conv-08
-    state:
-      left-character-ids: [ mc ]
-      right-character-ids: [ future-mc ]
-      dialog-text: |
+  - type: core.dialog-cutscene.set-text
+    text: |
         [b]Future You:[/b] No time. Listen. You need to go and get the three
         flags from people around here. You need to do it because I did it.
         Don't ask me why I did it, I'm you so ask yourself.
-    edges:
-      - input: advance
-        destination-frame: conv-09
-      - input: skip
-  - frame-id: conv-09
-    state:
-      left-character-ids: [ mc ]
-      right-character-ids: [ future-mc ]
-      dialog-text: |
+  - type: core.dialog-cutscene.set-text
+    text: |
         [b]You:[/b] Ok but who do I need to get these flags from?  Also flags?
-    edges:
-      - input: advance
-        destination-frame: conv-10
-      - input: skip
-  - frame-id: conv-10
-    state:
-      left-character-ids: [ mc ]
-      right-character-ids: [ future-mc ]
-      dialog-text: |
+  - type: core.dialog-cutscene.set-text
+    text: |
         [b]Future You:[/b] Just go talk to people ok? There's only three buttons
         and they all talk to someone so you literally can't not talk to them. I'm
         gonna go get some coffee.
-    edges:
-      - input: advance
-      - input: skip
+  edges:
+  - event-id: core.dialog-cutscene.end-block.conversation
+    destination: end-conversation

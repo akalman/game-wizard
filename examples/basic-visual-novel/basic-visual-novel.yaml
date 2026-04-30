@@ -1,5 +1,6 @@
 modules: [ core ]
 initial-screen: initial-cutscene
+close-screen: end-game
 
 #######
 # STATE
@@ -8,15 +9,15 @@ initial-screen: initial-cutscene
 state:
   flags:
   # track dialog progress for each NPC.
-  - flag-id: shopkeep-progress
+  - id: shopkeep-progress
     values: [ unseen, open, success, fail ]
     initial-value: unseen
 
-  - flag-id: enthusiast-progress
+  - id: enthusiast-progress
     values: [ unseen, open, success, fail ]
     initial-value: unseen
 
-  - flag-id: stranger-progress
+  - id: stranger-progress
     values: [ unseen, open, success, fail ]
     initial-value: unseen
 
@@ -25,13 +26,11 @@ state:
 #########
 
 screens:
-- screen-id: initial-cutscene
+- id: initial-cutscene
   template: core.dialog-cutscene
   config: res://examples/basic-visual-novel/screens/initial-cutscene.yaml
-  is-overlay: true
-  halts-inputs: true
 
-- screen-id: world-map
+- id: world-map
   template: core.landmark-overworld
   config: res://examples/basic-visual-novel/screens/world-map.yaml
 
@@ -40,104 +39,38 @@ screens:
 # shared dialog cutscenes for both prior to the dialog choice and for each dialog choice.
 
 # shopkeep
-- screen-id: initial-shopkeep-cutscene
+- id: shopkeep-cutscene
   template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/shopkeep/initial-shopkeep-cutscene.yaml
+  config: res://examples/basic-visual-novel/screens/shopkeep/shopkeep-cutscene.yaml
 
-- screen-id: revisit-shopkeep-cutscene
-  template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/shopkeep/revisit-shopkeep-cutscene.yaml
-
-- screen-id: shared-shopkeep-cutscene
-  template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/shopkeep/shared-shopkeep-cutscene.yaml
-
-- screen-id: shopkeep-dialog-choice
+- id: shopkeep-dialog-choice
   template: core.menu
   config: res://examples/basic-visual-novel/screens/shopkeep/shopkeep-dialog-choice.yaml
-  is-overlay: true
-  halts-inputs: true
-
-- screen-id: success-shopkeep-cutscene
-  template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/shopkeep/success-shopkeep-cutscene.yaml
-
-- screen-id: fail-shopkeep-cutscene
-  template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/shopkeep/fail-shopkeep-cutscene.yaml
-
-- screen-id: open-shopkeep-cutscene
-  template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/shopkeep/open-shopkeep-cutscene.yaml
 
 # enthusiast
-- screen-id: initial-enthusiast-cutscene
+- id: enthusiast-cutscene
   template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/enthusiast/initial-enthusiast-cutscene.yaml
+  config: res://examples/basic-visual-novel/screens/enthusiast/enthusiast-cutscene.yaml
 
-- screen-id: revisit-enthusiast-cutscene
-  template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/enthusiast/revisit-enthusiast-cutscene.yaml
-
-- screen-id: shared-enthusiast-cutscene
-  template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/enthusiast/shared-enthusiast-cutscene.yaml
-
-- screen-id: enthusiast-dialog-choice
+- id: enthusiast-dialog-choice
   template: core.menu
   config: res://examples/basic-visual-novel/screens/enthusiast/enthusiast-dialog-choice.yaml
-  is-overlay: true
-  halts-inputs: true
-
-- screen-id: success-enthusiast-cutscene
-  template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/enthusiast/success-enthusiast-cutscene.yaml
-
-- screen-id: fail-enthusiast-cutscene
-  template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/enthusiast/fail-enthusiast-cutscene.yaml
-
-- screen-id: open-enthusiast-cutscene
-  template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/enthusiast/open-enthusiast-cutscene.yaml
 
 # stranger
-- screen-id: initial-stranger-cutscene
+- id: stranger-cutscene
   template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/stranger/initial-stranger-cutscene.yaml
+  config: res://examples/basic-visual-novel/screens/stranger/stranger-cutscene.yaml
 
-- screen-id: revisit-stranger-cutscene
-  template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/stranger/revisit-stranger-cutscene.yaml
-
-- screen-id: shared-stranger-cutscene
-  template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/stranger/shared-stranger-cutscene.yaml
-
-- screen-id: stranger-dialog-choice
+- id: stranger-dialog-choice
   template: core.menu
   config: res://examples/basic-visual-novel/screens/stranger/stranger-dialog-choice.yaml
-  is-overlay: true
-  halts-inputs: true
-
-- screen-id: success-stranger-cutscene
-  template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/stranger/success-stranger-cutscene.yaml
-
-- screen-id: fail-stranger-cutscene
-  template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/stranger/fail-stranger-cutscene.yaml
-
-- screen-id: open-stranger-cutscene
-  template: core.dialog-cutscene
-  config: res://examples/basic-visual-novel/screens/stranger/open-stranger-cutscene.yaml
 
 # separate screen for each ending
-- screen-id: win-cutscene
+- id: win-cutscene
   template: core.dialog-cutscene
   config: res://examples/basic-visual-novel/screens/win-cutscene.yaml
 
-- screen-id: lose-cutscene
+- id: lose-cutscene
   template: core.dialog-cutscene
   config: res://examples/basic-visual-novel/screens/lose-cutscene.yaml
 
@@ -146,253 +79,65 @@ screens:
 #######
 
 edges:
-- source: initial-cutscene
-  type: complete
-  edge: end-dialog
-  destination: world-map
+- initial-cutscene => terminal-frame => world-map;
 
-# we want to vary the start of the npc dialog depending on if you've seen the npc before. to do this we create a
-# unique cutscene for each situation and have both automatically edge to the shared dialog.
-- source: world-map
-  type: navigate
-  edge: shopkeep-location
-  conditions:
-  - type: flag
-    name: shopkeep-progress
-    comparator: one-of
-    targets: [ unseen ]
-  destination: initial-shopkeep-cutscene
+# we want to vary the start of the npc dialog depending on if you've seen the npc before. this is
+# handled within the config for the dialog cutscene.  for now we just need to handle connecting
+# the dialog cutscene to the menu for getting dialog choice inputs from the user.
+- world-map => navigate.shopkeep-location => shopkeep-cutscene;
+- shopkeep-cutscene => dialog-event.question => shopkeep-dialog-choice;
 
-- source: initial-shopkeep-cutscene
-  type: complete
-  edge: complete
-  destination: shared-shopkeep-cutscene
+# when the user finishes interacting with the menu, we provide their final choice back the parent
+# as part of the edge traversal logic.
+- shopkeep-dialog-choice => terminal-select => ref://parent;
 
-- source: world-map
-  type: navigate
-  edge: shopkeep-location
-  destination: revisit-shopkeep-cutscene
+# set the game state flags based on user choice.  this is done after the associated cutscene by
+# convention.  it could also be done during the edge back into the cutscene from the dialog
+# choice, or it could have been done in response to dialog block being or end events.
+- shopkeep-cutscene => terminal-frame.success => ref://parent;
+  set flag shopkeep-progress to success;
+- shopkeep-cutscene => terminal-frame.fail => ref://parent;
+  set flag shopkeep-progress to fail;
+- shopkeep-cutscene => terminal-frame.open => ref://parent;
+  set flag shopkeep-progress to open;
 
-- source: revisit-shopkeep-cutscene
-  type: complete
-  edge: complete
-  destination: shared-shopkeep-cutscene
-
-# now we need to handle the dialog tree. to do this we will leverage a menu to make the dialog choices and place dialog
-# cutscenes in between.  we will also attach state update effects to the menu screen.
-- source: shared-shopkeep-cutscene
-  type: complete
-  edge: complete
-  destination: shopkeep-dialog-choice
-
-- source: shopkeep-dialog-choice
-  type: terminal-select
-  edge: success
-  destination: success-shopkeep-cutscene
-  effects:
-  - type: set-flag
-    target: shopkeep-progress
-    value: success
-- source: success-shopkeep-cutscene
-  type: complete
-  edge: complete
-  destination: world-map
-
-- source: shopkeep-dialog-choice
-  type: terminal-select
-  edge: fail
-  destination: fail-shopkeep-cutscene
-  effects:
-  - type: set-flag
-    target: shopkeep-progress
-    value: fail
-- source: fail-shopkeep-cutscene
-  type: complete
-  edge: complete
-  destination: world-map
-
-- source: shopkeep-dialog-choice
-  type: terminal-select
-  edge: open
-  destination: open-shopkeep-cutscene
-  effects:
-  - type: set-flag
-    target: shopkeep-progress
-    value: open
-- source: open-shopkeep-cutscene
-  type: complete
-  edge: complete
-  destination: world-map
 
 # repeat above edges for other two NPCs.
-
 # enthusiast
-- source: world-map
-  type: navigate
-  edge: enthusiast-location
-  conditions:
-  - type: flag
-    name: enthusiast-progress
-    comparator: one-of
-    targets: [ unseen ]
-  destination: initial-enthusiast-cutscene
+- world-map => navigate.enthusiast-location => enthusiast-cutscene;
+- enthusiast-cutscene => dialog-event.question => enthusiast-dialog-choice;
 
-- source: initial-enthusiast-cutscene
-  type: complete
-  edge: complete
-  destination: shared-enthusiast-cutscene
+- enthusiast-dialog-choice => terminal-select => ref://parent;
 
-- source: world-map
-  type: navigate
-  edge: enthusiast-location
-  destination: revisit-enthusiast-cutscene
-
-- source: revisit-enthusiast-cutscene
-  type: complete
-  edge: complete
-  destination: shared-enthusiast-cutscene
-
-- source: shared-enthusiast-cutscene
-  type: complete
-  edge: complete
-  destination: enthusiast-dialog-choice
-
-- source: enthusiast-dialog-choice
-  type: terminal-select
-  edge: success
-  destination: success-enthusiast-cutscene
-  effects:
-  - type: set-flag
-    target: enthusiast-progress
-    value: success
-- source: success-enthusiast-cutscene
-  type: complete
-  edge: complete
-  destination: world-map
-
-- source: enthusiast-dialog-choice
-  type: terminal-select
-  edge: fail
-  destination: fail-enthusiast-cutscene
-  effects:
-  - type: set-flag
-    target: enthusiast-progress
-    value: fail
-- source: fail-enthusiast-cutscene
-  type: complete
-  edge: complete
-  destination: world-map
-
-- source: enthusiast-dialog-choice
-  type: terminal-select
-  edge: open
-  destination: open-enthusiast-cutscene
-  effects:
-  - type: set-flag
-    target: enthusiast-progress
-    value: open
-- source: open-enthusiast-cutscene
-  type: complete
-  edge: complete
-  destination: world-map
+- enthusiast-cutscene => terminal-frame.success => ref://parent;
+  set flag enthusiast-progress to success;
+- enthusiast-cutscene => terminal-frame.fail => ref://parent;
+  set flag enthusiast-progress to fail;
+- enthusiast-cutscene => terminal-frame.open => ref://parent;
+  set flag enthusiast-progress to open;
 
 # stranger
-- source: world-map
-  type: navigate
-  edge: stranger-location
-  conditions:
-  - type: flag
-    name: stranger-progress
-    comparator: one-of
-    targets: [ unseen ]
-  destination: initial-stranger-cutscene
+- world-map => navigate.stranger-location => stranger-cutscene;
+- stranger-cutscene => dialog-event.question => stranger-dialog-choice;
 
-- source: initial-stranger-cutscene
-  type: complete
-  edge: complete
-  destination: shared-stranger-cutscene
+- stranger-dialog-choice => terminal-select => ref://parent;
 
-- source: world-map
-  type: navigate
-  edge: stranger-location
-  destination: revisit-stranger-cutscene
+- stranger-cutscene => terminal-frame.success => ref://parent;
+  set flag stranger-progress to success;
+- stranger-cutscene => terminal-frame.fail => ref://parent;
+  set flag stranger-progress to fail;
+- stranger-cutscene => terminal-frame.open => ref://parent;
+  set flag stranger-progress to open;
 
-- source: revisit-stranger-cutscene
-  type: complete
-  edge: complete
-  destination: shared-stranger-cutscene
-
-- source: shared-stranger-cutscene
-  type: complete
-  edge: complete
-  destination: stranger-dialog-choice
-
-- source: stranger-dialog-choice
-  type: terminal-select
-  edge: success
-  destination: success-stranger-cutscene
-  effects:
-  - type: set-flag
-    target: stranger-progress
-    value: success
-- source: success-stranger-cutscene
-  type: complete
-  edge: complete
-  destination: world-map
-
-- source: stranger-dialog-choice
-  type: terminal-select
-  edge: fail
-  destination: fail-stranger-cutscene
-  effects:
-  - type: set-flag
-    target: stranger-progress
-    value: fail
-- source: fail-stranger-cutscene
-  type: complete
-  edge: complete
-  destination: world-map
-
-- source: stranger-dialog-choice
-  type: terminal-select
-  edge: open
-  destination: open-stranger-cutscene
-  effects:
-  - type: set-flag
-    target: stranger-progress
-    value: open
-- source: open-stranger-cutscene
-  type: complete
-  edge: complete
-  destination: world-map
 
 # end game is available from the world map once all flags are success or fail.
 # if they're all success, go to win cutscene, otherwise lose cutscene.
-- source: world-map
-  type: navigate
-  edge: ending
-  conditions:
-  - type: flag
-    name: shopkeep-progress
-    comparator: one-of
-    targets: [ success ]
-  - type: flag
-    name: enthusiast-progress
-    comparator: one-of
-    targets: [ success ]
-  - type: flag
-    name: stranger-progress
-    comparator: one-of
-    targets: [ success ]
-  destination: win-cutscene
-- source: win-cutscene
-  type: complete
-  edge: end-dialog
+- world-map => navigate.ending;
+  when flag shopkeep-progress in [success];
+  when flag enthusiast-progress in [success];
+  when flag stranger-progress in [success] => win-cutscene;
+  else => lose-cutscene;
 
-- source: world-map
-  type: navigate
-  edge: ending
-  destination: lose-cutscene
-- source: lose-cutscene
-  type: complete
-  edge: end-dialog
+# close the game after ending cutscenes
+- win-cutscene => terminal-frame.conversation => end-game;
+- lose-cutscene => terminal-frame.conversation => end-game;

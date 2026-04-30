@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using GameWizard.Engine;
-using GameWizard.Engine.Util;
+using GameWizard.Engine.State;
 using Godot;
 
 namespace GameWizard.Core;
@@ -41,7 +41,7 @@ public partial class GWLandmarkOverworldController : GWTemplateController<GWLand
 
         foreach (var landmark in Config.Landmarks)
         {
-            Landmarks[landmark.LandmarkId] = landmark;
+            Landmarks[landmark.Id] = landmark;
 
             var container = new CenterContainer
             {
@@ -49,7 +49,7 @@ public partial class GWLandmarkOverworldController : GWTemplateController<GWLand
                 Position = landmark.Offset * new Vector2(960, 540),
             };
 
-            var texture = GD.Load<Texture2D>(landmark.TexturePath);
+            var texture = GD.Load<Texture2D>(landmark.Texture);
             var button = new TextureButton
             {
                 TextureNormal = texture,
@@ -61,8 +61,8 @@ public partial class GWLandmarkOverworldController : GWTemplateController<GWLand
 
             container.AddChild(button);
             LandmarkContainer.AddChild(container);
-            Buttons[landmark.Edge] = button;
-            button.Pressed += () => HandleButtonPressed(landmark.Edge);
+            Buttons[landmark.EventId] = button;
+            button.Pressed += () => HandleButtonPressed(landmark.EventId);
 
             button.Visible = GWConditionEvaluator.Evaluate(State, landmark.Conditions);
         }
@@ -85,7 +85,7 @@ public partial class GWLandmarkOverworldController : GWTemplateController<GWLand
         foreach (var landmarkId in Landmarks.Keys)
         {
             var landmark = Landmarks[landmarkId];
-            var button = Buttons[landmark.Edge];
+            var button = Buttons[landmark.EventId];
             button.Visible = GWConditionEvaluator.Evaluate(State, landmark.Conditions);
         }
     }

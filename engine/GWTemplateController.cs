@@ -1,3 +1,4 @@
+using GameWizard.Engine.Config;
 using GameWizard.Engine.State;
 using GameWizard.Engine.Util;
 using Godot;
@@ -7,7 +8,9 @@ namespace GameWizard.Engine;
 public abstract partial class GWTemplateController<T> : Node2D, GWTemplateController where T : class
 {
     public GWGameController GameController { get; set; }
-    public GWStateCache State { get; set; }
+    public GWStateFacade State { get; set; }
+    public string ScreenId { get; set; }
+
     protected T Config { get; set; }
 
     public void SetConfig(IConfigLoader loader, string path)
@@ -23,7 +26,9 @@ public abstract partial class GWTemplateController<T> : Node2D, GWTemplateContro
 public interface GWTemplateController
 {
     public GWGameController GameController { get; set; }
-    public GWStateCache State { get; set; }
+    public GWStateFacade State { get; set; }
+    public string ScreenId { get; set; }
+
     public void SetConfig(IConfigLoader loader, string path);
     public bool ReceiveInput(string command);
 }

@@ -6,53 +6,49 @@ landmarks:
 
 # create a landmark for each NPC to interact with.
 # only show the landmark if the state for that NPC is unconcluded.
-- landmark-id: shopkeep-landmark
-  texture-path: res://examples/basic-visual-novel/sprites/world-map-landmark-a.png
-  edge: shopkeep-location
+- id: shopkeep-landmark
+  texture: res://examples/basic-visual-novel/sprites/world-map-landmark-a.png
+  event-id: shopkeep-location
   size: ( 200 200 )
   offset: ( -0.6 -0.4 )
   conditions:
-  - type: flag
-    name: shopkeep-progress
-    comparator: one-of
-    targets: [ unseen, open ]
-- landmark-id: enthusiast-landmark
-  texture-path: res://examples/basic-visual-novel/sprites/world-map-landmark-a.png
-  edge: enthusiast-location
+  - predicate: flag-in
+    target: shopkeep-progress
+    set: [ unseen, open ]
+
+- id: enthusiast-landmark
+  texture: res://examples/basic-visual-novel/sprites/world-map-landmark-a.png
+  event-id: enthusiast-location
   size: ( 200 200 )
   offset: ( 0.6 -0.4 )
   conditions:
-  - type: flag
-    name: enthusiast-progress
-    comparator: one-of
-    targets: [ unseen, open ]
-- landmark-id: stranger-landmark
-  texture-path: res://examples/basic-visual-novel/sprites/world-map-landmark-a.png
-  edge: stranger-location
+  - predicate: flag-in
+    target: enthusiast-progress
+    set: [ unseen, open ]
+
+- id: stranger-landmark
+  texture: res://examples/basic-visual-novel/sprites/world-map-landmark-a.png
+  event-id: stranger-location
   size: ( 200 200 )
   offset: ( -0.6 0.4 )
   conditions:
-  - type: flag
-    name: stranger-progress
-    comparator: one-of
-    targets: [ unseen, open ]
+  - predicate: flag-in
+    target: stranger-progress
+    set: [ unseen, open ]
 
 # create a new landmark that only shows up once all the NPCs have concluded.
-- landmark-id: ending-landmark
-  texture-path: res://examples/basic-visual-novel/sprites/world-map-landmark-a.png
-  edge: ending
+- id: ending-landmark
+  texture: res://examples/basic-visual-novel/sprites/world-map-landmark-a.png
+  event-id: ending
   size: ( 200 200 )
   offset: ( 0.6 0.4 )
   conditions:
-  - type: flag
-    name: shopkeep-progress
-    comparator: one-of
-    targets: [ success, fail ]
-  - type: flag
-    name: enthusiast-progress
-    comparator: one-of
-    targets: [ success, fail ]
-  - type: flag
-    name: stranger-progress
-    comparator: one-of
-    targets: [ success, fail ]
+  - predicate: flag-in
+    target: stranger-progress
+    set: [ success, fail ]
+  - predicate: flag-in
+    target: enthusiast-progress
+    set: [ success, fail ]
+  - predicate: flag-in
+    target: stranger-progress
+    set: [ success, fail ]

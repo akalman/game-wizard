@@ -1,15 +1,24 @@
-module-id: core
+id: core
 templates:
-- template-id: dialog-cutscene
-  scene-path: res://core/dialog-cutscene/dialog-cutscene.tscn
-  inputs: [ advance, skip ]
-  edge-types: [ complete ]
-- template-id: landmark-overworld
-  scene-path: res://core/landmark-overworld/landmark-overworld.tscn
-  inputs: [ ]
-  edge-types: [ navigate ]
 
-- template-id: menu
-  scene-path: res://core/menu/menu.tscn
+- id: menu
+  scene: res://core/menu/menu.tscn
   inputs: [ select, cancel ]
-  edge-types: [ terminal-select, closed ]
+  events:
+    terminal-select: terminal
+    closed: terminal
+
+- id: dialog-cutscene
+  scene: res://core/dialog-cutscene/dialog-cutscene.tscn
+  inputs: [ advance, skip ]
+  events:
+    dialog-event: inactive
+    terminal-frame: terminal
+    begin-block: active
+    end-block: active
+
+- id: landmark-overworld
+  scene: res://core/landmark-overworld/landmark-overworld.tscn
+  inputs: [ select ]
+  events:
+    navigate: active

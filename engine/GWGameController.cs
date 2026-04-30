@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GameWizard.Engine.Config;
 using GameWizard.Engine.Schema;
 using GameWizard.Engine.State;
 using GameWizard.Engine.Util;
@@ -13,7 +14,7 @@ public partial class GWGameController : Node2D
     [Export(PropertyHint.File, "*.yaml")] public string GameConfig { get; set; }
 
     public IConfigLoader ConfigLoader { get; set; } = new YamlConfigLoader();
-    public GWStateCache State { get; set; }
+    public GWStateFacade State { get; set; }
 
     public GWGame Game { get; set; }
 
@@ -43,29 +44,39 @@ public partial class GWGameController : Node2D
         var currentScreen = Screens[currentScreenId];
         var currentTemplate = Templates[currentScreen.Template];
 
-        if (!currentTemplate.EdgeTypes.Contains(edgeType))
+        if (!currentTemplate.Events.ContainsKey(edgeType))
         {
             GD.PushError(
-                $"Received invalid edge type {edgeType} for current screen template {currentTemplate.TemplateId}.  Expected one of {currentTemplate.EdgeTypes}.");
+                $"Received invalid edge type {edgeType} for current screen template {currentTemplate.Id}.  Expected one of {currentTemplate.Events}.");
             GetTree().Quit();
             return;
         }
 
+        // Edges[$"{currentScreenId}.{edgeType}.{edgeId}"]
+        // find edge and fallback to wildcard id if needed
+        IList<GWEdge> edges = [];
+        if (Edges.ContainsKey($"{currentScreenId}.{edgeType}.{edgeId}"))
+            edges = Edges[$"{currentScreenId}.{edgeType}.{edgeId}"];
+        else if (Edges.ContainsKey($"{currentScreenId}.{edgeType}.ref://any"))
+            edges = Edges[$"{currentScreenId}.{edgeType}.ref://any"];
+
         // find conditional destination
-        var edges = Edges[$"{currentScreenId}.{edgeType}.{edgeId}"];
         var edge = edges.FirstOrDefault(edge => GWConditionEvaluator.Evaluate(State, edge.Conditions));
         if (edge == null)
         {
-            GD.PushError($"Did not find valid conditional destination for {currentScreenId}.{edgeType}.{edgeId}.");
-            GetTree().Quit();
+            GD.PushWarning($"Did not find valid conditional destination for {currentScreenId}.{edgeType}.{edgeId}.");
+            // GetTree().Quit();
+            return;
         }
 
+        GD.PushWarning($"next screen {edge.Destination}");
+
         // apply effects
-        foreach (var effect in edge.Effects)
+        foreach (var effect in edge.Changes)
         {
             switch (effect.Type)
             {
-                case GWEdgeEffectType.SetFlag:
+                case GWStateChangeType.SetFlag:
                     State.Write(effect.Target, effect.Value);
                     break;
             }
@@ -73,32 +84,24 @@ public partial class GWGameController : Node2D
 
         var targetScreenId = edge.Destination;
 
-        // if the edge is terminal, pop off stack and close game if stack now empty
-        if (string.IsNullOrEmpty(targetScreenId))
+        // if the source screen is now terminal or the target screen is ref://parent, remove the current screen
+        if (targetScreenId == "ref://parent" ||
+            currentTemplate.Events[edge.Event] == GWEventLifecycle.Terminal)
         {
             LoadedScenes[ScreenFocusStack[0]].QueueFree();
             ScreenFocusStack.RemoveAt(0);
-
-            if (ScreenFocusStack.Count <= 0) GetTree().Quit();
-            return;
+            if (ScreenFocusStack.Count > 0 && LoadedScenes[ScreenFocusStack[0]] is GWTemplateController controller)
+                controller.ReceiveInput($"{currentScreen.Template}.{edgeType}.{edgeId}");
         }
 
-        // if the target screen isn't an overlay, clear out current scenes
-        var targetScreen = Screens[targetScreenId];
+        // quit if the destination is the close screen
+        if (targetScreenId == Game.CloseScreen) GetTree().Quit();
 
-        if (!targetScreen.IsOverlay)
-        {
-            foreach (var (_, scene) in LoadedScenes)
-            {
-                scene.QueueFree();
-            }
+        // load destination screen
+        else if (targetScreenId != "ref://parent") LoadScreen(targetScreenId);
 
-            LoadedScenes.Clear();
-            ScreenFocusStack.Clear();
-        }
-
-        // load destination scene
-        LoadScreen(targetScreenId);
+        // quit if we are left with no active screens
+        if (ScreenFocusStack.Count == 0) GetTree().Quit();
     }
 
     private void ProcessInputs()
@@ -115,9 +118,9 @@ public partial class GWGameController : Node2D
 
             foreach (var input in template.Inputs)
             {
-                if (Input.IsActionJustPressed($"{template.TemplateId}.{input}"))
+                if (Input.IsActionJustPressed($"{screen.Template}.{input}"))
                 {
-                    if (controller.ReceiveInput(input))
+                    if (controller.ReceiveInput($"{screen.Template}.{input}"))
                     {
                         return;
                     }
@@ -125,23 +128,21 @@ public partial class GWGameController : Node2D
             }
 
             // if this screen halts inputs don't process any further
-            if (screen.HaltsInputs)
-            {
-                return;
-            }
+            return;
         }
     }
 
     private void LoadScreen(string screenId)
     {
+        GD.PushWarning($"loading screen {screenId}");
         var screen = Screens[screenId];
         var template = Templates[screen.Template];
-        var packedScene = GD.Load<PackedScene>(template.ScenePath);
+        var packedScene = GD.Load<PackedScene>(template.Scene);
 
         var scene = packedScene.Instantiate() as Node2D;
         if (scene == null)
         {
-            GD.PushError($"Loaded scene for template {template.TemplateId} is not a Node2D scene.");
+            GD.PushError($"Loaded scene for template {template.Id} is not a Node2D scene.");
             GetTree().Quit();
             return;
         }
@@ -150,44 +151,48 @@ public partial class GWGameController : Node2D
         if (controller == null)
         {
             GD.PushError(
-                $"Loaded scene for template {template.TemplateId} has no GWTemplateController implementation at the root.");
+                $"Loaded scene for template {template.Id} has no GWTemplateController implementation at the root.");
             GetTree().Quit();
             return;
         }
 
         LoadedScenes[screenId] = scene;
 
+        controller.ScreenId = screenId;
         controller.GameController = this;
         controller.State = State;
-        controller.SetConfig(ConfigLoader, screen.Config);
         scene.ZIndex = ScreenFocusStack.Count;
 
-        AddChild(scene);
         ScreenFocusStack.Insert(0, screenId);
+
+        AddChild(scene);
+
+        controller.SetConfig(ConfigLoader, screen.Config);
     }
 
     private void InitializeGame()
     {
         Game = ConfigLoader.Load<GWGame>(GameConfig);
-        State = new GWStateCache(Game.State);
+        State = new GWStateFacade(Game.State);
 
         foreach (var moduleId in Game.Modules)
         {
             var module = ConfigLoader.Load<GWModule>($"res://{moduleId}/config.yaml");
             foreach (var template in module.Templates)
             {
-                Templates[$"{module.ModuleId}.{template.TemplateId}"] = template;
+                Templates[$"{module.Id}.{template.Id}"] = template;
             }
         }
 
         foreach (var screen in Game.Screens)
         {
-            Screens[screen.ScreenId] = screen;
+            Screens[screen.Id] = screen;
         }
 
         foreach (var edge in Game.Edges)
         {
-            var edgeKey = $"{edge.Source}.{edge.Type}.{edge.Edge}";
+            var edgeKey = $"{edge.Source}.{edge.Event}.{edge.EventId}";
+            GD.PushWarning(edgeKey);
             if (!Edges.ContainsKey(edgeKey))
             {
                 Edges[edgeKey] = new List<GWEdge>();
@@ -195,5 +200,25 @@ public partial class GWGameController : Node2D
 
             Edges[edgeKey].Add(edge);
         }
+    }
+
+    public void EmitEvent(GWTemplateController source, string eventId)
+    {
+        GD.PushWarning($"Processing Event {eventId}");
+
+        if (source.ScreenId != ScreenFocusStack[0]) return;
+
+        var screen = Screens[source.ScreenId];
+        var template = Templates[screen.Template];
+
+        if (!eventId.StartsWith(screen.Template)) throw new NotImplementedException();
+
+        eventId = eventId.Substring(screen.Template.Length + 1);
+
+        var eventIdParts = eventId.Split(".");
+
+        if (!template.Events.ContainsKey(eventIdParts[0])) throw new NotImplementedException();
+
+        TransitionScreen(eventIdParts[0], eventIdParts[1]);
     }
 }

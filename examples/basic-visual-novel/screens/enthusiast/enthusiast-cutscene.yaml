@@ -1,0 +1,242 @@
+id: enthusiast-cutscene
+initial-block: route-coversation
+terminal-block: end-conversation
+characters:
+  - id: mc
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+  - id: enthusiast
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+
+blocks:
+###
+# Route Conversation
+###
+- id: route-coversation
+  edges:
+  - event-id: core.dialog-cutscene.end-block.route-coversation
+    destination: initial
+    conditions:
+    - predicate: flag-in
+      target: enthusiast-progress
+      set: [ unseen ]
+  - event-id: core.dialog-cutscene.end-block.route-coversation
+    destination: revisit
+
+###
+# Initial
+###
+- id: initial
+  updates:
+  - type: core.dialog-cutscene.add-left-character
+    character: mc
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]You:[/b] There's someone over here surrounded by...
+        are those all flags? That's like a hundred flags. Why
+        does one person need that many flags.
+
+  - type: core.dialog-cutscene.add-right-character
+    character: enthusiast
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] HELLO!! Do you like FLAGS?!
+        I LOVE flags!! I have 247 of them!! Each one is
+        special and unique and I have named every single one!!
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]You:[/b] Oh god.
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] This one is Gerald! This one is
+        Flag McFlagface! This one is just called "The Incident"
+        and I don't like to talk about why!
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]You:[/b] Look, I actually need a flag. It's kind of
+        an emergency. A me-from-the-future kind of emergency.
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] Oh I could NEVER just give away
+        one of my flags! They're my CHILDREN! Well, not literally.
+        That would be weird. They're rectangles.
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] BUT! If you can prove to me that
+        you truly APPRECIATE flags, I might be willing to part
+        with one. Maybe. It'll be hard. I'll probably cry.
+  edges:
+  - event-id: core.dialog-cutscene.end-block.initial
+    destination: shared
+
+###
+# Revisit
+###
+- id: revisit
+  updates:
+  - type: core.dialog-cutscene.add-left-character
+    character: mc
+  - type: core.dialog-cutscene.add-right-character
+    character: enthusiast
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] YOU'RE BACK!! I knew you couldn't
+        stay away from the flags!! Nobody can!! They're just
+        so rectangular and wonderful!!
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]You:[/b] Yeah. Couldn't stop thinking about those
+        flags. Haunted by them, actually. In a bad way.
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] That's the SPIRIT!! Let's pick
+        up right where we left off!! I've been practicing my
+        flag quiz questions while you were gone!!
+
+  edges:
+  - event-id: core.dialog-cutscene.end-block.revisit
+    destination: shared
+
+###
+# Shared
+###
+- id: shared
+  updates:
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] OK so here's the deal! I will
+        ask you ONE question about flags, and your answer will
+        determine if you are WORTHY of flag ownership!
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]You:[/b] One question? That's it?
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] One question is all I NEED!
+        You can tell EVERYTHING about a person by how they
+        feel about flags! It's basically a personality test!
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] Here it is: What is the BEST
+        thing about flags?
+  edges:
+  - event-id: core.dialog-cutscene.end-block.shared
+    destination: question
+  - event-id: core.menu.terminal-select.success
+    destination: success
+  - event-id: core.menu.terminal-select.fail
+    destination: fail
+  - event-id: core.menu.terminal-select.open
+    destination: open
+
+###
+# Success
+###
+- id: success
+  updates:
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] ...
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] That... that is the most
+        BEAUTIFUL answer I have EVER heard. You GET it.
+        You really GET flags.
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] I'm not crying! My eyes are
+        just flapping in the wind! Like a flag! Which is
+        BEAUTIFUL as you CORRECTLY identified!
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] Here! Take Gerald! He's my
+        favorite but I know he'd want to be with someone who
+        truly understands the flapping arts!
+
+  - type: core.dialog-cutscene.remove-right-character
+    character: enthusiast
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]You:[/b] I got... Gerald. Cool. I have a flag named
+        Gerald now. This is my life. I'm collecting named
+        rectangles to save reality.
+  edges:
+  - event-id: core.dialog-cutscene.end-block.success
+    destination: end-conversation
+
+###
+# Fail
+###
+- id: fail
+  updates:
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] ...
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] Cloth... on a stick? CLOTH?!
+        ON A STICK?!?!
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] Gerald is NOT "cloth on a stick"!
+        Gerald is a SYMBOL! Gerald is ART! Gerald has a BACKSTORY
+        and a FAVORITE COLOR and it's CRIMSON!
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] I would NEVER give a flag to
+        someone like you! NEVER! Now if you'll excuse me I need
+        to go apologize to my flags for making them hear that!
+
+  - type: core.dialog-cutscene.remove-right-character
+    character: enthusiast
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]You:[/b] I feel like I should feel bad but also that
+        person definitely has too many flags. Anyway. No flag
+        from here I guess. Future me is going to be annoyed.
+  edges:
+  - event-id: core.dialog-cutscene.end-block.fail
+    destination: end-conversation
+
+###
+# Open
+###
+- id: open
+  updates:
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] REFLECT?! Yes!! Take ALL the
+        time you need! Flags deserve CONTEMPLATION! They deserve
+        MEDITATION! They deserve a RETREAT!
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Flag Enthusiast:[/b] Go out there and REALLY think
+        about what flags mean to you! And when you come back,
+        I'll be here! With my 247 friends!
+
+  - type: core.dialog-cutscene.remove-right-character
+    character: enthusiast
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]You:[/b] Right. I'm going to go "reflect on flags."
+        And by that I mean go literally anywhere else and then
+        come back and guess a better answer.
+  edges:
+  - event-id: core.dialog-cutscene.end-block.open
+    destination: end-conversation

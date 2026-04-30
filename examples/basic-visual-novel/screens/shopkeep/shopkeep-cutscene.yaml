@@ -1,0 +1,237 @@
+id: shopkeep-cutscene
+initial-block: route-coversation
+terminal-block: end-conversation
+characters:
+  - id: mc
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+  - id: shopkeep
+    sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
+
+blocks:
+###
+# Route Conversation
+###
+- id: route-coversation
+  edges:
+  - event-id: core.dialog-cutscene.end-block.route-coversation
+    destination: initial
+    conditions:
+    - predicate: flag-in
+      target: shopkeep-progress
+      set: [ unseen ]
+  - event-id: core.dialog-cutscene.end-block.route-coversation
+    destination: revisit
+
+###
+# Initial
+###
+- id: initial
+  updates:
+  - type: core.dialog-cutscene.add-left-character
+    character: mc
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]You:[/b] Oh look, a little shop in the middle of nowhere.
+        I'm sure this is a normal and reasonably priced establishment.
+
+  - type: core.dialog-cutscene.add-right-character
+    character: shopkeep
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Shopkeep:[/b] Welcome welcome WELCOME to my shop! I sell
+        flags! And only flags! Business is... not great if I'm
+        being honest.
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]You:[/b] Wait, you sell flags? Like, actual flags?
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Shopkeep:[/b] What other kind of flag is there? You want
+        a flag or not? I got flags of all shapes and sizes. Rectangles,
+        mostly. Some triangles if you're feeling adventurous.
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]You:[/b] I actually do need a flag. A future version of
+        myself told me I have to collect three of them or reality
+        collapses.
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Shopkeep:[/b] Oh yeah that happens like twice a week around
+        here. Very good for the flag economy though. Lots of desperate
+        buyers.
+  edges:
+  - event-id: core.dialog-cutscene.end-block.initial
+    destination: shared
+
+###
+# Revisit
+###
+- id: revisit
+  updates:
+  - type: core.dialog-cutscene.add-left-character
+    character: mc
+  - type: core.dialog-cutscene.add-right-character
+    character: shopkeep
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Shopkeep:[/b] Oh hey it's you again! The spacetime
+        collapse person! Have you decided yet? The flags aren't
+        getting any cheaper. Well actually they are. Nobody buys
+        flags.
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]You:[/b] Yeah I'm back. Still need that flag.
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Shopkeep:[/b] Well you know the deal! Let's get
+        right to it then. I respect a returning customer.
+        You're actually my only customer.
+
+  edges:
+  - event-id: core.dialog-cutscene.end-block.revisit
+    destination: shared
+
+###
+# Shared
+###
+- id: shared
+  updates:
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Shopkeep:[/b] So here's the situation. I've got one
+        premium flag left. It's my finest flag. It's a rectangle.
+        A really good one though.
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]You:[/b] How much?
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Shopkeep:[/b] That depends entirely on you! I accept
+        three forms of payment: compliments, correct answers to
+        riddles, and also just asking nicely. I'm very lonely out
+        here.
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]You:[/b] Ok so what do I need to do exactly?
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Shopkeep:[/b] Just pick one of the options! That's how
+        these things work right? You pick an option and then
+        something happens? I dunno, I just sell flags.
+  edges:
+  - event-id: core.dialog-cutscene.end-block.shared
+    destination: question
+  - event-id: core.menu.terminal-select.success
+    destination: success
+  - event-id: core.menu.terminal-select.fail
+    destination: fail
+  - event-id: core.menu.terminal-select.open
+    destination: open
+
+###
+# Success
+###
+- id: success
+  updates:
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Shopkeep:[/b] Oh... oh my. That's the nicest thing
+        anyone has ever said to me. And about my SHOP no less!
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Shopkeep:[/b] You know what? Take the flag. Take it!
+        It's yours! No charge! Well, the compliment was the charge.
+        That's how my economy works.
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]You:[/b] Wow, really? Thanks! That was way easier than
+        I expected.
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Shopkeep:[/b] Please come back and compliment me again
+        sometime! Or don't! I'll just be here! Selling flags!
+        To nobody!
+
+  - type: core.dialog-cutscene.remove-right-character
+    character: shopkeep
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]You:[/b] Got the flag! One down. I'm starting to think
+        saving reality might actually be pretty easy.
+  edges:
+  - event-id: core.dialog-cutscene.end-block.success
+    destination: end-conversation
+
+###
+# Fail
+###
+- id: fail
+  updates:
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Shopkeep:[/b] A bad review?! A BAD REVIEW?! Do you
+        have ANY idea how hard it is to run a flag shop in this
+        economy?!
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Shopkeep:[/b] I have ZERO stars on Yelp! Not because
+        of bad reviews, because nobody has EVER reviewed me! And
+        you want to make it NEGATIVE?!
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Shopkeep:[/b] No flag for you! Get out of my shop!
+        And take your collapsing spacetime with you! I hope
+        reality implodes! At least then I won't have to pay rent!
+
+  - type: core.dialog-cutscene.remove-right-character
+    character: shopkeep
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]You:[/b] Well that could have gone better. Probably
+        shouldn't have threatened a small business owner. Future
+        me is going to be really disappointed.
+  edges:
+  - event-id: core.dialog-cutscene.end-block.fail
+    destination: end-conversation
+
+###
+# Open
+###
+- id: open
+  updates:
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Shopkeep:[/b] Sure, take your time! It's not like
+        the fabric of reality is at stake or anything! Oh wait,
+        it literally is. You told me that.
+
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]Shopkeep:[/b] I'll be right here! Standing behind
+        this counter! Like I always am! Forever!
+
+  - type: core.dialog-cutscene.remove-right-character
+    character: shopkeep
+  - type: core.dialog-cutscene.set-text
+    text: |
+        [b]You:[/b] Ok I'll come back later. Maybe I should go
+        talk to the other people first and figure out how this
+        whole "picking options" thing works.
+  edges:
+  - event-id: core.dialog-cutscene.end-block.open
+    destination: end-conversation

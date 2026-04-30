@@ -4,8 +4,7 @@ namespace GameWizard.Engine.Schema;
 
 public class GWCondition
 {
-    public GWConditionType Type { get; set; }
-    public string Name { get; set; }
-    public GWConditionComparator Comparator { get; set; }
-    public IList<string> Targets { get; set; }
+    public GWStatePredicate Predicate { get; set; }
+    public string Target { get; set; }
+    public IList<string> Set { get; set; }
 }

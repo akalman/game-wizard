@@ -1,92 +1,55 @@
-dialog-id: win-cutscene
-initial-frame-id: conv-01
-complete-edge: end-dialog
+id: win-cutscene
+initial-block: conversation
+terminal-block: end-conversation
 
 characters:
-  - character-id: mc
+  - id: mc
     sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
-  - character-id: future-mc
+  - id: future-mc
     sprite-path: res://examples/basic-visual-novel/sprites/char-masc-meso.png
 
-frames:
-  - frame-id: conv-01
-    state:
-      left-character-ids: [ mc ]
-      right-character-ids: [ ]
-      dialog-text: |
+blocks:
+- id: conversation
+  updates:
+  - type: core.dialog-cutscene.add-left-character
+    character: mc
+  - type: core.dialog-cutscene.set-text
+    text: |
         [b]You:[/b] I did it! I got all three flags! From a
         lonely shopkeep, an unhinged flag enthusiast, and a
         person who's been lurking at a corner waiting for
         someone to crash into them!
-    edges:
-      - input: advance
-        destination-frame: conv-02
-      - input: skip
-  - frame-id: conv-02
-    state:
-      left-character-ids: [ mc ]
-      right-character-ids: [ future-mc ]
-      dialog-text: |
+  - type: core.dialog-cutscene.add-right-character
+    character: future-mc
+  - type: core.dialog-cutscene.set-text
+    text: |
         [b]Future You:[/b] Oh hey nice you actually did it.
         I'm honestly surprised. I figured you'd mess up at
         least one of them.
-    edges:
-      - input: advance
-        destination-frame: conv-03
-      - input: skip
-  - frame-id: conv-03
-    state:
-      left-character-ids: [ mc ]
-      right-character-ids: [ future-mc ]
-      dialog-text: |
+  - type: core.dialog-cutscene.set-text
+    text: |
         [b]You:[/b] Thanks for the vote of confidence. So
         is reality saved now?
-    edges:
-      - input: advance
-        destination-frame: conv-04
-      - input: skip
-  - frame-id: conv-04
-    state:
-      left-character-ids: [ mc ]
-      right-character-ids: [ future-mc ]
-      dialog-text: |
+  - type: core.dialog-cutscene.set-text
+    text: |
         [b]Future You:[/b] Yep! Spacetime is intact! The
         timeline is preserved! Everything is exactly as it
         should be! Probably! I'm not a scientist!
-    edges:
-      - input: advance
-        destination-frame: conv-05
-      - input: skip
-  - frame-id: conv-05
-    state:
-      left-character-ids: [ mc ]
-      right-character-ids: [ future-mc ]
-      dialog-text: |
+  - type: core.dialog-cutscene.set-text
+    text: |
         [b]You:[/b] Great. Can I go get my coffee now?
-    edges:
-      - input: advance
-        destination-frame: conv-06
-      - input: skip
-  - frame-id: conv-06
-    state:
-      left-character-ids: [ mc ]
-      right-character-ids: [ future-mc ]
-      dialog-text: |
+  - type: core.dialog-cutscene.set-text
+    text: |
         [b]Future You:[/b] Yeah go for it. You earned it.
         I already had mine. It was pretty good. You're gonna
         love it. Later, me!
-    edges:
-      - input: advance
-        destination-frame: conv-07
-      - input: skip
-  - frame-id: conv-07
-    state:
-      left-character-ids: [ mc ]
-      right-character-ids: [ ]
-      dialog-text: |
+  - type: core.dialog-cutscene.remove-right-character
+    character: future-mc
+  - type: core.dialog-cutscene.set-text
+    text: |
         [b]You:[/b] Well that's that. I saved reality by being
         nice to people and answering questions correctly. What
         a day. What a weird, weird day.
-    edges:
-      - input: advance
-      - input: skip
+  edges:
+  - event-id: core.dialog-cutscene.end-block.conversation
+    destination: end-conversation

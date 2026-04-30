@@ -4,6 +4,6 @@ namespace GameWizard.Engine.Schema;
 
 public class GWModule
 {
-    public string ModuleId { get; set; }
-    public IList<GWTemplate> Templates { get; set; }
+    public string Id { get; set; }
+    public IList<GWTemplate> Templates { get; set; } = new List<GWTemplate>();
 }

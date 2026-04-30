@@ -4,7 +4,7 @@ namespace GameWizard.Engine.Schema;
 
 public class GWStateFlag
 {
-    public string FlagId { get; set; }
+    public string Id { get; set; }
     public IList<string> Values { get; set; }
     public string InitialValue { get; set; }
 }
