@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://n7fig15q6hto"]
+
+[ext_resource type="Script" uid="uid://c52qwq4h8xqt2" path="res://engine/GameController.cs" id="1_dqu5q"]
+
+[node name="VisualNovel" type="Node2D" unique_id=2145317428]
+script = ExtResource("1_dqu5q")
+GameConfigPath = "res://examples/visual-novel/game.yaml"

@@ -1,0 +1,32 @@
+id: core
+templates:
+
+  menu:
+    scene: res://addons/game-wizard/core/menu/menu.tscn
+    inputs: [ select, cancel ]
+    outputs:
+      terminal-select:
+        default: end
+        allowed: [ move to, end ]
+      closed:
+        default: end
+        allowed: [ move to, end ]
+
+  dialog-cutscene:
+    scene: res://addons/game-wizard/core/dialog-cutscene/dialog-cutscene.tscn
+    inputs: [ advance, skip ]
+    outputs:
+      dialog-interaction:
+        default: end
+        allowed: [ move to, spawn, end ]
+      terminal-frame:
+        default: end
+        allowed: [ move to, end ]
+
+  landmark-overworld:
+    scene: res://addons/game-wizard/core/landmark-overworld/landmark-overworld.tscn
+    inputs: [ select ]
+    outputs:
+      navigate:
+        default: do nothing
+        allowed: [ move to, spawn, end, do nothing ]
