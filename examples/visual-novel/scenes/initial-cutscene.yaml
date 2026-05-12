@@ -1,0 +1,87 @@
+initial-shot: conversation
+
+style:
+  background: res://examples/visual-novel/sprites/50-px-darken.png
+  banner:
+    background: res://examples/visual-novel/sprites/dialog-banner-background.png
+    height: 50
+  characters:
+    outer-margin: 50
+  dialog-box:
+    background: res://examples/visual-novel/sprites/dialog-box-background.png
+    height: 350
+    text-margin: ( 30 20 )
+
+
+characters:
+  mc:
+    sprite: res://examples/visual-novel/sprites/char-masc-meso.png
+  future-mc:
+    sprite: res://examples/visual-novel/sprites/char-masc-meso.png
+
+
+shots:
+  conversation:
+    end-action: start done
+    frames:
+      - type: add-character
+        side: left
+        character: mc
+      - type: set-text
+        character: mc
+        text: |
+          [b]You:[/b] Oh boy I sure do love walking outside in the
+          outdoors outside to get coffee in the outside because there's
+          coffee.
+      - type: set-text
+        character: mc
+        text: |
+          [b]You:[/b] OH SHIT! AHH THE SUN ITS SO BRIGHT!
+      - type: set-text
+        character: mc
+        text: |
+          [b]You:[/b] Oh wait that isn't the sun.  What
+          is that? It looks like... me???
+      - type: add-character
+        side: right
+        character: future-mc
+      - type: set-text
+        character: future-mc
+        text: |
+          [b]You?:[/b] Hello.  It's me, you from the future.
+          Listen.  You really fucked up.  I was not supposed to come
+          back in time.  Nice going.  Now if you don't perfectly
+          recreate my actions we're going to collapse spacetime and
+          destroy reality.
+      - type: set-text
+        character: mc
+        text: |
+          [b]You:[/b] Uhh, but I haven't done anything?
+      - type: set-text
+        character: future-mc
+        text: |
+          [b]Future You:[/b] Don't worry. You will. But I'm here to make
+          sure you don't, watch: "Hey. Don't."
+      - type: set-text
+        character: mc
+        text: |
+          [b]You:[/b] Uhh...
+      - type: set-text
+        character: future-mc
+        text: |
+          [b]Future You:[/b] No time. Listen. You need to go and get the three
+          flags from people around here. You need to do it because I did it.
+          Don't ask me why I did it, I'm you so ask yourself.
+      - type: set-text
+        character: mc
+        text: |
+            [b]You:[/b] Ok but who do I need to get these flags from?  Also flags?
+      - type: set-text
+        character: future-mc
+        text: |
+            [b]Future You:[/b] Just go talk to people ok? There's only three buttons
+            and they all talk to someone so you literally can't not talk to them. I'm
+            gonna go get some coffee.
+
+  done:
+    end-action: end

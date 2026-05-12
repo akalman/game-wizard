@@ -3,7 +3,7 @@ name: Game-Wizard Example Visual Novel
 # basic engine boilerplate. load any resources from modules you want to use and then configure
 # when and where the game should start and end.
 modules:
-- res://addons/game-wizard/modules/core/config.yaml
+- res://modules/core/config.yaml
 initial-scene: initial-cutscene
 
 
@@ -26,6 +26,7 @@ state:
       values: [ unseen, open, success, fail ]
       initial-value: unseen
 
+
 # game wizard modules contain special types of godot scenes called scene templates.  these are
 # scenes that can be re-used across many different parts of your game by using configuration.
 # each scene below is a named combination of a scene template and a configuration file.
@@ -39,7 +40,7 @@ scenes:
     template: core.dialog-cutscene
     config: res://examples/visual-novel/scenes/initial-cutscene.yaml
     transitions:
-      - edge: terminal-frame.end move to world-map
+      - edge: terminal-frame.done move to world-map
 
   # the main world map scene used to navigate between npcs. logic related to how the scene acts
   # internally is located within the template documentation. as an example, for this scene logic

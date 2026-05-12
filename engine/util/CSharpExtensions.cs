@@ -9,5 +9,18 @@ public static class CSharpExtensions
     {
         return collection.Count == 0;
     }
+
+    public static bool IsNullOrEmpty(this string str)
+    {
+        return string.IsNullOrEmpty(str);
+    }
+
+    public static U SafeGet<T, U>(this IDictionary<T, U> dict, T key)
+    {
+        if (!dict.TryGetValue(key, out var value))
+            throw new GameWizardInternalException($"Could not find key {key} in map.");
+
+        return value;
+    }
 }
 

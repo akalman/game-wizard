@@ -18,10 +18,11 @@ public partial class GameController : Node2D
 
     public GameConfig GameConfig { get; set; }
 
-    public IConfigRepository Config { get; set; } = new ConfigRepository(new YamlConfigLoader());
+    public IConfigRepository Config { get; set; }
     public IStateRepository State { get; set; } = new StateRepository();
     public IDatabaseRepository Db { get; set; } = new DatabaseRepository();
 
+    private IList<PluginController> Plugins { get; set; } = new List<PluginController>();
     private IDictionary<string, Template> Templates { get; set; } = new Dictionary<string, Template>();
     private IDictionary<string, GameScene> Scenes { get; set; } = new Dictionary<string, GameScene>();
 
@@ -42,6 +43,20 @@ public partial class GameController : Node2D
 
     private void InitializeGame()
     {
+        Plugins = GetChildren().Cast<PluginController>().ToList();
+
+        var loader = new YamlConfigLoader();
+
+        loader.RegisterDeserializer(new ConditionYamlConverter());
+        loader.RegisterDeserializer(new GameEdgeYamlConverter());
+        loader.RegisterDeserializer(new GaneStateUpdateYamlConverter());
+        loader.RegisterDeserializer(new Vector2YamlConverter());
+
+        foreach (var plugin in Plugins)
+            plugin.RegisterDeserializer(loader);
+
+        Config = new ConfigRepository(loader);
+
         GameConfig = Config.Read<GameConfig>(GameConfigPath);
 
         foreach (var modulePath in GameConfig.Modules)

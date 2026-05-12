@@ -2,31 +2,31 @@ id: core
 templates:
 
   menu:
-    scene: res://addons/game-wizard/core/menu/menu.tscn
+    scene: res://modules/core/menu/menu.tscn
     inputs: [ select, cancel ]
     outputs:
       terminal-select:
-        default: end
-        allowed: [ move to, end ]
+        default: to-parent
+        allowed: [ to-sibling, to-parent ]
       closed:
-        default: end
-        allowed: [ move to, end ]
+        default: to-parent
+        allowed: [ to-sibling, to-parent ]
 
   dialog-cutscene:
-    scene: res://addons/game-wizard/core/dialog-cutscene/dialog-cutscene.tscn
+    scene: res://modules/core/dialog-cutscene/dialog-cutscene.tscn
     inputs: [ advance, skip ]
     outputs:
       dialog-interaction:
-        default: end
-        allowed: [ move to, spawn, end ]
+        default: to-parent
+        allowed: [ to-sibling, to-child, to-parent ]
       terminal-frame:
-        default: end
-        allowed: [ move to, end ]
+        default: to-parent
+        allowed: [ to-sibling, to-parent ]
 
   landmark-overworld:
-    scene: res://addons/game-wizard/core/landmark-overworld/landmark-overworld.tscn
+    scene: res://modules/core/landmark-overworld/landmark-overworld.tscn
     inputs: [ select ]
     outputs:
       navigate:
-        default: do nothing
-        allowed: [ move to, spawn, end, do nothing ]
+        default: to-self
+        allowed: [ to-sibling, to-child, to-parent, to-self ]

@@ -23,7 +23,7 @@ public abstract partial class TemplateController<T> : Node2D, ITemplateControlle
         InitializeScene();
     }
 
-    private void EmitOutput(string outputId, string outputArg)
+    protected void EmitOutput(string outputId, string outputArg)
     {
         OutputEmitted?.Invoke(SceneId, outputId, outputArg);
     }

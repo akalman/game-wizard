@@ -1,7 +1,11 @@
 [gd_scene format=3 uid="uid://n7fig15q6hto"]
 
 [ext_resource type="Script" uid="uid://c52qwq4h8xqt2" path="res://engine/GameController.cs" id="1_dqu5q"]
+[ext_resource type="Script" uid="uid://tjwbxhhvedxx" path="res://modules/core/dialog-cutscene/plugins/DialogCutsceneYamlPlugin.cs" id="2_iebnw"]
 
 [node name="VisualNovel" type="Node2D" unique_id=2145317428]
 script = ExtResource("1_dqu5q")
 GameConfigPath = "res://examples/visual-novel/game.yaml"
+
+[node name="DialogCutscenePlugin" type="Node2D" parent="." unique_id=187794112]
+script = ExtResource("2_iebnw")
