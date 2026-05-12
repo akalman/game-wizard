@@ -4,7 +4,8 @@ name: Game-Wizard Example Visual Novel
 # when and where the game should start and end.
 modules:
 - res://modules/core/config.yaml
-initial-scene: initial-cutscene
+# initial-scene: initial-cutscene
+initial-scene: world-map
 
 
 # define what state our game needs to track. this can be used to track story event flags,
@@ -51,17 +52,17 @@ scenes:
     config: res://examples/visual-novel/scenes/world-map.yaml
     transitions:
       # create a subscription to spawn each cutscene for each npc
-      - edge: navigate.shopkeep-location spawn shopkeep-cutscene
-      - edge: navigate.enthusiast-location spawn enthusiast-cutscene
-      - edge: navigate.stranger-location spawn stranger-cutscene
+      - edge: navigate.shopkeep-landmark spawn shopkeep-cutscene
+      - edge: navigate.enthusiast-landmark spawn enthusiast-cutscene
+      - edge: navigate.stranger-landmark spawn stranger-cutscene
       # conditionally navigate to the win or lose cutscene depending on current game state. order
       # matters here since only the first matching subscriber in this list will handle the event.
-      - edge: navigate.ending spawn win-cutscene
+      - edge: navigate.ending-landmark spawn win-cutscene
         when:
         - flag shopkeep-progress in [success]
         - flag enthusiast-progress in [success]
         - flag stranger-progress in [success]
-      - edge: navigate.ending spawn lose-cutscene
+      - edge: navigate.ending-landmark spawn lose-cutscene
 
   # create scenes for each npc. we start with the shopkeep npc. the first scene is the conversation
   # with the npc itself. dialog routing is done internally.
