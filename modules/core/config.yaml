@@ -1,8 +1,9 @@
 id: core
+plugins: plugins.tscn
 templates:
 
   menu:
-    scene: res://modules/core/menu/menu.tscn
+    scene: menu/menu.tscn
     inputs: [ select, cancel ]
     outputs:
       terminal-select:
@@ -13,7 +14,7 @@ templates:
         allowed: [ to-sibling, to-parent ]
 
   dialog-cutscene:
-    scene: res://modules/core/dialog-cutscene/dialog-cutscene.tscn
+    scene: dialog-cutscene/dialog-cutscene.tscn
     inputs: [ advance, skip ]
     outputs:
       dialog-interaction:
@@ -24,7 +25,7 @@ templates:
         allowed: [ to-sibling, to-parent ]
 
   landmark-overworld:
-    scene: res://modules/core/landmark-overworld/landmark-overworld.tscn
+    scene: landmark-overworld/landmark-overworld.tscn
     inputs: [ select ]
     outputs:
       navigate:

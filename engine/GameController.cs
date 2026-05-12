@@ -24,7 +24,6 @@ public partial class GameController : Node2D
 
     private IList<PluginController> Plugins { get; set; } = new List<PluginController>();
     private IDictionary<string, Template> Templates { get; set; } = new Dictionary<string, Template>();
-    private IDictionary<string, GameScene> Scenes { get; set; } = new Dictionary<string, GameScene>();
 
     private IDictionary<string, Node2D> LoadedScenes { get; set; } = new Dictionary<string, Node2D>();
     private IList<string> SceneFocusStack { get; set; } = new List<string>();
@@ -43,31 +42,48 @@ public partial class GameController : Node2D
 
     private void InitializeGame()
     {
-        Plugins = GetChildren().Cast<PluginController>().ToList();
+        // create loader just for initializiation while we load modules.
+        var initLoader = new YamlConfigLoader();
+        initLoader.RegisterDeserializer(new ConditionYamlConverter());
+        initLoader.RegisterDeserializer(new GameEdgeYamlConverter());
+        initLoader.RegisterDeserializer(new GaneStateUpdateYamlConverter());
+        initLoader.RegisterDeserializer(new Vector2YamlConverter());
+        var config = new ConfigRepository(initLoader);
 
+        // read top level game config
+        GameConfig = config.Read<GameConfig>(GameConfigPath);
+
+        // load all modules
+        foreach (var modulePath in GameConfig.Modules)
+        {
+            var module = config.Read<Module>(modulePath);
+            var moduleDirectory = string.Concat(modulePath.Reverse().SkipWhile(curr => curr != '/').Reverse());
+
+            foreach (var (templateId, template) in module.Templates)
+            {
+                template.Scene = $"{moduleDirectory}/{template.Scene}";
+                Templates[$"{module.Id}.{templateId}"] = template;
+            }
+
+            var pluginScene = GD.Load<PackedScene>($"{moduleDirectory}/{module.Plugins}");
+            var pluginContainer = pluginScene.Instantiate() as Node2D;
+
+            if (pluginContainer is null)
+                throw new GameWizardInternalException();
+
+            foreach (var child in pluginContainer.GetChildren().Cast<PluginController>())
+                Plugins.Add(child);
+        }
+
+        // create actual config loader
         var loader = new YamlConfigLoader();
-
         loader.RegisterDeserializer(new ConditionYamlConverter());
         loader.RegisterDeserializer(new GameEdgeYamlConverter());
         loader.RegisterDeserializer(new GaneStateUpdateYamlConverter());
         loader.RegisterDeserializer(new Vector2YamlConverter());
-
         foreach (var plugin in Plugins)
             plugin.RegisterDeserializer(loader);
-
         Config = new ConfigRepository(loader);
-
-        GameConfig = Config.Read<GameConfig>(GameConfigPath);
-
-        foreach (var modulePath in GameConfig.Modules)
-        {
-            var module = Config.Read<Module>(modulePath);
-
-            foreach (var (templateId, template) in module.Templates)
-                Templates[$"{module.Id}.{templateId}"] = template;
-        }
-
-        Scenes = GameConfig.Scenes;
 
         State.Initialize(GameConfig.State);
     }
@@ -77,7 +93,7 @@ public partial class GameController : Node2D
         if (LoadedScenes.ContainsKey(sceneId))
             throw new InvalidSceneTransitionException($"Tried to load scene {sceneId} when scene already loaded");
 
-        var scene = Scenes[sceneId];
+        var scene = GameConfig.Scenes[sceneId];
         var templateId = scene.Template;
         var template = Templates[templateId];
 
@@ -106,7 +122,7 @@ public partial class GameController : Node2D
 
         foreach (var sceneId in SceneFocusStack.Skip(1))
         {
-            var scene = Scenes[sceneId];
+            var scene = GameConfig.Scenes[sceneId];
 
             if (!handled && scene.AlwaysActive)
                 handled = ProcessInputForScene(sceneId);
@@ -115,7 +131,7 @@ public partial class GameController : Node2D
 
     private bool ProcessInputForScene(string sceneId)
     {
-        var scene = Scenes[sceneId];
+        var scene = GameConfig.Scenes[sceneId];
         var templateId = scene.Template;
         var template = Templates[templateId];
         var controller = LoadedScenes[sceneId].AsTemplate(templateId);
@@ -146,7 +162,7 @@ public partial class GameController : Node2D
         if (sourceSceneId != SceneFocusStack[0])
             throw new NotImplementedException();
 
-        var sourceScene = Scenes[sourceSceneId];
+        var sourceScene = GameConfig.Scenes[sourceSceneId];
         var sourceTemplateId = sourceScene.Template;
         var sourceTemplate = Templates[sourceTemplateId];
 
@@ -203,7 +219,7 @@ public partial class GameController : Node2D
             target.Edge.Type == EdgeType.ToParent)
         {
             var newSceneId = SceneFocusStack[0];
-            var newScene = Scenes[newSceneId];
+            var newScene = GameConfig.Scenes[newSceneId];
             var newController = LoadedScenes[newSceneId].AsTemplate(newScene.Template);
 
             newController.HandleFocus(sourceSceneId, $"{outputId}.{outputArg}");

@@ -6,6 +6,7 @@ namespace GameWizard.Engine.Schema.Modules;
 public class Module
 {
     public string Id { get; set; }
+    public string Plugins { get; set; }
 
     public IDictionary<string, Template> Templates { get; set; } = new Dictionary<string, Template>();
 }
