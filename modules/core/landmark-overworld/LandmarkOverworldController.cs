@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using GameWizard.Engine;
 using GameWizard.Engine.Util;
 using Godot;
@@ -8,6 +9,8 @@ public partial class LandmarkOverworldController : TemplateController<OverworldC
 {
     [Export] public TextureRect Background { get; set; }
     [Export] public Control LandmarkContainer { get; set; }
+
+    private IDictionary<string, TextureButton> LoadedLandmarks { get; set; } = new Dictionary<string, TextureButton>();
 
     protected override void InitializeScene()
     {
@@ -33,6 +36,7 @@ public partial class LandmarkOverworldController : TemplateController<OverworldC
 
             LandmarkContainer.AddChild(landmarkNode);
             landmarkNode.Pressed += () => EmitOutput("navigate", landmarkId);
+            LoadedLandmarks[landmarkId] = landmarkNode;
         }
     }
 
@@ -43,6 +47,7 @@ public partial class LandmarkOverworldController : TemplateController<OverworldC
 
     public override void HandleFocus(string sourceScene, string outputId)
     {
-
+        foreach (var (landmarkId, landmarkButton) in LoadedLandmarks)
+            landmarkButton.Visible = Config.Landmarks[landmarkId].When.Evaluate(Game.State);
     }
 }

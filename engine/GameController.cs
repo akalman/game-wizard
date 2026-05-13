@@ -179,7 +179,19 @@ public partial class GameController : Node2D
         }
 
         if (target is null)
-            throw new InvalidGameStateException($"Did not find a valid output edge for output {outputId}.{outputArg}.");
+        {
+            var defaultType = sourceTemplate.Outputs[outputId].Default;
+            GD.PushWarning($"Did not find a valid output edge for output {outputId}.{outputArg}, defaulting to {defaultType}.");
+            target = new SceneTransition
+            {
+                Edge = new Edge
+                {
+                    Type = defaultType,
+                    OutputId = outputId,
+                    OutputArg = outputArg,
+                },
+            };
+        }
 
         var output = sourceTemplate.Outputs[target.Edge.OutputId];
 

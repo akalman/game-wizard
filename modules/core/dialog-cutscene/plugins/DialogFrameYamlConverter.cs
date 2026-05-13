@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using GameWizard.Core.DialogCutscene.State;
 using GameWizard.Engine.Schema.Logic;
 using YamlDotNet.Core;
 using YamlDotNet.Core.Events;

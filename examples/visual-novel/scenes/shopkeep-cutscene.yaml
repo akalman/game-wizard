@@ -124,7 +124,7 @@ sequences:
 
   shared-intro:
     transitions:
-      - action: action question
+      - action: interlude question
     frames:
       - type: set-text
         character: shopkeep

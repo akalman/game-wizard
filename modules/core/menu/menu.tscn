@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://ifjc4uatxwtp"]
+
+[ext_resource type="Script" uid="uid://bp8qc3cdleaxb" path="res://modules/core/menu/MenuController.cs" id="1_grgri"]
+[ext_resource type="PackedScene" uid="uid://vom1e2i7wgth" path="res://modules/core/menu/scenes/menu-option.tscn" id="2_julem"]
+
+[node name="Menu" type="Node2D" unique_id=66625438 node_paths=PackedStringArray("Background", "OptionsContainer")]
+script = ExtResource("1_grgri")
+Background = NodePath("Background")
+OptionsContainer = NodePath("OptionsContainer")
+MenuOptionScene = ExtResource("2_julem")
+
+[node name="Background" type="TextureRect" parent="." unique_id=1690702849]
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="OptionsContainer" type="VBoxContainer" parent="." unique_id=1763748409]
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 40.0
+offset_bottom = 40.0
+alignment = 1

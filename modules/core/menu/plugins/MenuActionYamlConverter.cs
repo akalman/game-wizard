@@ -6,20 +6,20 @@ using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 
-namespace GameWizard.Core.DialogCutscene;
+namespace GameWizard.Core.Menu;
 
-public class TransitionActionYamlConverter : IYamlTypeConverter
+public class MenuActionYamlConverter : IYamlTypeConverter
 {
     private const string TermPattern = @"([.\w-]+)";
 
-    private static readonly IDictionary<TransitionActionType, string> Templates = new Dictionary<TransitionActionType, string>
+    private static readonly IDictionary<MenuActionType, string> Templates = new Dictionary<MenuActionType, string>
     {
-        { TransitionActionType.End, "end" },
-        { TransitionActionType.StartSequence, "start {0}" },
-        { TransitionActionType.StartInterlude, "interlude {0}" },
+        { MenuActionType.LoadPage, "load {0}" },
+        { MenuActionType.End, "end" },
+        { MenuActionType.None, "none" },
     };
 
-    public bool Accepts(Type type) => type == typeof(TransitionAction);
+    public bool Accepts(Type type) => type == typeof(MenuAction);
 
     public object ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
     {
@@ -30,7 +30,7 @@ public class TransitionActionYamlConverter : IYamlTypeConverter
             var match = Regex.Match(raw.Value, $"^{string.Format(template, TermPattern)}$");
             if (match.Success)
             {
-                return new TransitionAction
+                return new MenuAction
                 {
                     Type = actionType,
                     Destination = match.Groups[1].Value,
@@ -38,7 +38,7 @@ public class TransitionActionYamlConverter : IYamlTypeConverter
             }
         }
 
-        throw new ConfigLoadingException($"Invalid transition action format: {raw.Value}");
+        throw new ConfigLoadingException($"Invalid menu action format: {raw.Value}");
     }
 
     public void WriteYaml(IEmitter emitter, object value, Type type, ObjectSerializer serializer)

@@ -52,7 +52,7 @@ public class TransitionAction
 
 public enum TransitionActionType
 {
-    RollShot,
-    SendAction,
+    StartSequence,
+    StartInterlude,
     End,
 }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using GameWizard.Core.DialogCutscene.State;
 using GameWizard.Engine;
 using GameWizard.Engine.Schema.Logic;
 using GameWizard.Engine.Util;
@@ -26,6 +25,7 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
 
     private IDictionary<string, TextureRect> LoadedCharacters { get; } = new Dictionary<string, TextureRect>();
     private string CurrentSequence { get; set; }
+    private string CurrentInterlude { get; set; }
     private IList<IDialogFrame> RemainingFrames { get; set; } = new List<IDialogFrame>();
 
     protected override void InitializeScene()
@@ -50,7 +50,21 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
 
     public override void HandleFocus(string sourceScene, string outputId)
     {
-        // TODO: add logic to resume after action
+        if (CurrentInterlude.IsNullOrEmpty())
+            return;
+
+        if (!Config.Interludes.TryGetValue(CurrentInterlude, out var interlude))
+            throw new InvalidDialogException($"Did not find definition for interlude: {CurrentInterlude}");
+
+        foreach (var t in interlude.Transitions)
+            GD.PushWarning(t.Source);
+
+        var transition = interlude.Transitions
+            .FirstOrDefault(trn => trn.Source == $"{outputId}" && trn.When.Evaluate(Game.State));
+        if (transition is null)
+            throw new InvalidDialogException($"Did not find transition for source {outputId}.");
+
+        ProcessTransition(transition.Action);
     }
 
     private void StyleScene()
@@ -100,20 +114,8 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
             if (transition is null)
                 throw new InvalidDialogException($"Did not find an applicable transition for sequence: {CurrentSequence}.");
 
-            switch (transition.Action.Type)
-            {
-                case TransitionActionType.End:
-                    EmitOutput("terminal-frame", CurrentSequence);
-                    return;
-                case TransitionActionType.SendAction:
-                    EmitOutput("dialog-interlude", transition.Action.Destination);
-                    return;
-                case TransitionActionType.RollShot:
-                    LoadShot(transition.Action.Destination);
-                    return;
-                default:
-                    throw new GameWizardInternalException();
-            }
+            ProcessTransition(transition.Action);
+            return;
         }
 
         var update = RemainingFrames[0];
@@ -133,15 +135,18 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
             case AddCharacterFrame a:
                 AddCharacter(a.Character, a.Side, a.Side);
                 break;
-            case SetTextFrame b:
-                SetText(b.Text, b.Character);
+            case RemoveCharacterFrame b:
+                RemoveCharacter(b.Character);
+                break;
+            case SetTextFrame c:
+                SetText(c.Text, c.Character);
                 break;
             default:
                 throw new GameWizardInternalException();
         }
     }
 
-    public void AddCharacter(string characterId, HorizontalDirection screenSide, HorizontalDirection lineupSide)
+    private void AddCharacter(string characterId, HorizontalDirection screenSide, HorizontalDirection lineupSide)
     {
         var character = Config.Characters[characterId];
 
@@ -179,7 +184,7 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
         container.MoveChild(characterNode, targetIndex);
     }
 
-    public void RemoveCharacter(string characterId)
+    private void RemoveCharacter(string characterId)
     {
         var characterNode = LoadedCharacters[characterId];
 
@@ -187,8 +192,27 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
         characterNode.QueueFree();
     }
 
-    public void SetText(string text, string characterId)
+    private void SetText(string text, string characterId)
     {
         DialogBox.Text = text;
+    }
+
+    private void ProcessTransition(TransitionAction action)
+    {
+        switch (action.Type)
+        {
+            case TransitionActionType.End:
+                EmitOutput("terminal-frame", CurrentSequence);
+                return;
+            case TransitionActionType.StartInterlude:
+                CurrentInterlude = action.Destination;
+                EmitOutput("dialog-interlude", action.Destination);
+                return;
+            case TransitionActionType.StartSequence:
+                LoadShot(action.Destination);
+                return;
+            default:
+                throw new GameWizardInternalException();
+        }
     }
 }

@@ -1,6 +1,6 @@
 using System;
 
-namespace GameWizard.Engine.State;
+namespace GameWizard.Engine;
 
 public class InvalidSceneTransitionException : Exception
 {

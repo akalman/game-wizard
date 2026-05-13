@@ -2,9 +2,7 @@ using GameWizard.Engine.Schema.Logic;
 
 namespace GameWizard.Core.DialogCutscene;
 
-public interface IDialogFrame
-{
-}
+public interface IDialogFrame;
 
 public class AddCharacterFrame : IDialogFrame
 {

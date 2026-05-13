@@ -1,6 +1,6 @@
 using System;
 
-namespace GameWizard.Core.DialogCutscene.State;
+namespace GameWizard.Core.DialogCutscene;
 
 public class InvalidDialogException : Exception
 {
