@@ -6,10 +6,10 @@ namespace GameWizard.Engine.State;
 public class StateRepository : IStateRepository
 {
     private GameState Definition { get; set; }
-    public bool IsInitialized { get; set; } = false;
+    public bool IsInitialized { get; set; }
 
     private SaveState Current { get; set; }
-    private bool IsLoaded { get; set; } = false;
+    private bool IsLoaded { get; set; }
 
     public void Initialize(GameState definition)
     {

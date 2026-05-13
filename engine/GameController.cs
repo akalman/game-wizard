@@ -69,7 +69,7 @@ public partial class GameController : Node2D
             var pluginContainer = pluginScene.Instantiate() as Node2D;
 
             if (pluginContainer is null)
-                throw new GameWizardInternalException();
+                throw new GameWizardInternalException($"Encountered invalid root node type while loading plugins for module at: {modulePath}");
 
             foreach (var child in pluginContainer.GetChildren().Cast<PluginController>())
                 Plugins.Add(child);
@@ -85,11 +85,13 @@ public partial class GameController : Node2D
             plugin.RegisterDeserializer(loader);
         Config = new ConfigRepository(loader);
 
+        // load state definition into state repository
         State.Initialize(GameConfig.State);
     }
 
     private void LoadScene(string sceneId)
     {
+        // validate scene can be loaded and get related config
         if (LoadedScenes.ContainsKey(sceneId))
             throw new InvalidSceneTransitionException($"Tried to load scene {sceneId} when scene already loaded");
 
@@ -97,6 +99,7 @@ public partial class GameController : Node2D
         var templateId = scene.Template;
         var template = Templates[templateId];
 
+        // instantiate scene
         var packedScene = GD.Load<PackedScene>(template.Scene);
         var godotScene = packedScene.Instantiate() as Node2D;
         if (godotScene is null)
@@ -104,22 +107,29 @@ public partial class GameController : Node2D
         if (SceneFocusStack.Count > 0)
             godotScene.ZIndex = LoadedScenes[SceneFocusStack[0]].ZIndex + 1;
 
+        // register event handler to let the template send outputs
         var controller = godotScene.AsTemplate(templateId);
         controller.OutputEmitted += HandleTemplateOutput;
 
+        // update internal state
         LoadedScenes[sceneId] = godotScene;
         SceneFocusStack.Insert(0, sceneId);
 
+        // add to game node tree and initialize scene
         AddChild(godotScene);
         controller.InitializeController(this, templateId, sceneId, scene.Config);
     }
 
     private void ProcessInputs()
     {
+        // early return if there is no scene to process inputs for.  this should
+        // only happen during initialization.
         if (SceneFocusStack.IsEmpty()) return;
 
+        // check to see if the currently focused screen can handle the inputs
         var handled = ProcessInputForScene(SceneFocusStack[0]);
 
+        // if not, traverse up focus stack until some always active scene supports it
         foreach (var sceneId in SceneFocusStack.Skip(1))
         {
             var scene = GameConfig.Scenes[sceneId];
@@ -136,14 +146,13 @@ public partial class GameController : Node2D
         var template = Templates[templateId];
         var controller = LoadedScenes[sceneId].AsTemplate(templateId);
 
-        foreach (var input in template.Inputs)
-        {
-            if (Input.IsActionJustPressed($"{templateId}.{input}"))
-                if (controller.HandleInput(input))
-                    return true;
-        }
+        // get all inputs for given scene
+        var inputState = template.Inputs.ToDictionary(
+            input => input,
+            input => Input.IsActionJustPressed($"{templateId}.{input}"));
 
-        return false;
+        // scene decides if inputs should continue
+        return inputState.Any(kvp => kvp.Value) && controller.HandleInput(inputState);
     }
 
     private void UnloadCurrentScene()
@@ -160,14 +169,14 @@ public partial class GameController : Node2D
     {
         // TODO: add support for processing outputs from scenes not in focus
         if (sourceSceneId != SceneFocusStack[0])
-            throw new NotImplementedException();
+            throw new GameWizardInternalException($"Tried to process a template output from an non-focused scene.");
 
         var sourceScene = GameConfig.Scenes[sourceSceneId];
         var sourceTemplateId = sourceScene.Template;
         var sourceTemplate = Templates[sourceTemplateId];
 
+        // find applicable transition for output
         SceneTransition target = null;
-
         foreach (var transition in sourceScene.Transitions)
         {
             if (transition.Edge.OutputId == outputId &&
@@ -178,6 +187,7 @@ public partial class GameController : Node2D
             }
         }
 
+        // if we didn't find one, try to create a smart default
         if (target is null)
         {
             var defaultType = sourceTemplate.Outputs[outputId].Default;
@@ -195,38 +205,42 @@ public partial class GameController : Node2D
 
         var output = sourceTemplate.Outputs[target.Edge.OutputId];
 
+        // quit is always allowed and happens immediately
         if (target.Edge.Type == EdgeType.Quit)
         {
             GetTree().Quit();
             return;
         }
 
+        // validate the type of edge is supported by the output
         if (!output.Allowed.Contains(target.Edge.Type))
-            throw new InvalidGameStateException(
-                $"Output edge type {target.Edge.Type} not allowed for output {target.Edge.OutputId}");
+            throw new InvalidGameStateException($"Output edge type {target.Edge.Type} not allowed for output {target.Edge.OutputId}");
 
+        // if the edge type means we should unload the current scene, do so
         if (target.Edge.Type == EdgeType.ToSibling ||
             target.Edge.Type == EdgeType.ToParent)
         {
             UnloadCurrentScene();
         }
 
+        // apply any state updates
         foreach (var update in target.Updates)
             State.Update(update);
 
+        // load the new scene if the edge type has one
         if (target.Edge.Type == EdgeType.ToSibling ||
             target.Edge.Type == EdgeType.ToChild)
         {
             if (string.IsNullOrEmpty(target.Edge.Destination))
-                throw new GameWizardInternalException(
-                    $"Expected edge {sourceSceneId} => {outputId}.{outputArg} to have a destination.");
+                throw new GameWizardInternalException($"Expected edge {sourceSceneId} => {outputId}.{outputArg} to have a destination.");
             LoadScene(target.Edge.Destination);
         }
 
+        // if we're out of loaded scenes, quit
         if (SceneFocusStack.IsEmpty())
-            throw new InvalidSceneTransitionException(
-                $"Zero scenes are loaded after transition {sourceSceneId} => {outputId}.{outputArg}.");
+            throw new InvalidSceneTransitionException($"Zero scenes are loaded after transition {sourceSceneId} => {outputId}.{outputArg}.");
 
+        // inform newly focused scene it is now in focus
         if (target.Edge.Type == EdgeType.ToChild ||
             target.Edge.Type == EdgeType.ToParent)
         {

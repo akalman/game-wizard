@@ -14,7 +14,7 @@ public static class CSharpExtensions
         return string.IsNullOrEmpty(str);
     }
 
-    public static U SafeGet<T, U>(this IDictionary<T, U> dict, T key)
+    public static TB SafeGet<TA, TB>(this IDictionary<TA, TB> dict, TA key)
     {
         if (!dict.TryGetValue(key, out var value))
             throw new GameWizardInternalException($"Could not find key {key} in map.");

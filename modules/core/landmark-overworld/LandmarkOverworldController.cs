@@ -40,8 +40,10 @@ public partial class LandmarkOverworldController : TemplateController<OverworldC
         }
     }
 
-    public override bool HandleInput(string input)
+    public override bool HandleInput(IDictionary<string, bool> inputs)
     {
+        // TODO: add input support
+
         return false;
     }
 

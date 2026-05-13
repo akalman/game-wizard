@@ -24,10 +24,10 @@ public class DialogFrameYamlConverter : IYamlTypeConverter
 
         parser.Consume<MappingEnd>();
 
-        if (!properties.ContainsKey("type"))
+        if (!properties.TryGetValue("type", out var frameType))
             throw new InvalidDialogException($"Encountered dialog frame missing type parameter: {properties}");
 
-        return properties["type"] switch
+        return frameType switch
         {
             "add-character" => new AddCharacterFrame
             {

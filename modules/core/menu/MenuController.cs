@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using GameWizard.Engine;
 using GameWizard.Engine.Util;
 using Godot;
@@ -21,8 +22,10 @@ public partial class MenuController : TemplateController<MenuConfig>
         LoadPage(Config.InitialPage);
     }
 
-    public override bool HandleInput(string input)
+    public override bool HandleInput(IDictionary<string, bool> inputs)
     {
+        // TODO: add input support
+
         return false;
     }
 

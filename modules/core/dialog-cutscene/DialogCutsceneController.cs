@@ -31,21 +31,25 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
     protected override void InitializeScene()
     {
         StyleScene();
-        LoadShot(Config.InitialSequence);
+        LoadSequence(Config.InitialSequence);
     }
 
-    public override bool HandleInput(string input)
+    public override bool HandleInput(IDictionary<string, bool> inputs)
     {
-        switch (input)
+        var handled = false;
+
+        if (inputs["advance"])
         {
-            case "advance":
-                AdvanceFrame();
-                return true;
-            case "skip":
-                break;
+            AdvanceFrame();
+            handled = true;
         }
 
-        return false;
+        if (inputs["skip"])
+        {
+            // TODO: implement skip
+        }
+
+        return handled;
     }
 
     public override void HandleFocus(string sourceScene, string outputId)
@@ -97,10 +101,10 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
 
     }
 
-    private void LoadShot(string shotId)
+    private void LoadSequence(string sequenceId)
     {
-        CurrentSequence = shotId;
-        RemainingFrames = Config.Sequences[shotId].Frames.ToList();
+        CurrentSequence = sequenceId;
+        RemainingFrames = Config.Sequences[sequenceId].Frames.ToList();
         AdvanceFrame();
     }
 
@@ -209,7 +213,7 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
                 EmitOutput("dialog-interlude", action.Destination);
                 return;
             case TransitionActionType.StartSequence:
-                LoadShot(action.Destination);
+                LoadSequence(action.Destination);
                 return;
             default:
                 throw new GameWizardInternalException();

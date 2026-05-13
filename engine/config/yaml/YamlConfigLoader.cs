@@ -18,8 +18,7 @@ public class YamlConfigLoader : IConfigLoader<IYamlTypeConverter>
 
     public T Load<T>(string path)
     {
-        if (Deserializer is null)
-            BuildDeserializer();
+        Deserializer ??= BuildDeserializer();
 
         GD.PushWarning($"Loading config at {path}.");
         var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
@@ -27,7 +26,7 @@ public class YamlConfigLoader : IConfigLoader<IYamlTypeConverter>
         return Deserializer.Deserialize<T>(configText);
     }
 
-    private void BuildDeserializer()
+    private IDeserializer BuildDeserializer()
     {
         var builder = new DeserializerBuilder()
             .WithNamingConvention(HyphenatedNamingConvention.Instance)
@@ -36,6 +35,6 @@ public class YamlConfigLoader : IConfigLoader<IYamlTypeConverter>
         foreach (var deserializer in Deserializers)
             builder = builder.WithTypeConverter(deserializer);
 
-        Deserializer = builder.Build();
+        return builder.Build();
     }
 }

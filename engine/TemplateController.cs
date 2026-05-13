@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 
 namespace GameWizard.Engine;
@@ -29,7 +30,7 @@ public abstract partial class TemplateController<T> : Node2D, ITemplateControlle
     }
 
     protected abstract void InitializeScene();
-    public abstract bool HandleInput(string input);
+    public abstract bool HandleInput(IDictionary<string, bool> inputs);
     public abstract void HandleFocus(string sourceScene, string outputId);
 }
 
@@ -43,6 +44,6 @@ public interface ITemplateController
 
     public void InitializeController(GameController game, string templateId, string sceneId, string path);
 
-    public bool HandleInput(string input);
+    public bool HandleInput(IDictionary<string, bool> inputs);
     public void HandleFocus(string sourceScene, string outputId);
 }
