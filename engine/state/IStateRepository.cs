@@ -1,0 +1,15 @@
+using GameWizard.Engine.Schema.Game;
+
+namespace GameWizard.Engine.State;
+
+public interface IStateRepository
+{
+    public void Initialize(GameState definition);
+
+    public void Create();
+    public void Load(string path);
+
+    public string ReadFlag(string flagId);
+
+    public void Update(StateUpdate update);
+}

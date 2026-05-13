@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://wiui40enw57"]
+
+[ext_resource type="Script" uid="uid://b1ulbfxc288sv" path="res://modules/core/landmark-overworld/LandmarkOverworldController.cs" id="1_psqkf"]
+
+[node name="LandmarkOverworld" type="Node2D" unique_id=1055626717 node_paths=PackedStringArray("Background", "LandmarkContainer")]
+script = ExtResource("1_psqkf")
+Background = NodePath("RegionsContainer/Background")
+LandmarkContainer = NodePath("RegionsContainer/LandmarkContainer")
+
+[node name="RegionsContainer" type="CenterContainer" parent="." unique_id=1551551747]
+custom_minimum_size = Vector2(1920, 1080)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="RegionsContainer" unique_id=13836636]
+custom_minimum_size = Vector2(1920, 1080)
+layout_mode = 2
+
+[node name="LandmarkContainer" type="Control" parent="RegionsContainer" unique_id=316293826]
+custom_minimum_size = Vector2(1920, 1080)
+layout_mode = 2

@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bpcly10dobtoi"]
+
+[ext_resource type="Script" uid="uid://tjwbxhhvedxx" path="res://modules/core/dialog-cutscene/plugins/DialogCutsceneYamlPlugin.cs" id="1_sfowu"]
+[ext_resource type="Script" uid="uid://djxd4oh0s5f25" path="res://modules/core/menu/plugins/MenuYamlPlugin.cs" id="2_wv5wl"]
+
+[node name="Plugins" type="Node2D" unique_id=1604491496]
+
+[node name="DialogCutscenePlugin" type="Node2D" parent="." unique_id=1487179202]
+script = ExtResource("1_sfowu")
+
+[node name="MenuPlugin" type="Node2D" parent="." unique_id=531347380]
+script = ExtResource("2_wv5wl")

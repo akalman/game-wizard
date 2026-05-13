@@ -1,0 +1,35 @@
+id: core
+plugins: plugins.tscn
+
+
+templates:
+
+  menu:
+    scene: menu/menu.tscn
+    inputs: [ select, cancel ]
+    outputs:
+      terminal-select:
+        default: to-parent
+        allowed: [ to-sibling, to-parent ]
+      closed:
+        default: to-parent
+        allowed: [ to-sibling, to-parent ]
+
+  dialog-cutscene:
+    scene: dialog-cutscene/dialog-cutscene.tscn
+    inputs: [ advance, skip ]
+    outputs:
+      dialog-interlude:
+        default: to-parent
+        allowed: [ to-sibling, to-child, to-parent ]
+      terminal-frame:
+        default: to-parent
+        allowed: [ to-sibling, to-parent ]
+
+  landmark-overworld:
+    scene: landmark-overworld/landmark-overworld.tscn
+    inputs: [ select ]
+    outputs:
+      navigate:
+        default: to-self
+        allowed: [ to-sibling, to-child, to-parent, to-self ]

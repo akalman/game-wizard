@@ -1,0 +1,148 @@
+name: Game-Wizard Example Visual Novel
+
+
+# basic engine boilerplate. load any resources from modules you want to use and then configure
+# when and where the game should start and end.
+modules:
+- res://modules/core/config.yaml
+initial-scene: initial-cutscene
+# initial-scene: world-map
+
+
+# define what state our game needs to track. this can be used to track story event flags,
+# arbitrary state enums, numerical values, and collections of database entries.
+state:
+  # we will have three npcs each of which will have state independently tracked as a flag. anything
+  # that can be represented as a bound set of strings can be represented as a flag. flags support
+  # membership conditions and can only be set to specific values.
+  flags:
+    shopkeep-progress:
+      values: [ unseen, open, success, fail ]
+      initial-value: unseen
+
+    enthusiast-progress:
+      values: [ unseen, open, success, fail ]
+      initial-value: unseen
+
+    stranger-progress:
+      values: [ unseen, open, success, fail ]
+      initial-value: unseen
+
+
+# game wizard modules contain special types of godot scenes called scene templates.  these are
+# scenes that can be re-used across many different parts of your game by using configuration.
+# each scene below is a named combination of a scene template and a configuration file.
+scenes:
+
+  # TODO: add in main menu to example
+
+  # create an introductory cutscene that brings the player up to speed on the game premise. After
+  # which go to the world map.
+  initial-cutscene:
+    template: core.dialog-cutscene
+    config: res://examples/visual-novel/scenes/initial-cutscene.yaml
+    transitions:
+      - edge: terminal-frame.done move to world-map
+
+  # the main world map scene used to navigate between npcs. logic related to how the scene acts
+  # internally is located within the template documentation. as an example, for this scene logic
+  # around what npcs are available and when the ending location is shown are handled by the
+  # template.
+  world-map:
+    template: core.landmark-overworld
+    config: res://examples/visual-novel/scenes/world-map.yaml
+    transitions:
+      # create a subscription to spawn each cutscene for each npc
+      - edge: navigate.shopkeep-landmark spawn shopkeep-cutscene
+      - edge: navigate.enthusiast-landmark spawn enthusiast-cutscene
+      - edge: navigate.stranger-landmark spawn stranger-cutscene
+      # conditionally navigate to the win or lose cutscene depending on current game state. order
+      # matters here since only the first matching subscriber in this list will handle the event.
+      - edge: navigate.ending-landmark spawn win-cutscene
+        when:
+        - flag shopkeep-progress in [success]
+        - flag enthusiast-progress in [success]
+        - flag stranger-progress in [success]
+      - edge: navigate.ending-landmark spawn lose-cutscene
+
+  # create scenes for each npc. we start with the shopkeep npc. the first scene is the conversation
+  # with the npc itself. dialog routing is done internally.
+  shopkeep-cutscene:
+    template: core.dialog-cutscene
+    config: res://examples/visual-novel/scenes/shopkeep-cutscene.yaml
+    transitions:
+        # when input from a user is needed, we spawn a child scene in response to the
+        # dialog-interlude event.
+      - edge: dialog-interlude.question spawn shopkeep-dialog-choice
+
+  # create the scene for letting the player make a choice within the dialog cutscene. create
+  # transitions for each option, and for each option, update the associated flag to the
+  # appropriate state.
+  shopkeep-dialog-choice:
+    template: core.menu
+    config: res://examples/visual-novel/scenes/shopkeep-dialog-choice.yaml
+    transitions:
+      - edge: terminal-select.success ends
+        updates:
+          - set flag shopkeep-progress to success
+      - edge: terminal-select.fail ends
+        updates:
+          - set flag shopkeep-progress to fail
+      - edge: terminal-select.open ends
+        updates:
+          - set flag shopkeep-progress to open
+
+  # do the same for each other npc.
+  # enthusiast
+  enthusiast-cutscene:
+    template: core.dialog-cutscene
+    config: res://examples/visual-novel/scenes/enthusiast-cutscene.yaml
+    transitions:
+      - edge: dialog-interlude.question spawn enthusiast-dialog-choice
+
+  enthusiast-dialog-choice:
+    template: core.menu
+    config: res://examples/visual-novel/scenes/enthusiast-dialog-choice.yaml
+    transitions:
+      - edge: terminal-select.success ends
+        updates:
+          - set flag enthusiast-progress to success
+      - edge: terminal-select.fail ends
+        updates:
+          - set flag enthusiast-progress to fail
+      - edge: terminal-select.open ends
+        updates:
+          - set flag enthusiast-progress to open
+
+  # stranger
+  stranger-cutscene:
+    template: core.dialog-cutscene
+    config: res://examples/visual-novel/scenes/stranger-cutscene.yaml
+    transitions:
+      - edge: dialog-interlude.question spawn stranger-dialog-choice
+
+  stranger-dialog-choice:
+    template: core.menu
+    config: res://examples/visual-novel/scenes/stranger-dialog-choice.yaml
+    transitions:
+      - edge: terminal-select.success ends
+        updates:
+          - set flag stranger-progress to success
+      - edge: terminal-select.fail ends
+        updates:
+          - set flag stranger-progress to fail
+      - edge: terminal-select.open ends
+        updates:
+          - set flag stranger-progress to open
+
+  # define the ending cutscenes. use quit event action.
+  win-cutscene:
+    template: core.dialog-cutscene
+    config: res://examples/visual-novel/scenes/win-cutscene.yaml
+    transitions:
+      - edge: terminal-frame.end quit
+  lose-cutscene:
+    template: core.dialog-cutscene
+    config: res://examples/visual-novel/scenes/lose-cutscene.yaml
+    transitions:
+      - edge: terminal-frame.end quit
