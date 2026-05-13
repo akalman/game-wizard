@@ -1,5 +1,7 @@
 id: core
 plugins: plugins.tscn
+
+
 templates:
 
   menu:
@@ -17,7 +19,7 @@ templates:
     scene: dialog-cutscene/dialog-cutscene.tscn
     inputs: [ advance, skip ]
     outputs:
-      dialog-interaction:
+      dialog-interlude:
         default: to-parent
         allowed: [ to-sibling, to-child, to-parent ]
       terminal-frame:

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using GameWizard.Core.DialogCutscene.State;
 using GameWizard.Engine;
 using GameWizard.Engine.Schema.Logic;
 using GameWizard.Engine.Util;
@@ -24,13 +25,13 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
     [Export] public RichTextLabel DialogBox { get; set; }
 
     private IDictionary<string, TextureRect> LoadedCharacters { get; } = new Dictionary<string, TextureRect>();
-    private string CurrentShot { get; set; }
+    private string CurrentSequence { get; set; }
     private IList<IDialogFrame> RemainingFrames { get; set; } = new List<IDialogFrame>();
 
     protected override void InitializeScene()
     {
         StyleScene();
-        LoadShot(Config.InitialShot);
+        LoadShot(Config.InitialSequence);
     }
 
     public override bool HandleInput(string input)
@@ -84,8 +85,8 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
 
     private void LoadShot(string shotId)
     {
-        CurrentShot = shotId;
-        RemainingFrames = Config.Shots[shotId].Frames.ToList();
+        CurrentSequence = shotId;
+        RemainingFrames = Config.Sequences[shotId].Frames.ToList();
         AdvanceFrame();
     }
 
@@ -93,18 +94,22 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
     {
         if (RemainingFrames.IsEmpty())
         {
-            var shot = Config.Shots[CurrentShot];
+            var sequence = Config.Sequences[CurrentSequence];
 
-            switch (shot.EndAction.Type)
+            var transition = sequence.Transitions.FirstOrDefault(transition => transition.When.Evaluate(Game.State));
+            if (transition is null)
+                throw new InvalidDialogException($"Did not find an applicable transition for sequence: {CurrentSequence}.");
+
+            switch (transition.Action.Type)
             {
-                case EndActionType.End:
-                    EmitOutput("terminal-frame", CurrentShot);
+                case TransitionActionType.End:
+                    EmitOutput("terminal-frame", CurrentSequence);
                     return;
-                case EndActionType.SendAction:
-                    EmitOutput("dialog-interaction", shot.EndAction.Destination);
+                case TransitionActionType.SendAction:
+                    EmitOutput("dialog-interlude", transition.Action.Destination);
                     return;
-                case EndActionType.RollShot:
-                    LoadShot(shot.EndAction.Destination);
+                case TransitionActionType.RollShot:
+                    LoadShot(transition.Action.Destination);
                     return;
                 default:
                     throw new GameWizardInternalException();

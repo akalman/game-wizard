@@ -40,6 +40,10 @@ public class DialogFrameYamlConverter : IYamlTypeConverter
                     _ => throw new InvalidDialogException($"Encountered unrecognized side: {properties["side"]}")
                 },
             },
+            "remove-character" => new RemoveCharacterFrame
+            {
+                Character = properties["character"],
+            },
             "set-text" => new SetTextFrame
             {
                 Character = properties["character"],

@@ -12,6 +12,11 @@ public class AddCharacterFrame : IDialogFrame
     public string Character { get; set; }
 }
 
+public class RemoveCharacterFrame : IDialogFrame
+{
+    public string Character { get; set; }
+}
+
 public class SetTextFrame : IDialogFrame
 {
     public string Character { get; set; }

@@ -28,6 +28,7 @@ public partial class LandmarkOverworldController : TemplateController<OverworldC
                 CustomMinimumSize = landmark.Size,
                 Position = (landmark.Offset + Vector2.One) * new Vector2(960, 540),
                 Visible = landmark.When.Evaluate(Game.State),
+                FocusMode = Control.FocusModeEnum.None,
             };
 
             LandmarkContainer.AddChild(landmarkNode);

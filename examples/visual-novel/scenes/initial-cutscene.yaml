@@ -1,4 +1,5 @@
-initial-shot: conversation
+initial-sequence: conversation
+
 
 style:
   background: res://examples/visual-novel/sprites/50-px-darken.png
@@ -20,9 +21,11 @@ characters:
     sprite: res://examples/visual-novel/sprites/char-masc-meso.png
 
 
-shots:
+sequences:
+
   conversation:
-    end-action: start done
+    transitions:
+      - action: start done
     frames:
       - type: add-character
         side: left
@@ -33,15 +36,18 @@ shots:
           [b]You:[/b] Oh boy I sure do love walking outside in the
           outdoors outside to get coffee in the outside because there's
           coffee.
+
       - type: set-text
         character: mc
         text: |
           [b]You:[/b] OH SHIT! AHH THE SUN ITS SO BRIGHT!
+
       - type: set-text
         character: mc
         text: |
           [b]You:[/b] Oh wait that isn't the sun.  What
           is that? It looks like... me???
+
       - type: add-character
         side: right
         character: future-mc
@@ -53,29 +59,35 @@ shots:
           back in time.  Nice going.  Now if you don't perfectly
           recreate my actions we're going to collapse spacetime and
           destroy reality.
+
       - type: set-text
         character: mc
         text: |
           [b]You:[/b] Uhh, but I haven't done anything?
+
       - type: set-text
         character: future-mc
         text: |
           [b]Future You:[/b] Don't worry. You will. But I'm here to make
           sure you don't, watch: "Hey. Don't."
+
       - type: set-text
         character: mc
         text: |
           [b]You:[/b] Uhh...
+
       - type: set-text
         character: future-mc
         text: |
           [b]Future You:[/b] No time. Listen. You need to go and get the three
           flags from people around here. You need to do it because I did it.
           Don't ask me why I did it, I'm you so ask yourself.
+
       - type: set-text
         character: mc
         text: |
             [b]You:[/b] Ok but who do I need to get these flags from?  Also flags?
+
       - type: set-text
         character: future-mc
         text: |
@@ -84,4 +96,5 @@ shots:
             gonna go get some coffee.
 
   done:
-    end-action: end
+    transitions:
+      - action: end

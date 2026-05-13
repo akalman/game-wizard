@@ -10,7 +10,7 @@ public partial class DialogCutsceneYamlPlugin : PluginController
 	{
 		if (loader is IConfigLoader<IYamlTypeConverter> yaml)
 		{
-			yaml.RegisterDeserializer(new ShotEndActionYamlConverter());
+			yaml.RegisterDeserializer(new TransitionActionYamlConverter());
 			yaml.RegisterDeserializer(new DialogFrameYamlConverter());
 		}
 	}

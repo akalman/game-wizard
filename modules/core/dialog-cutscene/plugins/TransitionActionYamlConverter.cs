@@ -2,25 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using GameWizard.Engine.Config;
-using GameWizard.Engine.Schema.Game;
 using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 
 namespace GameWizard.Core.DialogCutscene;
 
-public class ShotEndActionYamlConverter : IYamlTypeConverter
+public class TransitionActionYamlConverter : IYamlTypeConverter
 {
     private const string TermPattern = @"([.\w-]+)";
 
-    private static readonly IDictionary<EndActionType, string> Templates = new Dictionary<EndActionType, string>
+    private static readonly IDictionary<TransitionActionType, string> Templates = new Dictionary<TransitionActionType, string>
     {
-        { EndActionType.End, "end" },
-        { EndActionType.RollShot, "start {0}" },
-        { EndActionType.SendAction, "action {0}" },
+        { TransitionActionType.End, "end" },
+        { TransitionActionType.RollShot, "start {0}" },
+        { TransitionActionType.SendAction, "action {0}" },
     };
 
-    public bool Accepts(Type type) => type == typeof(ShotEndAction);
+    public bool Accepts(Type type) => type == typeof(TransitionAction);
 
     public object ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
     {
@@ -31,7 +30,7 @@ public class ShotEndActionYamlConverter : IYamlTypeConverter
             var match = Regex.Match(raw.Value, $"^{string.Format(template, TermPattern)}$");
             if (match.Success)
             {
-                return new ShotEndAction
+                return new TransitionAction
                 {
                     Type = edgeType,
                     Destination = match.Groups[1].Value,
