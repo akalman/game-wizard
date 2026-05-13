@@ -1,0 +1,27 @@
+initial-page: dialog-choice
+
+
+style:
+  background: res://examples/visual-novel/sprites/50-px-darken.png
+  options:
+    sprite: res://examples/visual-novel/sprites/dialog-choice-button.png
+    size: ( 800 200 )
+
+
+pages:
+
+  dialog-choice:
+    cancel-action: none
+    options:
+      success:
+        action: end
+        label: |
+          "I'm late! I'm late!"
+      fail:
+        action: end
+        label: |
+          "You are already dead."
+      open:
+        action: end
+        label: |
+          "La-li-lu-le-lo."

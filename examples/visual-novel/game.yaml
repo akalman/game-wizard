@@ -138,11 +138,11 @@ scenes:
   # define the ending cutscenes. use quit event action.
   win-cutscene:
     template: core.dialog-cutscene
-    config: res://examples/visual-novel/screens/win-cutscene.yaml
+    config: res://examples/visual-novel/scenes/win-cutscene.yaml
     transitions:
       - edge: terminal-frame.end quit
   lose-cutscene:
     template: core.dialog-cutscene
-    config: res://examples/visual-novel/screens/lose-cutscene.yaml
+    config: res://examples/visual-novel/scenes/lose-cutscene.yaml
     transitions:
       - edge: terminal-frame.end quit

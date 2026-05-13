@@ -24,7 +24,7 @@ landmarks:
     size: ( 200 200 )
     offset: ( -0.65 0.45 )
     when:
-      - flag enthusiast-progress in [unseen,open]
+      - flag stranger-progress in [unseen,open]
 
   ending-landmark:
     sprite: res://examples/visual-novel/sprites/world-map-landmark.png

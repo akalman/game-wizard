@@ -195,15 +195,15 @@ public partial class GameController : Node2D
 
         var output = sourceTemplate.Outputs[target.Edge.OutputId];
 
-        if (!output.Allowed.Contains(target.Edge.Type))
-            throw new InvalidGameStateException(
-                $"Output edge type {target.Edge.Type} not allowed for output {target.Edge.OutputId}");
-
         if (target.Edge.Type == EdgeType.Quit)
         {
             GetTree().Quit();
             return;
         }
+
+        if (!output.Allowed.Contains(target.Edge.Type))
+            throw new InvalidGameStateException(
+                $"Output edge type {target.Edge.Type} not allowed for output {target.Edge.OutputId}");
 
         if (target.Edge.Type == EdgeType.ToSibling ||
             target.Edge.Type == EdgeType.ToParent)
