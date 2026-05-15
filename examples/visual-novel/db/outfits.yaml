@@ -1,0 +1,75 @@
+interfaces: [ core.dialog-cutscene.outfit ]
+
+
+fields:
+  character: database
+  layer: number
+  sprite: string
+
+
+entries:
+
+  mc-pants:
+    character: characters.mc
+    layer: 1
+    sprite: res://examples/visual-novel/sprites/characters/placeholder-pants.png
+  mc-shirt:
+    character: characters.mc
+    layer: 2
+    sprite: res://examples/visual-novel/sprites/characters/placeholder-shirt.png
+  mc-face:
+    character: characters.mc
+    layer: 3
+    sprite: res://examples/visual-novel/sprites/characters/placeholder-face.png
+
+  mc-pants:
+    character: characters.future-mc
+    layer: 1
+    sprite: res://examples/visual-novel/sprites/characters/placeholder-pants.png
+  mc-shirt:
+    character: characters.future-mc
+    layer: 2
+    sprite: res://examples/visual-novel/sprites/characters/placeholder-shirt.png
+  mc-face:
+    character: characters.future-mc
+    layer: 3
+    sprite: res://examples/visual-novel/sprites/characters/placeholder-face.png
+
+  mc-pants:
+    character: characters.shopkeep
+    layer: 1
+    sprite: res://examples/visual-novel/sprites/characters/placeholder-pants.png
+  mc-shirt:
+    character: characters.shopkeep
+    layer: 2
+    sprite: res://examples/visual-novel/sprites/characters/placeholder-shirt.png
+  mc-face:
+    character: characters.shopkeep
+    layer: 3
+    sprite: res://examples/visual-novel/sprites/characters/placeholder-face.png
+
+  mc-pants:
+    character: characters.enthusiast
+    layer: 1
+    sprite: res://examples/visual-novel/sprites/characters/placeholder-pants.png
+  mc-shirt:
+    character: characters.enthusiast
+    layer: 2
+    sprite: res://examples/visual-novel/sprites/characters/placeholder-shirt.png
+  mc-face:
+    character: characters.enthusiast
+    layer: 3
+    sprite: res://examples/visual-novel/sprites/characters/placeholder-face.png
+
+  mc-pants:
+    character: characters.stranger
+    layer: 1
+    sprite: res://examples/visual-novel/sprites/characters/placeholder-pants.png
+  mc-shirt:
+    character: characters.stranger
+    layer: 2
+    sprite: res://examples/visual-novel/sprites/characters/placeholder-shirt.png
+  mc-face:
+    character: characters.stranger
+    layer: 3
+    sprite: res://examples/visual-novel/sprites/characters/placeholder-face.png

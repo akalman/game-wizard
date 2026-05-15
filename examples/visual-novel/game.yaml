@@ -28,6 +28,28 @@ state:
       values: [ unseen, open, success, fail ]
       initial-value: unseen
 
+  attributes:
+    shopkeep-familiarity:
+      min: 0
+      max: 3
+      initial-value: 0
+
+    enthusiast-familiarity:
+      min: 0
+      max: 3
+      initial-value: 0
+
+    stranger-familiarity:
+      min: 0
+      max: 3
+      initial-value: 0
+
+
+database:
+  characters: res://examples/visual-novel/db/characters.yaml
+  outfits: res://examples/visual-novel/db/outfits.yaml
+  npcs: res://examples/visual-novel/db/npcs.yaml
+
 
 # game wizard modules contain special types of godot scenes called scene templates.  these are
 # scenes that can be re-used across many different parts of your game by using configuration.

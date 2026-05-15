@@ -13,4 +13,10 @@ public class Condition
 public enum ConditionType
 {
     FlagIn,
+
+    AttributeIs,
+    AttributeMoreThan,
+    AttributeLessThan,
+
+    BagContains,
 }

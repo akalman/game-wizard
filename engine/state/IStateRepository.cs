@@ -10,6 +10,8 @@ public interface IStateRepository
     public void Load(string path);
 
     public string ReadFlag(string flagId);
+    public decimal ReadAttribute(string statId);
+    public int NumInBag(string bagId, string itemId);
 
     public void Update(StateUpdate update);
 }

@@ -87,6 +87,10 @@ public partial class GameController : Node2D
 
         // load state definition into state repository
         State.Initialize(GameConfig.State);
+
+        // load database entries into database
+        foreach (var (databaseId, dbConfigPath) in GameConfig.Database)
+            Db.RegisterDb(databaseId, Config.Read<GameDb>(dbConfigPath));
     }
 
     private void LoadScene(string sceneId)

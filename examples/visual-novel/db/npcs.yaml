@@ -1,0 +1,22 @@
+fields:
+  character: database
+  progress: flag
+  familiarity: attribute
+
+
+entries:
+
+  shopkeep:
+    character: character.shopkeep
+    progress: shopkeep-progress
+    familiarity: shopkeep-familiarity
+
+  enthusiast:
+    character: character.enthusiast
+    progress: enthusiast-progress
+    familiarity: enthusiast-familiarity
+
+  stranger:
+    character: character.stranger
+    progress: stranger-progress
+    familiarity: stranger-familiarity
