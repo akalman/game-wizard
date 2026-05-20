@@ -14,11 +14,8 @@ style:
     text-margin: ( 30 20 )
 
 
-characters:
-  mc:
-    sprite: res://examples/visual-novel/sprites/char-masc-meso.png
-  shopkeep:
-    sprite: res://examples/visual-novel/sprites/char-masc-meso.png
+characters: characters
+outfits: outfits
 
 
 interludes:

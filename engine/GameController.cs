@@ -20,7 +20,7 @@ public partial class GameController : Node2D
 
     public IConfigRepository Config { get; set; }
     public IStateRepository State { get; set; } = new StateRepository();
-    public IDatabaseRepository Db { get; set; } = new DatabaseRepository();
+    public IDatabaseRepository Db { get; set; }
 
     private IList<PluginController> Plugins { get; set; } = new List<PluginController>();
     private IDictionary<string, Template> Templates { get; set; } = new Dictionary<string, Template>();
@@ -81,6 +81,7 @@ public partial class GameController : Node2D
         loader.RegisterDeserializer(new GameEdgeYamlConverter());
         loader.RegisterDeserializer(new GaneStateUpdateYamlConverter());
         loader.RegisterDeserializer(new Vector2YamlConverter());
+        loader.RegisterDeserializer(new DbEntryYamlConverter());
         foreach (var plugin in Plugins)
             plugin.RegisterDeserializer(loader);
         Config = new ConfigRepository(loader);
@@ -89,6 +90,7 @@ public partial class GameController : Node2D
         State.Initialize(GameConfig.State);
 
         // load database entries into database
+        Db = new DatabaseRepository(Config);
         foreach (var (databaseId, dbConfigPath) in GameConfig.Database)
             Db.RegisterDb(databaseId, Config.Read<GameDb>(dbConfigPath));
     }

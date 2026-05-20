@@ -14,11 +14,8 @@ style:
     text-margin: ( 30 20 )
 
 
-characters:
-  mc:
-    sprite: res://examples/visual-novel/sprites/char-masc-meso.png
-  future-mc:
-    sprite: res://examples/visual-novel/sprites/char-masc-meso.png
+characters: characters
+outfits: outfits
 
 
 sequences:
@@ -30,6 +27,12 @@ sequences:
       - type: add-character
         side: left
         character: mc
+      - type: set-outfit
+        character: mc
+        outfit: mc-regular-clothes
+      - type: set-outfit
+        character: mc
+        outfit: face-happy
       - type: set-text
         character: mc
         text: |
@@ -37,11 +40,17 @@ sequences:
           outdoors outside to get coffee in the outside because there's
           coffee.
 
+      - type: set-outfit
+        character: mc
+        outfit: face-surprised
       - type: set-text
         character: mc
         text: |
           [b]You:[/b] OH SHIT! AHH THE SUN ITS SO BRIGHT!
 
+      - type: set-outfit
+        character: mc
+        outfit: face-weirded-out
       - type: set-text
         character: mc
         text: |
@@ -51,6 +60,12 @@ sequences:
       - type: add-character
         side: right
         character: future-mc
+      - type: set-outfit
+        character: future-mc
+        outfit: mc-regular-clothes
+      - type: set-outfit
+        character: future-mc
+        outfit: face-angry
       - type: set-text
         character: future-mc
         text: |
@@ -71,11 +86,17 @@ sequences:
           [b]Future You:[/b] Don't worry. You will. But I'm here to make
           sure you don't, watch: "Hey. Don't."
 
+      - type: set-outfit
+        character: future-mc
+        outfit: face-neutral
       - type: set-text
         character: mc
         text: |
           [b]You:[/b] Uhh...
 
+      - type: set-outfit
+        character: future-mc
+        outfit: face-angry
       - type: set-text
         character: future-mc
         text: |
@@ -83,11 +104,17 @@ sequences:
           flags from people around here. You need to do it because I did it.
           Don't ask me why I did it, I'm you so ask yourself.
 
+      - type: set-outfit
+        character: future-mc
+        outfit: face-neutral
       - type: set-text
         character: mc
         text: |
             [b]You:[/b] Ok but who do I need to get these flags from?  Also flags?
 
+      - type: set-outfit
+        character: future-mc
+        outfit: face-angry
       - type: set-text
         character: future-mc
         text: |

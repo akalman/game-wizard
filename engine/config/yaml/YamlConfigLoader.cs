@@ -26,6 +26,11 @@ public class YamlConfigLoader : IConfigLoader<IYamlTypeConverter>
         return Deserializer.Deserialize<T>(configText);
     }
 
+    public T Convert<T>(string content)
+    {
+        return Deserializer.Deserialize<T>(content);
+    }
+
     private IDeserializer BuildDeserializer()
     {
         var builder = new DeserializerBuilder()

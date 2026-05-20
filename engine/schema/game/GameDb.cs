@@ -7,8 +7,8 @@ public class GameDb
     public IList<string> Interfaces { get; set; } = new List<string>();
     public IDictionary<string, DbFieldTypes> Fields { get; set; } = new Dictionary<string, DbFieldTypes>();
 
-    public IDictionary<string, IDictionary<string, string>> Entries { get; set; } =
-        new Dictionary<string, IDictionary<string, string>>();
+    public IDictionary<string, DbEntry> Entries { get; set; } =
+        new Dictionary<string, DbEntry>();
 }
 
 public enum DbFieldTypes
@@ -19,4 +19,11 @@ public enum DbFieldTypes
     Attribute,
     Bag,
     Database,
+    StringList,
+}
+
+public class DbEntry
+{
+    public IDictionary<string, string> SimpleFields { get; set; } = new Dictionary<string, string>();
+    public IDictionary<string, IList<string>> CollectionFields { get; set; } = new Dictionary<string, IList<string>>();
 }

@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using GameWizard.Engine;
+using GameWizard.Engine.Database;
 using GameWizard.Engine.Schema.Logic;
 using GameWizard.Engine.Util;
 using Godot;
@@ -23,10 +25,22 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
     [Export] public MarginContainer DialogBoxMargin { get; set; }
     [Export] public RichTextLabel DialogBox { get; set; }
 
-    private IDictionary<string, TextureRect> LoadedCharacters { get; } = new Dictionary<string, TextureRect>();
+    private IDictionary<string, (MarginContainer, HorizontalDirection)> LoadedCharacters { get; } =
+        new Dictionary<string, (MarginContainer, HorizontalDirection)>();
+    private IDictionary<string, IList<(MarginContainer, int)>> LoadedOutfits { get; } =
+        new Dictionary<string, IList<(MarginContainer, int)>>();
     private string CurrentSequence { get; set; }
     private string CurrentInterlude { get; set; }
     private IList<IDialogFrame> RemainingFrames { get; set; } = new List<IDialogFrame>();
+
+    private bool _animating;
+    private bool Animating
+    {
+        get => _animating;
+        set => _animating = value || !CurrentAnimations.IsEmpty();
+    }
+
+    private IDictionary<Guid, Tween> CurrentAnimations { get; set; } = new Dictionary<Guid, Tween>();
 
     protected override void InitializeScene()
     {
@@ -40,7 +54,10 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
 
         if (inputs["advance"])
         {
-            AdvanceFrame();
+            if (Animating)
+                FlushAnimations();
+            else
+                AdvanceFrame();
             handled = true;
         }
 
@@ -142,8 +159,11 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
             case RemoveCharacterFrame b:
                 RemoveCharacter(b.Character);
                 break;
-            case SetTextFrame c:
-                SetText(c.Text, c.Character);
+            case SetOutfitFrame c:
+                SetOutfit(c.Character, c.Outfit);
+                break;
+            case SetTextFrame d:
+                SetText(d.Text, d.Character);
                 break;
             default:
                 throw new GameWizardInternalException();
@@ -152,53 +172,131 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
 
     private void AddCharacter(string characterId, HorizontalDirection screenSide, HorizontalDirection lineupSide)
     {
-        var character = Config.Characters[characterId];
+        Animating = true;
+        var character = Game.Db.ReadDb(Config.Characters, characterId);
 
-        var characterNode = new TextureRect
+        var (container, targetIdx, flipH, slideProp) = screenSide switch
         {
-            Texture = GD.Load<Texture2D>(character.Sprite),
-            ExpandMode = TextureRect.ExpandModeEnum.FitWidthProportional,
-            FlipH = screenSide switch
+            HorizontalDirection.Left => (LeftCharactersContainer, 0, false, "margin_left"),
+            HorizontalDirection.Right => (RightCharactersContainer, RightCharactersContainer.GetChildCount() - 1, true, "margin_right"),
+            _ => throw new GameWizardInternalException()
+        };
+
+        var characterContainer = new MarginContainer();
+        var baseContainer = new MarginContainer { Name = "Base" };
+        foreach (var spritePath in character.Get<IList<string>>("sprites"))
+            baseContainer.AddChild(new TextureRect
             {
-                HorizontalDirection.Left => false,
-                HorizontalDirection.Right => true,
-                _ => throw new GameWizardInternalException($"Encountered unknown side: {screenSide}."),
-            }
-        };
+                Texture = GD.Load<Texture2D>(spritePath),
+                ExpandMode = TextureRect.ExpandModeEnum.FitWidthProportional,
+                FlipH = flipH,
+            });
 
-        var container = screenSide switch
+        var fadeId = Guid.NewGuid();
+        var fadeTween = GetTree().CreateTween();
+        CurrentAnimations[fadeId] = fadeTween;
+        characterContainer.Modulate = new Color(1, 1, 1, 0);
+        fadeTween.TweenProperty(characterContainer, "modulate", new Color(1, 1, 1, 1), 0.2f)
+            .SetTrans(Tween.TransitionType.Linear)
+            .SetEase(Tween.EaseType.InOut);
+        fadeTween.TweenCallback(Callable.From(() =>
         {
-            HorizontalDirection.Left => LeftCharactersContainer,
-            HorizontalDirection.Right => RightCharactersContainer,
-            _ => throw new GameWizardInternalException($"Encountered unknown side: {screenSide}"),
-        };
+            CurrentAnimations.Remove(fadeId);
+            Animating = false;
+        }));
+
+        var slideId = Guid.NewGuid();
+        var slideTween = GetTree().CreateTween();
+        CurrentAnimations[slideId] = slideTween;
+        slideTween.TweenMethod(
+                Callable.From<int>(val => characterContainer.AddThemeConstantOverride(slideProp, val)),
+                -50, 0, 0.2f)
+            .SetTrans(Tween.TransitionType.Linear)
+            .SetEase(Tween.EaseType.InOut);
+        slideTween.TweenCallback(Callable.From(() =>
+        {
+            CurrentAnimations.Remove(slideId);
+            Animating = false;
+        }));
 
         if (LoadedCharacters.ContainsKey(characterId))
             RemoveCharacter(characterId);
+        LoadedCharacters[characterId] = (characterContainer, screenSide);
+        LoadedOutfits[characterId] = new List<(MarginContainer, int)>();
 
-        LoadedCharacters[characterId] = characterNode;
-        container.AddChild(characterNode);
-
-        var targetIndex = lineupSide switch
-        {
-            HorizontalDirection.Left => 0,
-            HorizontalDirection.Right => container.GetChildCount() - 1,
-            _ => throw new GameWizardInternalException($"Encountered unknown side: {lineupSide}"),
-        };
-        container.MoveChild(characterNode, targetIndex);
+        characterContainer.AddChild(baseContainer);
+        container.AddChild(characterContainer);
+        container.MoveChild(characterContainer, targetIdx);
     }
 
     private void RemoveCharacter(string characterId)
     {
-        var characterNode = LoadedCharacters[characterId];
+        var (node, side) = LoadedCharacters[characterId];
 
         LoadedCharacters.Remove(characterId);
-        characterNode.QueueFree();
+        node.QueueFree();
+    }
+
+    private void SetOutfit(string characterId, string outfitId)
+    {
+        var character = Game.Db.ReadDb(Config.Characters, characterId);
+        var outfit = Game.Db.ReadDb(Config.Outfits, outfitId);
+        var (node, side) = LoadedCharacters[characterId];
+        var flipH = side == HorizontalDirection.Right;
+        var loadedOutfits = LoadedOutfits[characterId];
+        var targetLayer = (int)outfit.Get<decimal>("layer");
+        var outfitNode = CreateOutfit(outfit, targetLayer, flipH);
+
+        if (loadedOutfits.IsEmpty())
+        {
+            loadedOutfits.Add((outfitNode, targetLayer));
+            node.AddChild(outfitNode);
+            return;
+        }
+
+        var currIdx = 0;
+        while (currIdx < loadedOutfits.Count)
+        {
+            var (existingNode, layer) = loadedOutfits[currIdx];
+            if (layer == targetLayer)
+            {
+                existingNode.QueueFree();
+                loadedOutfits[currIdx] = (outfitNode, layer);
+                node.AddChild(outfitNode);
+                node.MoveChild(outfitNode, currIdx + 2);
+                return;
+            }
+
+            if (layer > targetLayer)
+            {
+                break;
+            }
+
+            currIdx += 1;
+        }
+
+        loadedOutfits.Insert(currIdx, (outfitNode, targetLayer));
+        node.AddChild(outfitNode);
+        node.MoveChild(outfitNode, currIdx + 1);
     }
 
     private void SetText(string text, string characterId)
     {
+        Animating = true;
         DialogBox.Text = text;
+        DialogBox.VisibleCharacters = 0;
+
+        var speakId = Guid.NewGuid();
+        var speakTween = GetTree().CreateTween();
+        CurrentAnimations[speakId] = speakTween;
+        speakTween.TweenProperty(DialogBox, "visible_characters", text.Length, 0.05 * text.Length)
+            .SetTrans(Tween.TransitionType.Linear)
+            .SetEase(Tween.EaseType.InOut);
+        speakTween.TweenCallback(Callable.From(() =>
+        {
+            CurrentAnimations.Remove(speakId);
+            Animating = false;
+        }));
     }
 
     private void ProcessTransition(TransitionAction action)
@@ -218,5 +316,24 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
             default:
                 throw new GameWizardInternalException();
         }
+    }
+
+    private void FlushAnimations()
+    {
+        foreach (var (animationId, tween) in CurrentAnimations)
+            tween.CustomStep(999999f);
+    }
+
+    private MarginContainer CreateOutfit(DatabaseEntry outfit, int targetLayer, bool flipH)
+    {
+        var outfitContainer = new MarginContainer { Name = $"outfit layer {targetLayer}" };
+        foreach (var spritePath in outfit.Get<IList<string>>("sprites"))
+            outfitContainer.AddChild(new TextureRect
+            {
+                Texture = GD.Load<Texture2D>(spritePath),
+                ExpandMode = TextureRect.ExpandModeEnum.FitWidthProportional,
+                FlipH = flipH,
+            });
+        return outfitContainer;
     }
 }

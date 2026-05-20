@@ -4,39 +4,26 @@ interfaces: [ core.dialog-cutscene.character ]
 fields:
   # character interface
   display-name: string
-  sprite: string
+  sprites: string-list
   scale: number
   vertical-offset: number
 
 
 entries:
 
-  shopkeep:
-    display-name: Shopkeep
-    sprite: res://blah
-    scale: 1
-    vertical-offset: 0
-
-  enthusiast:
-    display-name: Enthusiast
-    sprite: res://blah
-    scale: 1
-    vertical-offset: 0
-
-  stranger:
-    display-name: Stranger
-    sprite: res://blah
-    scale: 1
-    vertical-offset: 0
-
   mc:
     display-name: You
-    sprite: res://blah
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-a-tone-neutral-2.png
+      - res://examples/visual-novel/sprites/characters/body-a-hair-a.png
     scale: 1
     vertical-offset: 0
 
   future-mc:
     display-name: Future You
-    sprite: res://blah
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-a-tone-neutral-2.png
+      - res://examples/visual-novel/sprites/characters/body-a-hair-a.png
+      - res://examples/visual-novel/sprites/characters/body-a-beard-a.png
     scale: 0.8
     vertical-offset: -50

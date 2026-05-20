@@ -4,72 +4,41 @@ interfaces: [ core.dialog-cutscene.outfit ]
 fields:
   character: database
   layer: number
-  sprite: string
+  sprites: string-list
 
 
 entries:
 
-  mc-pants:
-    character: characters.mc
+  mc-regular-clothes:
+    characters: [ characters.mc, characters.future-mc ]
     layer: 1
-    sprite: res://examples/visual-novel/sprites/characters/placeholder-pants.png
-  mc-shirt:
-    character: characters.mc
-    layer: 2
-    sprite: res://examples/visual-novel/sprites/characters/placeholder-shirt.png
-  mc-face:
-    character: characters.mc
-    layer: 3
-    sprite: res://examples/visual-novel/sprites/characters/placeholder-face.png
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-a-pants-a.png
+      - res://examples/visual-novel/sprites/characters/body-a-shirt-a.png
+      - res://examples/visual-novel/sprites/characters/body-a-hair-a.png
 
-  mc-pants:
-    character: characters.future-mc
-    layer: 1
-    sprite: res://examples/visual-novel/sprites/characters/placeholder-pants.png
-  mc-shirt:
-    character: characters.future-mc
+  face-neutral:
+    characters: [ characters.mc, characters.future-mc ]
     layer: 2
-    sprite: res://examples/visual-novel/sprites/characters/placeholder-shirt.png
-  mc-face:
-    character: characters.future-mc
-    layer: 3
-    sprite: res://examples/visual-novel/sprites/characters/placeholder-face.png
-
-  mc-pants:
-    character: characters.shopkeep
-    layer: 1
-    sprite: res://examples/visual-novel/sprites/characters/placeholder-pants.png
-  mc-shirt:
-    character: characters.shopkeep
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-a-face-neutral.png
+  face-angry:
+    characters: [ characters.mc, characters.future-mc ]
     layer: 2
-    sprite: res://examples/visual-novel/sprites/characters/placeholder-shirt.png
-  mc-face:
-    character: characters.shopkeep
-    layer: 3
-    sprite: res://examples/visual-novel/sprites/characters/placeholder-face.png
-
-  mc-pants:
-    character: characters.enthusiast
-    layer: 1
-    sprite: res://examples/visual-novel/sprites/characters/placeholder-pants.png
-  mc-shirt:
-    character: characters.enthusiast
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-a-face-angry.png
+  face-happy:
+    characters: [ characters.mc, characters.future-mc ]
     layer: 2
-    sprite: res://examples/visual-novel/sprites/characters/placeholder-shirt.png
-  mc-face:
-    character: characters.enthusiast
-    layer: 3
-    sprite: res://examples/visual-novel/sprites/characters/placeholder-face.png
-
-  mc-pants:
-    character: characters.stranger
-    layer: 1
-    sprite: res://examples/visual-novel/sprites/characters/placeholder-pants.png
-  mc-shirt:
-    character: characters.stranger
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-a-face-happy.png
+  face-surprised:
+    characters: [ characters.mc, characters.future-mc ]
     layer: 2
-    sprite: res://examples/visual-novel/sprites/characters/placeholder-shirt.png
-  mc-face:
-    character: characters.stranger
-    layer: 3
-    sprite: res://examples/visual-novel/sprites/characters/placeholder-face.png
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-a-face-surprised.png
+  face-weirded-out:
+    characters: [ characters.mc, characters.future-mc ]
+    layer: 2
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-a-face-weirded-out.png

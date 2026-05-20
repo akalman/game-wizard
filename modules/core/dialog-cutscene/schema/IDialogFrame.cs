@@ -15,6 +15,13 @@ public class RemoveCharacterFrame : IDialogFrame
     public string Character { get; set; }
 }
 
+public class SetOutfitFrame : IDialogFrame
+{
+    public string Character { get; set; }
+    public string Outfit { get; set; }
+
+}
+
 public class SetTextFrame : IDialogFrame
 {
     public string Character { get; set; }
