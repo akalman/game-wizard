@@ -5,8 +5,8 @@ name: Game-Wizard Example Visual Novel
 # when and where the game should start and end.
 modules:
 - res://modules/core/config.yaml
-initial-scene: initial-cutscene
-# initial-scene: world-map
+# initial-scene: initial-cutscene
+initial-scene: world-map
 
 
 # define what state our game needs to track. this can be used to track story event flags,

@@ -25,5 +25,29 @@ entries:
       - res://examples/visual-novel/sprites/characters/body-a-tone-neutral-2.png
       - res://examples/visual-novel/sprites/characters/body-a-hair-a.png
       - res://examples/visual-novel/sprites/characters/body-a-beard-a.png
-    scale: 0.8
-    vertical-offset: -50
+    scale: 1
+    vertical-offset: 0
+
+  shopkeep:
+    display-name: Shopkeep
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-b-tone-neutral-2.png
+      - res://examples/visual-novel/sprites/characters/body-b-stranger-hair.png
+    scale: 1
+    vertical-offset: 0
+
+  enthusiast:
+    display-name: Enthusiast
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-b-tone-neutral-2.png
+      - res://examples/visual-novel/sprites/characters/body-b-stranger-hair.png
+    scale: 1
+    vertical-offset: 0
+
+  stranger:
+    display-name: Stranger
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-b-tone-neutral-2.png
+      - res://examples/visual-novel/sprites/characters/body-b-stranger-hair.png
+    scale: 1
+    vertical-offset: 0

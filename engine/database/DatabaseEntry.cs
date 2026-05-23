@@ -23,6 +23,7 @@ public class DatabaseEntry(GameDb definition, DbEntry entry, IConfigRepository f
 
         // db ref types
         { DbFieldTypes.Database, typeof(string) },
+        { DbFieldTypes.DatabaseList, typeof(IList<string>) },
     };
 
     private GameDb Definition { get; } = definition;
@@ -36,7 +37,7 @@ public class DatabaseEntry(GameDb definition, DbEntry entry, IConfigRepository f
         if (typeof(T) != ExpectedReturnTypes[fieldType])
             throw new GameWizardInternalException();
 
-        if (fieldType == DbFieldTypes.StringList)
+        if (fieldType is DbFieldTypes.StringList or DbFieldTypes.DatabaseList)
             return (T) Entry.CollectionFields[fieldId];
 
         return FieldDeserializer.Convert<T>(Entry.SimpleFields[fieldId]);

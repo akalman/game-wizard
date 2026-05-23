@@ -20,6 +20,7 @@ public enum DbFieldTypes
     Bag,
     Database,
     StringList,
+    DatabaseList,
 }
 
 public class DbEntry

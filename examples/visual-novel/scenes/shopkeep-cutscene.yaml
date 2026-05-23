@@ -28,7 +28,6 @@ interludes:
       - source: terminal-select.fail
         action: start fail
 
-
 sequences:
 
   route-intro:
@@ -47,15 +46,30 @@ sequences:
       - type: add-character
         side: left
         character: mc
+      - type: set-outfit
+        character: mc
+        outfit: mc-regular-clothes
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-happy
       - type: set-text
         character: mc
         text: |
             [b]You:[/b] Oh look, a little shop in the middle of nowhere.
             I'm sure this is a normal and reasonably priced establishment.
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-neutral
       - type: add-character
         side: right
         character: shopkeep
+      - type: set-outfit
+        character: shopkeep
+        outfit: npc-regular-clothes
+      - type: set-outfit
+        character: shopkeep
+        outfit: npc-face-weirded-out
       - type: set-text
         character: shopkeep
         text: |
@@ -63,11 +77,17 @@ sequences:
             flags! And only flags! Business is... not great if I'm
             being honest.
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-surprised
       - type: set-text
         character: mc
         text: |
             [b]You:[/b] Wait, you sell flags? Like, actual flags?
 
+      - type: set-outfit
+        character: shopkeep
+        outfit: npc-face-happy
       - type: set-text
         character: shopkeep
         text: |
@@ -75,6 +95,9 @@ sequences:
             a flag or not? I got flags of all shapes and sizes. Rectangles,
             mostly. Some triangles if you're feeling adventurous.
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-happy
       - type: set-text
         character: mc
         text: |
@@ -96,9 +119,21 @@ sequences:
       - type: add-character
         side: left
         character: mc
+      - type: set-outfit
+        character: mc
+        outfit: mc-regular-clothes
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-neutral
       - type: add-character
         side: right
         character: shopkeep
+      - type: set-outfit
+        character: shopkeep
+        outfit: npc-regular-clothes
+      - type: set-outfit
+        character: shopkeep
+        outfit: npc-face-angry
       - type: set-text
         character: shopkeep
         text: |
@@ -107,11 +142,17 @@ sequences:
             getting any cheaper. Well actually they are. Nobody buys
             flags.
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-weirded-out
       - type: set-text
         character: mc
         text: |
             [b]You:[/b] Yeah I'm back. Still need that flag.
 
+      - type: set-outfit
+        character: shopkeep
+        outfit: npc-face-happy
       - type: set-text
         character: shopkeep
         text: |
@@ -123,6 +164,12 @@ sequences:
     transitions:
       - action: interlude question
     frames:
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-neutral
+      - type: set-outfit
+        character: shopkeep
+        outfit: npc-face-happy
       - type: set-text
         character: shopkeep
         text: |
@@ -130,6 +177,9 @@ sequences:
             premium flag left. It's my finest flag. It's a rectangle.
             A really good one though.
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-weirded-out
       - type: set-text
         character: mc
         text: |
@@ -143,11 +193,17 @@ sequences:
             riddles, and also just asking nicely. I'm very lonely out
             here.
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-neutral
       - type: set-text
         character: mc
         text: |
             [b]You:[/b] Ok so what do I need to do exactly?
 
+      - type: set-outfit
+        character: shopkeep
+        outfit: npc-face-surprised
       - type: set-text
         character: shopkeep
         text: |
@@ -159,6 +215,12 @@ sequences:
     transitions:
       - action: end
     frames:
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-weirded-out
+      - type: set-outfit
+        character: shopkeep
+        outfit: npc-face-angry
       - type: set-text
         character: shopkeep
         text: |
@@ -174,6 +236,9 @@ sequences:
 
       - type: remove-character
         character: shopkeep
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-happy
       - type: set-text
         character: mc
         text: |
@@ -185,12 +250,21 @@ sequences:
     transitions:
       - action: end
     frames:
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-neutral
+      - type: set-outfit
+        character: shopkeep
+        outfit: npc-face-surprised
       - type: set-text
         character: shopkeep
         text: |
             [b]Shopkeep:[/b] Oh... oh my. That's the nicest thing
             anyone has ever said to me. And about my SHOP no less!
 
+      - type: set-outfit
+        character: shopkeep
+        outfit: npc-face-happy
       - type: set-text
         character: shopkeep
         text: |
@@ -198,12 +272,21 @@ sequences:
             It's yours! No charge! Well, the compliment was the charge.
             That's how my economy works.
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-happy
+      - type: set-outfit
+        character: shopkeep
+        outfit: npc-face-neutral
       - type: set-text
         character: mc
         text: |
             [b]You:[/b] Wow, really? Thanks! That was way easier than
             I expected.
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-neutral
       - type: set-text
         character: shopkeep
         text: |
@@ -223,6 +306,12 @@ sequences:
     transitions:
       - action: end
     frames:
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-neutral
+      - type: set-outfit
+        character: shopkeep
+        outfit: npc-face-angry
       - type: set-text
         character: shopkeep
         text: |
@@ -230,6 +319,9 @@ sequences:
             have ANY idea how hard it is to run a flag shop in this
             economy?!
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-weirded-out
       - type: set-text
         character: shopkeep
         text: |

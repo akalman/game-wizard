@@ -32,7 +32,7 @@ sequences:
         outfit: mc-regular-clothes
       - type: set-outfit
         character: mc
-        outfit: face-happy
+        outfit: mc-face-happy
       - type: set-text
         character: mc
         text: |
@@ -42,7 +42,7 @@ sequences:
 
       - type: set-outfit
         character: mc
-        outfit: face-surprised
+        outfit: mc-face-surprised
       - type: set-text
         character: mc
         text: |
@@ -50,7 +50,7 @@ sequences:
 
       - type: set-outfit
         character: mc
-        outfit: face-weirded-out
+        outfit: mc-face-weirded-out
       - type: set-text
         character: mc
         text: |
@@ -65,7 +65,7 @@ sequences:
         outfit: mc-regular-clothes
       - type: set-outfit
         character: future-mc
-        outfit: face-angry
+        outfit: mc-face-angry
       - type: set-text
         character: future-mc
         text: |
@@ -88,7 +88,7 @@ sequences:
 
       - type: set-outfit
         character: future-mc
-        outfit: face-neutral
+        outfit: mc-face-neutral
       - type: set-text
         character: mc
         text: |
@@ -96,7 +96,7 @@ sequences:
 
       - type: set-outfit
         character: future-mc
-        outfit: face-angry
+        outfit: mc-face-angry
       - type: set-text
         character: future-mc
         text: |
@@ -106,7 +106,7 @@ sequences:
 
       - type: set-outfit
         character: future-mc
-        outfit: face-neutral
+        outfit: mc-face-neutral
       - type: set-text
         character: mc
         text: |
@@ -114,7 +114,7 @@ sequences:
 
       - type: set-outfit
         character: future-mc
-        outfit: face-angry
+        outfit: mc-face-angry
       - type: set-text
         character: future-mc
         text: |
