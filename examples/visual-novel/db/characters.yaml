@@ -32,7 +32,7 @@ entries:
     display-name: Shopkeep
     sprites:
       - res://examples/visual-novel/sprites/characters/body-b-tone-neutral-2.png
-      - res://examples/visual-novel/sprites/characters/body-b-stranger-hair.png
+      - res://examples/visual-novel/sprites/characters/body-b-shopkeep-hair.png
     scale: 1
     vertical-offset: 0
 
@@ -40,7 +40,7 @@ entries:
     display-name: Enthusiast
     sprites:
       - res://examples/visual-novel/sprites/characters/body-b-tone-neutral-2.png
-      - res://examples/visual-novel/sprites/characters/body-b-stranger-hair.png
+      - res://examples/visual-novel/sprites/characters/body-b-enthusiast-hair.png
     scale: 1
     vertical-offset: 0
 

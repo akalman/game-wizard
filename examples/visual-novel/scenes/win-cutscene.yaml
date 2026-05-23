@@ -14,11 +14,8 @@ style:
     text-margin: ( 30 20 )
 
 
-characters:
-  mc:
-    sprite: res://examples/visual-novel/sprites/char-masc-meso.png
-  future-mc:
-    sprite: res://examples/visual-novel/sprites/char-masc-meso.png
+characters: characters
+outfits: outfits
 
 
 sequences:
@@ -30,6 +27,12 @@ sequences:
       - type: add-character
         side: left
         character: mc
+      - type: set-outfit
+        character: mc
+        outfit: mc-regular-clothes
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-happy
       - type: set-text
         character: mc
         text: |
@@ -41,6 +44,12 @@ sequences:
       - type: add-character
         side: right
         character: future-mc
+      - type: set-outfit
+        character: future-mc
+        outfit: mc-regular-clothes
+      - type: set-outfit
+        character: future-mc
+        outfit: mc-face-neutral
       - type: set-text
         character: future-mc
         text: |
@@ -48,12 +57,18 @@ sequences:
             I'm honestly surprised. I figured you'd mess up at
             least one of them.
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-weirded-out
       - type: set-text
         character: mc
         text: |
             [b]You:[/b] Thanks for the vote of confidence. So
             is reality saved now?
 
+      - type: set-outfit
+        character: future-mc
+        outfit: mc-face-happy
       - type: set-text
         character: future-mc
         text: |
@@ -61,6 +76,9 @@ sequences:
             timeline is preserved! Everything is exactly as it
             should be! Probably! I'm not a scientist!
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-neutral
       - type: set-text
         character: mc
         text: |
@@ -75,6 +93,9 @@ sequences:
 
       - type: remove-character
         character: future-mc
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-happy
       - type: set-text
         character: mc
         text: |

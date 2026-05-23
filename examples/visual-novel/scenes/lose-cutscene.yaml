@@ -14,11 +14,8 @@ style:
     text-margin: ( 30 20 )
 
 
-characters:
-  mc:
-    sprite: res://examples/visual-novel/sprites/char-masc-meso.png
-  future-mc:
-    sprite: res://examples/visual-novel/sprites/char-masc-meso.png
+characters: characters
+outfits: outfits
 
 
 sequences:
@@ -30,6 +27,12 @@ sequences:
       - type: add-character
         side: left
         character: mc
+      - type: set-outfit
+        character: mc
+        outfit: mc-regular-clothes
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-weirded-out
       - type: set-text
         character: mc
         text: |
@@ -40,6 +43,12 @@ sequences:
       - type: add-character
         side: right
         character: future-mc
+      - type: set-outfit
+        character: future-mc
+        outfit: mc-regular-clothes
+      - type: set-outfit
+        character: future-mc
+        outfit: mc-face-angry
       - type: set-text
         character: future-mc
         text: |
@@ -53,6 +62,9 @@ sequences:
             [b]You:[/b] In my defense, one of those people had 247
             named flags and I panicked.
 
+      - type: set-outfit
+        character: future-mc
+        outfit: mc-face-neutral
       - type: set-text
         character: future-mc
         text: |

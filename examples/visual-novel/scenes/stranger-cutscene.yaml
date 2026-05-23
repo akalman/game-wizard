@@ -14,11 +14,8 @@ style:
     text-margin: ( 30 20 )
 
 
-characters:
-  mc:
-    sprite: res://examples/visual-novel/sprites/char-masc-meso.png
-  stranger:
-    sprite: res://examples/visual-novel/sprites/char-masc-meso.png
+characters: characters
+outfits: outfits
 
 
 interludes:
@@ -48,6 +45,12 @@ sequences:
       - type: add-character
         side: left
         character: mc
+      - type: set-outfit
+        character: mc
+        outfit: mc-regular-clothes
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-neutral
       - type: set-text
         character: mc
         text: |
@@ -56,11 +59,23 @@ sequences:
       - type: add-character
         side: right
         character: stranger
+      - type: set-outfit
+        character: stranger
+        outfit: npc-regular-clothes
+      - type: set-outfit
+        character: stranger
+        outfit: npc-face-angry
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-surprised
       - type: set-text
         character: mc
         text: |
             [b]BONK.[/b]
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-weirded-out
       - type: set-text
         character: mc
         text: |
@@ -87,12 +102,18 @@ sequences:
             the most important part. The crash means nothing without
             the line.
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-neutral
       - type: set-text
         character: mc
         text: |
             [b]You:[/b] I genuinely have no idea what you're talking
             about.
 
+      - type: set-outfit
+        character: stranger
+        outfit: npc-face-weirded-out
       - type: set-text
         character: stranger
         text: |
@@ -101,11 +122,17 @@ sequences:
             standing at this corner ALL DAY waiting for someone to
             crash into me and say it.
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-weirded-out
       - type: set-text
         character: mc
         text: |
             [b]You:[/b] That's... honestly kind of sad.
 
+      - type: set-outfit
+        character: stranger
+        outfit: npc-face-angry
       - type: set-text
         character: stranger
         text: |
@@ -119,6 +146,12 @@ sequences:
       - type: add-character
         side: left
         character: mc
+      - type: set-outfit
+        character: mc
+        outfit: mc-regular-clothes
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-neutral
       - type: set-text
         character: mc
         text: |
@@ -127,11 +160,23 @@ sequences:
       - type: add-character
         side: right
         character: stranger
+      - type: set-outfit
+        character: stranger
+        outfit: npc-regular-clothes
+      - type: set-outfit
+        character: stranger
+        outfit: npc-face-weirded-out
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-surprised
       - type: set-text
         character: mc
         text: |
             [b]BONK.[/b]
 
+      - type: set-outfit
+        character: stranger
+        outfit: npc-face-happy
       - type: set-text
         character: stranger
         text: |
@@ -139,6 +184,9 @@ sequences:
             crash this time. Really felt that one in my ribs. Now
             are you ready to say the line?
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-weirded-out
       - type: set-text
         character: mc
         text: |
@@ -150,6 +198,9 @@ sequences:
     transitions:
       - action: interlude question
     frames:
+      - type: set-outfit
+        character: stranger
+        outfit: npc-face-neutral
       - type: set-text
         character: stranger
         text: |
@@ -157,11 +208,17 @@ sequences:
             rounded a corner at speed and crashed directly into me,
             a stranger. Now. What do you say?
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-neutral
       - type: set-text
         character: mc
         text: |
             [b]You:[/b] Can I get a hint?
 
+      - type: set-outfit
+        character: stranger
+        outfit: npc-face-angry
       - type: set-text
         character: stranger
         text: |
@@ -174,11 +231,17 @@ sequences:
     transitions:
       - action: end
     frames:
+      - type: set-outfit
+        character: stranger
+        outfit: npc-face-surprised
       - type: set-text
         character: stranger
         text: |
             [b]Stranger:[/b] ...
 
+      - type: set-outfit
+        character: stranger
+        outfit: npc-face-happy
       - type: set-text
         character: stranger
         text: |
@@ -201,6 +264,9 @@ sequences:
 
       - type: remove-character
         character: stranger
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-weirded-out
       - type: set-text
         character: mc
         text: |
@@ -213,11 +279,17 @@ sequences:
     transitions:
       - action: end
     frames:
+      - type: set-outfit
+        character: stranger
+        outfit: npc-face-surprised
       - type: set-text
         character: stranger
         text: |
             [b]Stranger:[/b] ...what?
 
+      - type: set-outfit
+        character: stranger
+        outfit: npc-face-weirded-out
       - type: set-text
         character: stranger
         text: |
@@ -228,6 +300,9 @@ sequences:
 
       - type: remove-character
         character: stranger
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-weirded-out
       - type: set-text
         character: mc
         text: |
@@ -235,12 +310,18 @@ sequences:
             seemed pretty shaken up. Maybe I should have just
             said the line.
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-neutral
       - type: set-text
         character: mc
         text: |
             [b]You:[/b] ...they've been gone for a while. Let me
             go check around the corner.
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-surprised
       - type: set-text
         character: mc
         text: |
@@ -254,6 +335,9 @@ sequences:
             said?! That's not how that's supposed to work!! It's
             just a THING PEOPLE SAY!
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-weirded-out
       - type: set-text
         character: mc
         text: |
@@ -266,11 +350,17 @@ sequences:
     transitions:
       - action: end
     frames:
+      - type: set-outfit
+        character: stranger
+        outfit: npc-face-surprised
       - type: set-text
         character: stranger
         text: |
             [b]Stranger:[/b] What did you just say to me?
 
+      - type: set-outfit
+        character: stranger
+        outfit: npc-face-angry
       - type: set-text
         character: stranger
         text: |
@@ -278,6 +368,9 @@ sequences:
             YOU?! I KNEW they were watching! I KNEW the corner was
             compromised!
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-surprised
       - type: set-text
         character: mc
         text: |
@@ -294,6 +387,9 @@ sequences:
 
       - type: remove-character
         character: stranger
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-weirded-out
       - type: set-text
         character: mc
         text: |

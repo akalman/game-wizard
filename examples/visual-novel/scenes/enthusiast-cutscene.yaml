@@ -14,11 +14,8 @@ style:
     text-margin: ( 30 20 )
 
 
-characters:
-  mc:
-    sprite: res://examples/visual-novel/sprites/char-masc-meso.png
-  enthusiast:
-    sprite: res://examples/visual-novel/sprites/char-masc-meso.png
+characters: characters
+outfits: outfits
 
 
 interludes:
@@ -48,6 +45,12 @@ sequences:
       - type: add-character
         side: left
         character: mc
+      - type: set-outfit
+        character: mc
+        outfit: mc-regular-clothes
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-weirded-out
       - type: set-text
         character: mc
         text: |
@@ -58,6 +61,12 @@ sequences:
       - type: add-character
         side: right
         character: enthusiast
+      - type: set-outfit
+        character: enthusiast
+        outfit: npc-regular-clothes
+      - type: set-outfit
+        character: enthusiast
+        outfit: npc-face-happy
       - type: set-text
         character: enthusiast
         text: |
@@ -65,6 +74,9 @@ sequences:
             I LOVE flags!! I have 247 of them!! Each one is
             special and unique and I have named every single one!!
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-surprised
       - type: set-text
         character: mc
         text: |
@@ -77,12 +89,18 @@ sequences:
             Flag McFlagface! This one is just called "The Incident"
             and I don't like to talk about why!
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-neutral
       - type: set-text
         character: mc
         text: |
             [b]You:[/b] Look, I actually need a flag. It's kind of
             an emergency. A me-from-the-future kind of emergency.
 
+      - type: set-outfit
+        character: enthusiast
+        outfit: npc-face-weirded-out
       - type: set-text
         character: enthusiast
         text: |
@@ -90,6 +108,9 @@ sequences:
             one of my flags! They're my CHILDREN! Well, not literally.
             That would be weird. They're rectangles.
 
+      - type: set-outfit
+        character: enthusiast
+        outfit: npc-face-happy
       - type: set-text
         character: enthusiast
         text: |
@@ -104,9 +125,21 @@ sequences:
       - type: add-character
         side: left
         character: mc
+      - type: set-outfit
+        character: mc
+        outfit: mc-regular-clothes
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-neutral
       - type: add-character
         side: right
         character: enthusiast
+      - type: set-outfit
+        character: enthusiast
+        outfit: npc-regular-clothes
+      - type: set-outfit
+        character: enthusiast
+        outfit: npc-face-happy
       - type: set-text
         character: enthusiast
         text: |
@@ -114,6 +147,9 @@ sequences:
             stay away from the flags!! Nobody can!! They're just
             so rectangular and wonderful!!
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-weirded-out
       - type: set-text
         character: mc
         text: |
@@ -131,6 +167,9 @@ sequences:
     transitions:
       - action: interlude question
     frames:
+      - type: set-outfit
+        character: enthusiast
+        outfit: npc-face-happy
       - type: set-text
         character: enthusiast
         text: |
@@ -138,6 +177,9 @@ sequences:
             ask you ONE question about flags, and your answer will
             determine if you are WORTHY of flag ownership!
 
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-neutral
       - type: set-text
         character: mc
         text: |
@@ -150,6 +192,9 @@ sequences:
             You can tell EVERYTHING about a person by how they
             feel about flags! It's basically a personality test!
 
+      - type: set-outfit
+        character: enthusiast
+        outfit: npc-face-surprised
       - type: set-text
         character: enthusiast
         text: |
@@ -160,11 +205,17 @@ sequences:
     transitions:
       - action: end
     frames:
+      - type: set-outfit
+        character: enthusiast
+        outfit: npc-face-surprised
       - type: set-text
         character: enthusiast
         text: |
             [b]Flag Enthusiast:[/b] ...
 
+      - type: set-outfit
+        character: enthusiast
+        outfit: npc-face-happy
       - type: set-text
         character: enthusiast
         text: |
@@ -188,6 +239,9 @@ sequences:
 
       - type: remove-character
         character: enthusiast
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-weirded-out
       - type: set-text
         character: mc
         text: |
@@ -199,11 +253,17 @@ sequences:
     transitions:
       - action: end
     frames:
+      - type: set-outfit
+        character: enthusiast
+        outfit: npc-face-surprised
       - type: set-text
         character: enthusiast
         text: |
             [b]Flag Enthusiast:[/b] ...
 
+      - type: set-outfit
+        character: enthusiast
+        outfit: npc-face-angry
       - type: set-text
         character: enthusiast
         text: |
@@ -226,6 +286,9 @@ sequences:
 
       - type: remove-character
         character: enthusiast
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-weirded-out
       - type: set-text
         character: mc
         text: |
@@ -237,6 +300,9 @@ sequences:
     transitions:
       - action: end
     frames:
+      - type: set-outfit
+        character: enthusiast
+        outfit: npc-face-happy
       - type: set-text
         character: enthusiast
         text: |
@@ -253,6 +319,9 @@ sequences:
 
       - type: remove-character
         character: enthusiast
+      - type: set-outfit
+        character: mc
+        outfit: mc-face-neutral
       - type: set-text
         character: mc
         text: |
