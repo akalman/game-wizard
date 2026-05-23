@@ -20,11 +20,12 @@ public class StateAttribute
 {
     public int Min { get; set; }
     public int Max { get; set; }
-    public string InitialValue { get; set; }
+    public decimal InitialValue { get; set; }
 }
 
 public class StateBag
 {
+    public string Db { get; set; }
 }
 
 public class StateUpdate

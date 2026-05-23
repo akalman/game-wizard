@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GameWizard.Engine.Schema.Game;
+using Godot;
 
 namespace GameWizard.Engine.State;
 
@@ -20,6 +21,8 @@ public class BagFacade : StateFacade
     {
         ValidateUpdateValid(definition, state, stateId);
 
+        if (!state.Bags[stateId].ContainsKey(bagItemId))
+            state.Bags[stateId][bagItemId] = 0;
         return state.Bags[stateId][bagItemId];
     }
 
@@ -59,6 +62,7 @@ public class BagFacade : StateFacade
 
     private void ValidateUpdateValid(GameState definition, SaveState state, string stateId)
     {
+        GD.PushWarning(stateId);
         if (!definition.Bags.ContainsKey(stateId))
             throw new InvalidGameStateException($"Tried to read undefined bag {stateId}.");
 

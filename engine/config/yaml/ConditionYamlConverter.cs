@@ -16,6 +16,8 @@ public class ConditionYamlConverter : IYamlTypeConverter
     private static readonly IDictionary<ConditionType, string> Templates = new Dictionary<ConditionType, string>
     {
         { ConditionType.FlagIn, @"flag {0} in \[{1}\]" },
+
+        { ConditionType.BagContainsMoreThan, @"bag {0} contains more than {1} {2}" },
     };
 
     public bool Accepts(Type type) => type == typeof(Condition);
@@ -26,20 +28,28 @@ public class ConditionYamlConverter : IYamlTypeConverter
 
         foreach (var (updateType, template) in Templates)
         {
-            var match = Regex.Match(raw.Value, $"^{string.Format(template, TermPattern, TermPattern)}$");
-            if (!match.Success)
-                throw new ConfigLoadingException($"Encountered unrecognized condition statement: {raw}");
+            var match = Regex.Match(raw.Value, $"^{string.Format(template, TermPattern, TermPattern, TermPattern)}$");
+            if (!match.Success) continue;
 
-            var expectedMembership = new List<string>();
-            if (match.Groups[2].Success)
-                expectedMembership = match.Groups[2].Value.Split(",").ToList();
-
-            return new Condition
+            return updateType switch
             {
-                Type = updateType,
-                Target = match.Groups[1].Value,
-                ExpectedMembership = expectedMembership,
+                ConditionType.FlagIn => new Condition
+                {
+                    Type = updateType,
+                    Target = match.Groups[1].Value,
+                    ExpectedMembership = match.Groups[2].Value.Split(","),
+                },
+                ConditionType.BagContainsMoreThan => new Condition
+                {
+                    Type = updateType,
+                    BagTarget = match.Groups[1].Value,
+                    Target = match.Groups[3].Value,
+                    ExpectedNumber = decimal.Parse(match.Groups[2].Value),
+                    ExpectedMembership = match.Groups[2].Value.Split(","),
+                },
+                _ => throw new GameWizardInternalException(),
             };
+
         }
 
         throw new ConfigLoadingException($"Invalid condition format: {raw.Value}");

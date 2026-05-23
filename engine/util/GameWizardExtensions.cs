@@ -13,14 +13,12 @@ public static class GameWizardExtensions
 
         return conditions.All(condition =>
         {
-            switch (condition.Type)
+            return condition.Type switch
             {
-                case ConditionType.FlagIn:
-                    var value = state.ReadFlag(condition.Target);
-                    return condition.ExpectedMembership.Contains(value);
-                default:
-                    throw new GameWizardInternalException($"Encountered unexpected condition type {condition.Type}.");
-            }
+                ConditionType.FlagIn => condition.ExpectedMembership.Contains(state.ReadFlag(condition.Target)),
+                ConditionType.BagContainsMoreThan => state.NumInBag(condition.BagTarget, condition.Target) > condition.ExpectedNumber,
+                _ => throw new GameWizardInternalException($"Encountered unexpected condition type {condition.Type}."),
+            };
         });
     }
 }

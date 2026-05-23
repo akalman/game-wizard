@@ -1,0 +1,6 @@
+fields:
+  label: string
+
+entries:
+  can-of-beans:
+    label: can of beans

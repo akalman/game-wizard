@@ -44,11 +44,15 @@ state:
       max: 3
       initial-value: 0
 
+  bags:
+    inventory:
+      db: items
 
 database:
   characters: res://examples/visual-novel/db/characters.yaml
   outfits: res://examples/visual-novel/db/outfits.yaml
   npcs: res://examples/visual-novel/db/npcs.yaml
+  items: res://examples/visual-novel/db/items.yaml
 
 
 # game wizard modules contain special types of godot scenes called scene templates.  these are
@@ -75,7 +79,7 @@ scenes:
     config: res://examples/visual-novel/scenes/world-map.yaml
     transitions:
       # create a subscription to spawn each cutscene for each npc
-      - edge: navigate.shopkeep-landmark spawn shopkeep-cutscene
+      - edge: navigate.shopkeep-landmark spawn shopkeep-location
       - edge: navigate.enthusiast-landmark spawn enthusiast-cutscene
       - edge: navigate.stranger-landmark spawn stranger-cutscene
       # conditionally navigate to the win or lose cutscene depending on current game state. order
@@ -86,6 +90,16 @@ scenes:
         - flag enthusiast-progress in [success]
         - flag stranger-progress in [success]
       - edge: navigate.ending-landmark spawn lose-cutscene
+
+  shopkeep-location:
+    template: core.landmark-overworld
+    config: res://examples/visual-novel/scenes/shopkeep-location.yaml
+    transitions:
+      - edge: navigate.npc spawn shopkeep-cutscene
+      - edge: navigate.back-button ends
+      - edge: navigate.can-of-beans do nothing
+        updates:
+          - add 1 of item can-of-beans to bag inventory
 
   # create scenes for each npc. we start with the shopkeep npc. the first scene is the conversation
   # with the npc itself. dialog routing is done internally.

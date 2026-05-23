@@ -1,0 +1,21 @@
+map:
+  sprite: res://examples/visual-novel/sprites/shopkeep-background.png
+  scaling: fit-width
+
+
+landmarks:
+
+  npc:
+    sprite: res://examples/visual-novel/sprites/world-map-landmark.png
+    size: ( 200 200 )
+    offset: ( -0.25 -0.7 )
+
+  can-of-beans:
+    sprite: res://examples/visual-novel/sprites/can-of-beans.png
+    size: ( 200 200 )
+    offset: ( 0.25 0.4 )
+
+  back-button:
+    sprite: res://examples/visual-novel/sprites/world-map-landmark.png
+    size: ( 200 200 )
+    offset: ( -0.75 -0.75 )

@@ -17,6 +17,8 @@ pages:
         action: end
         label: |
           "That's a really nice shop you've got here."
+        when:
+          - bag inventory contains more than 2 can-of-beans
       fail:
         action: end
         label: |

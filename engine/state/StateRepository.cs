@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using GameWizard.Engine.Schema.Game;
 
 namespace GameWizard.Engine.State;
@@ -29,6 +30,12 @@ public class StateRepository : IStateRepository
 
         foreach (var (flagId, flag) in Definition.Flags)
             Current.Flags[flagId] = flag.InitialValue;
+
+        foreach (var (attributeId, attribute) in Definition.Attributes)
+            Current.Attributes[attributeId] = attribute.InitialValue;
+
+        foreach (var (bagId, bag) in Definition.Bags)
+            Current.Bags[bagId] = new Dictionary<string, int>();
 
         IsLoaded = true;
     }

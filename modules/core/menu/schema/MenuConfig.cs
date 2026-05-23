@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameWizard.Engine.Schema.Logic;
 
 namespace GameWizard.Core.Menu;
 
@@ -18,8 +19,9 @@ public class MenuPage
 
 public class PageOption
 {
-    public string Label { get; set; }
     public MenuAction Action { get; set; }
+    public string Label { get; set; }
+    public IList<Condition> When { get; set; } = new List<Condition>();
 }
 
 public class MenuAction

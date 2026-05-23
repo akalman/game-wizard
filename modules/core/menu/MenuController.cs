@@ -53,6 +53,7 @@ public partial class MenuController : TemplateController<MenuConfig>
 
             labelNode.Text = option.Label;
             labelNode.CustomMinimumSize = Config.Style.Options.Size;
+            optionNode.Visible = option.When.Evaluate(Game.State);
 
             OptionsContainer.AddChild(optionNode);
         }
