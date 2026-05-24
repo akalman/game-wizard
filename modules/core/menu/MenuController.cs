@@ -29,7 +29,7 @@ public partial class MenuController : TemplateController<MenuConfig>
         return false;
     }
 
-    public override void HandleFocus(string sourceScene, string outputId)
+    public override void HandleFocusUpdated(string sourceScene, string outputId, FocusState updatedState)
     {
 
     }

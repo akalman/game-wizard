@@ -31,7 +31,7 @@ public abstract partial class TemplateController<T> : Node2D, ITemplateControlle
 
     protected abstract void InitializeScene();
     public abstract bool HandleInput(IDictionary<string, bool> inputs);
-    public abstract void HandleFocus(string sourceScene, string outputId);
+    public abstract void HandleFocusUpdated(string sourceScene, string outputId, FocusState updatedState);
 }
 
 public interface ITemplateController
@@ -45,5 +45,12 @@ public interface ITemplateController
     public void InitializeController(GameController game, string templateId, string sceneId, string path);
 
     public bool HandleInput(IDictionary<string, bool> inputs);
-    public void HandleFocus(string sourceScene, string outputId);
+    public void HandleFocusUpdated(string sourceScene, string outputId, FocusState updatedState);
+}
+
+public enum FocusState
+{
+    Gained,
+    Lost,
+    Retained,
 }

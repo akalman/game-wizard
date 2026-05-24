@@ -28,6 +28,14 @@ state:
       values: [ unseen, open, success, fail ]
       initial-value: unseen
 
+    shopkeep-in-dialog:
+      values: [ yes, no ]
+      initial-value: no
+
+    found-shop-beans:
+      values: [ yes, no ]
+      initial-value: no
+
   attributes:
     shopkeep-familiarity:
       min: 0
@@ -96,10 +104,13 @@ scenes:
     config: res://examples/visual-novel/scenes/shopkeep-location.yaml
     transitions:
       - edge: navigate.npc spawn shopkeep-cutscene
+        updates:
+          - set flag shopkeep-in-dialog to yes
       - edge: navigate.back-button ends
       - edge: navigate.can-of-beans do nothing
         updates:
           - add 1 of item can-of-beans to bag inventory
+          - set flag found-shop-beans to yes
 
   # create scenes for each npc. we start with the shopkeep npc. the first scene is the conversation
   # with the npc itself. dialog routing is done internally.
@@ -110,6 +121,15 @@ scenes:
         # when input from a user is needed, we spawn a child scene in response to the
         # dialog-interlude event.
       - edge: dialog-interlude.question spawn shopkeep-dialog-choice
+      - edge: terminal-frame.success ends
+        updates:
+          - set flag shopkeep-in-dialog to no
+      - edge: terminal-frame.fail ends
+        updates:
+          - set flag shopkeep-in-dialog to no
+      - edge: terminal-frame.open ends
+        updates:
+          - set flag shopkeep-in-dialog to no
 
   # create the scene for letting the player make a choice within the dialog cutscene. create
   # transitions for each option, and for each option, update the associated flag to the

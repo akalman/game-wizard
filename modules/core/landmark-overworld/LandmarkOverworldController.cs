@@ -29,6 +29,8 @@ public partial class LandmarkOverworldController : TemplateController<OverworldC
             {
                 TextureNormal = GD.Load<Texture2D>(landmark.Sprite),
                 CustomMinimumSize = landmark.Size,
+                StretchMode = TextureButton.StretchModeEnum.KeepAspectCentered,
+                IgnoreTextureSize = true,
                 Position = (landmark.Offset + Vector2.One) * new Vector2(960, 540),
                 Visible = landmark.When.Evaluate(Game.State),
                 FocusMode = Control.FocusModeEnum.None,
@@ -47,8 +49,9 @@ public partial class LandmarkOverworldController : TemplateController<OverworldC
         return false;
     }
 
-    public override void HandleFocus(string sourceScene, string outputId)
+    public override void HandleFocusUpdated(string sourceScene, string outputId, FocusState updatedState)
     {
+        GD.PushWarning("recalcuing landmark visibility");
         foreach (var (landmarkId, landmarkButton) in LoadedLandmarks)
             landmarkButton.Visible = Config.Landmarks[landmarkId].When.Evaluate(Game.State);
     }

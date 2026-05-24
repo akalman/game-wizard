@@ -69,9 +69,9 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
         return handled;
     }
 
-    public override void HandleFocus(string sourceScene, string outputId)
+    public override void HandleFocusUpdated(string sourceScene, string outputId, FocusState updatedState)
     {
-        if (CurrentInterlude.IsNullOrEmpty())
+        if (CurrentInterlude.IsNullOrEmpty() || updatedState != FocusState.Gained)
             return;
 
         if (!Config.Interludes.TryGetValue(CurrentInterlude, out var interlude))
