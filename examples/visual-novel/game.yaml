@@ -36,6 +36,14 @@ state:
       values: [ yes, no ]
       initial-value: no
 
+    enthusiast-in-dialog:
+      values: [ yes, no ]
+      initial-value: no
+
+    found-house-beans:
+      values: [ yes, no ]
+      initial-value: no
+
   attributes:
     shopkeep-familiarity:
       min: 0
@@ -88,7 +96,7 @@ scenes:
     transitions:
       # create a subscription to spawn each cutscene for each npc
       - edge: navigate.shopkeep-landmark spawn shopkeep-location
-      - edge: navigate.enthusiast-landmark spawn enthusiast-cutscene
+      - edge: navigate.enthusiast-landmark spawn enthusiast-location
       - edge: navigate.stranger-landmark spawn stranger-cutscene
       # conditionally navigate to the win or lose cutscene depending on current game state. order
       # matters here since only the first matching subscriber in this list will handle the event.
@@ -155,6 +163,28 @@ scenes:
     config: res://examples/visual-novel/scenes/enthusiast-cutscene.yaml
     transitions:
       - edge: dialog-interlude.question spawn enthusiast-dialog-choice
+      - edge: terminal-frame.success ends
+        updates:
+          - set flag enthusiast-in-dialog to no
+      - edge: terminal-frame.fail ends
+        updates:
+          - set flag enthusiast-in-dialog to no
+      - edge: terminal-frame.open ends
+        updates:
+          - set flag enthusiast-in-dialog to no
+
+  enthusiast-location:
+    template: core.landmark-overworld
+    config: res://examples/visual-novel/scenes/enthusiast-location.yaml
+    transitions:
+      - edge: navigate.npc spawn enthusiast-cutscene
+        updates:
+          - set flag enthusiast-in-dialog to yes
+      - edge: navigate.back-button ends
+      - edge: navigate.can-of-beans do nothing
+        updates:
+          - add 1 of item can-of-beans to bag inventory
+          - set flag found-house-beans to yes
 
   enthusiast-dialog-choice:
     template: core.menu
