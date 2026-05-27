@@ -44,6 +44,14 @@ state:
       values: [ yes, no ]
       initial-value: no
 
+    stranger-in-dialog:
+      values: [ yes, no ]
+      initial-value: no
+
+    found-sign-beans:
+      values: [ yes, no ]
+      initial-value: no
+
   attributes:
     shopkeep-familiarity:
       min: 0
@@ -97,7 +105,7 @@ scenes:
       # create a subscription to spawn each cutscene for each npc
       - edge: navigate.shopkeep-landmark spawn shopkeep-location
       - edge: navigate.enthusiast-landmark spawn enthusiast-location
-      - edge: navigate.stranger-landmark spawn stranger-cutscene
+      - edge: navigate.stranger-landmark spawn stranger-location
       # conditionally navigate to the win or lose cutscene depending on current game state. order
       # matters here since only the first matching subscriber in this list will handle the event.
       - edge: navigate.ending-landmark spawn win-cutscene
@@ -206,6 +214,28 @@ scenes:
     config: res://examples/visual-novel/scenes/stranger-cutscene.yaml
     transitions:
       - edge: dialog-interlude.question spawn stranger-dialog-choice
+      - edge: terminal-frame.success ends
+        updates:
+          - set flag stranger-in-dialog to no
+      - edge: terminal-frame.fail ends
+        updates:
+          - set flag stranger-in-dialog to no
+      - edge: terminal-frame.open ends
+        updates:
+          - set flag stranger-in-dialog to no
+
+  stranger-location:
+    template: core.landmark-overworld
+    config: res://examples/visual-novel/scenes/stranger-location.yaml
+    transitions:
+      - edge: navigate.npc spawn stranger-cutscene
+        updates:
+          - set flag stranger-in-dialog to yes
+      - edge: navigate.back-button ends
+      - edge: navigate.can-of-beans do nothing
+        updates:
+          - add 1 of item can-of-beans to bag inventory
+          - set flag found-sign-beans to yes
 
   stranger-dialog-choice:
     template: core.menu
