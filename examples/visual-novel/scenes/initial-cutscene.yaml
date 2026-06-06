@@ -24,103 +24,69 @@ sequences:
     transitions:
       - action: start done
     frames:
-      - type: add-character
-        side: left
-        character: mc
-      - type: set-outfit
-        character: mc
-        outfit: mc-regular-clothes
-      - type: set-outfit
-        character: mc
-        outfit: mc-face-happy
-      - type: set-text
-        character: mc
-        text: |
-          [b]You:[/b] Oh boy I sure do love walking outside in the
-          outdoors outside to get coffee in the outside because there's
-          coffee.
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-happy
+      - |
+        mc says
+        [b]You:[/b] Oh boy I sure do love walking outside in the
+        outdoors outside to get coffee in the outside because there's
+        coffee.
 
-      - type: set-outfit
-        character: mc
-        outfit: mc-face-surprised
-      - type: set-text
-        character: mc
-        text: |
-          [b]You:[/b] OH SHIT! AHH THE SUN ITS SO BRIGHT!
+      - mc puts on mc-face-surprised
+      - |
+        mc says
+        [b]You:[/b] OH SHIT! AHH THE SUN ITS SO BRIGHT!
 
-      - type: set-outfit
-        character: mc
-        outfit: mc-face-weirded-out
-      - type: set-text
-        character: mc
-        text: |
-          [b]You:[/b] Oh wait that isn't the sun.  What
-          is that? It looks like... me???
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        [b]You:[/b] Oh wait that isn't the sun.  What
+        is that? It looks like... me???
 
-      - type: add-character
-        side: right
-        character: future-mc
-      - type: set-outfit
-        character: future-mc
-        outfit: mc-regular-clothes
-      - type: set-outfit
-        character: future-mc
-        outfit: mc-face-angry
-      - type: set-text
-        character: future-mc
-        text: |
-          [b]You?:[/b] Hello.  It's me, you from the future.
-          Listen.  You really fucked up.  I was not supposed to come
-          back in time.  Nice going.  Now if you don't perfectly
-          recreate my actions we're going to collapse spacetime and
-          destroy reality.
+      - future-mc added to Right
+      - future-mc puts on mc-regular-clothes
+      - future-mc puts on mc-face-angry
+      - |
+        future-mc says
+        [b]You?:[/b] Hello.  It's me, you from the future.
+        Listen.  You really fucked up.  I was not supposed to come
+        back in time.  Nice going.  Now if you don't perfectly
+        recreate my actions we're going to collapse spacetime and
+        destroy reality.
 
-      - type: set-text
-        character: mc
-        text: |
-          [b]You:[/b] Uhh, but I haven't done anything?
+      - |
+        mc says
+        [b]You:[/b] Uhh, but I haven't done anything?
 
-      - type: set-text
-        character: future-mc
-        text: |
-          [b]Future You:[/b] Don't worry. You will. But I'm here to make
-          sure you don't, watch: "Hey. Don't."
+      - |
+        mc says
+        [b]Future You:[/b] Don't worry. You will. But I'm here to make
+        sure you don't, watch: "Hey. Don't."
 
-      - type: set-outfit
-        character: future-mc
-        outfit: mc-face-neutral
-      - type: set-text
-        character: mc
-        text: |
-          [b]You:[/b] Uhh...
+      - future-mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] Uhh...
 
-      - type: set-outfit
-        character: future-mc
-        outfit: mc-face-angry
-      - type: set-text
-        character: future-mc
-        text: |
-          [b]Future You:[/b] No time. Listen. You need to go and get the three
-          flags from people around here. You need to do it because I did it.
-          Don't ask me why I did it, I'm you so ask yourself.
+      - future-mc puts on mc-face-angry
+      - |
+        future-mc says
+        [b]Future You:[/b] No time. Listen. You need to go and get the three
+        flags from people around here. You need to do it because I did it.
+        Don't ask me why I did it, I'm you so ask yourself.
 
-      - type: set-outfit
-        character: future-mc
-        outfit: mc-face-neutral
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] Ok but who do I need to get these flags from?  Also flags?
+      - future-mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] Ok but who do I need to get these flags from?  Also flags?
 
-      - type: set-outfit
-        character: future-mc
-        outfit: mc-face-angry
-      - type: set-text
-        character: future-mc
-        text: |
-            [b]Future You:[/b] Just go talk to people ok? There's only three buttons
-            and they all talk to someone so you literally can't not talk to them. I'm
-            gonna go get some coffee.
+      - future-mc puts on mc-face-angry
+      - |
+        future-mc says
+        [b]Future You:[/b] Just go talk to people ok? There's only three buttons
+        and they all talk to someone so you literally can't not talk to them. I'm
+        gonna go get some coffee.
 
   done:
     transitions:

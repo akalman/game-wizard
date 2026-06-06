@@ -24,84 +24,56 @@ sequences:
     transitions:
       - action: start end
     frames:
-      - type: add-character
-        side: left
-        character: mc
-      - type: set-outfit
-        character: mc
-        outfit: mc-regular-clothes
-      - type: set-outfit
-        character: mc
-        outfit: mc-face-happy
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] I did it! I got all three flags! From a
-            lonely shopkeep, an unhinged flag enthusiast, and a
-            person who's been lurking at a corner waiting for
-            someone to crash into them!
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-happy
+      - |
+        mc says
+        [b]You:[/b] I did it! I got all three flags! From a
+        lonely shopkeep, an unhinged flag enthusiast, and a
+        person who's been lurking at a corner waiting for
+        someone to crash into them!
 
-      - type: add-character
-        side: right
-        character: future-mc
-      - type: set-outfit
-        character: future-mc
-        outfit: mc-regular-clothes
-      - type: set-outfit
-        character: future-mc
-        outfit: mc-face-neutral
-      - type: set-text
-        character: future-mc
-        text: |
-            [b]Future You:[/b] Oh hey nice you actually did it.
-            I'm honestly surprised. I figured you'd mess up at
-            least one of them.
+      - future-mc added to Right
+      - future-mc puts on mc-regular-clothes
+      - future-mc puts on mc-face-neutral
+      - |
+        future-mc says
+        [b]Future You:[/b] Oh hey nice you actually did it.
+        I'm honestly surprised. I figured you'd mess up at
+        least one of them.
 
-      - type: set-outfit
-        character: mc
-        outfit: mc-face-weirded-out
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] Thanks for the vote of confidence. So
-            is reality saved now?
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        [b]You:[/b] Thanks for the vote of confidence. So
+        is reality saved now?
 
-      - type: set-outfit
-        character: future-mc
-        outfit: mc-face-happy
-      - type: set-text
-        character: future-mc
-        text: |
-            [b]Future You:[/b] Yep! Spacetime is intact! The
-            timeline is preserved! Everything is exactly as it
-            should be! Probably! I'm not a scientist!
+      - future-mc puts on mc-face-happy
+      - |
+        future-mc says
+        [b]Future You:[/b] Yep! Spacetime is intact! The
+        timeline is preserved! Everything is exactly as it
+        should be! Probably! I'm not a scientist!
 
-      - type: set-outfit
-        character: mc
-        outfit: mc-face-neutral
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] Great. Can I go get my coffee now?
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] Great. Can I go get my coffee now?
 
-      - type: set-text
-        character: future-mc
-        text: |
-            [b]Future You:[/b] Yeah go for it. You earned it.
-            I already had mine. It was pretty good. You're gonna
-            love it. Later, me!
+      - |
+        future-mc says
+        [b]Future You:[/b] Yeah go for it. You earned it.
+        I already had mine. It was pretty good. You're gonna
+        love it. Later, me!
 
-      - type: remove-character
-        character: future-mc
-      - type: set-outfit
-        character: mc
-        outfit: mc-face-happy
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] Well that's that. I saved reality by being
-            nice to people and answering questions correctly. What
-            a day. What a weird, weird day.
+      - future-mc removed
+      - mc puts on mc-face-happy
+      - |
+        mc says
+        [b]You:[/b] Well that's that. I saved reality by being
+        nice to people and answering questions correctly. What
+        a day. What a weird, weird day.
 
   end:
     transitions:
