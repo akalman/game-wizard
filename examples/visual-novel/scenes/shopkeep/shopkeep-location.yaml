@@ -11,6 +11,8 @@ landmarks:
     offset: ( -0.17 -0.63 )
     when:
       - flag shopkeep-in-dialog in [no]
+    disabled-when:
+      - flag shopkeep-progress in [unseen,open]
 
   can-of-beans:
     sprite: res://examples/visual-novel/sprites/can-of-beans.png

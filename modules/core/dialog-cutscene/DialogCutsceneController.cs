@@ -77,9 +77,6 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
         if (!Config.Interludes.TryGetValue(CurrentInterlude, out var interlude))
             throw new InvalidDialogException($"Did not find definition for interlude: {CurrentInterlude}");
 
-        foreach (var t in interlude.Transitions)
-            GD.PushWarning(t.Source);
-
         var transition = interlude.Transitions
             .FirstOrDefault(trn => trn.Source == $"{outputId}" && trn.When.Evaluate(Game.State));
         if (transition is null)

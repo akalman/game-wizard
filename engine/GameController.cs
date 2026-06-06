@@ -192,6 +192,7 @@ public partial class GameController : Node2D
                 transition.When.Evaluate(State))
             {
                 target = transition;
+                break;
             }
         }
 

@@ -51,7 +51,6 @@ public partial class LandmarkOverworldController : TemplateController<OverworldC
 
     public override void HandleFocusUpdated(string sourceScene, string outputId, FocusState updatedState)
     {
-        GD.PushWarning("recalcuing landmark visibility");
         foreach (var (landmarkId, landmarkButton) in LoadedLandmarks)
             landmarkButton.Visible = Config.Landmarks[landmarkId].When.Evaluate(Game.State);
     }

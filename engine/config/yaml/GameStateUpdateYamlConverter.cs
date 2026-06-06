@@ -58,7 +58,7 @@ public class GaneStateUpdateYamlConverter : IYamlTypeConverter
                     {
                         Type = updateType,
                         StateName = match.Groups[2].Value,
-                        Number = int.Parse(match.Groups[2].Value),
+                        Number = int.Parse(match.Groups[1].Value),
                     },
                     StateUpdateType.SubtractAttribute => new StateUpdate
                     {

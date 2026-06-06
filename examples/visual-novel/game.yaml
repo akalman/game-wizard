@@ -5,8 +5,8 @@ name: Game-Wizard Example Visual Novel
 # when and where the game should start and end.
 modules:
 - res://modules/core/config.yaml
-initial-scene: initial-cutscene
-# initial-scene: world-map
+# initial-scene: initial-cutscene
+initial-scene: world-map
 
 
 # define what state our game needs to track. this can be used to track story event flags,
@@ -32,19 +32,23 @@ state:
       values: [ yes, no ]
       initial-value: no
 
-    found-shop-beans:
-      values: [ yes, no ]
-      initial-value: no
-
     enthusiast-in-dialog:
       values: [ yes, no ]
       initial-value: no
 
-    found-house-beans:
+    stranger-in-dialog:
       values: [ yes, no ]
       initial-value: no
 
-    stranger-in-dialog:
+    shopkeep-wants-beans:
+      values: [ known, unknown ]
+      initial-value: unknown
+
+    found-shop-beans:
+      values: [ yes, no ]
+      initial-value: no
+
+    found-house-beans:
       values: [ yes, no ]
       initial-value: no
 
@@ -66,6 +70,11 @@ state:
     stranger-familiarity:
       min: 0
       max: 3
+      initial-value: 0
+
+    money:
+      min: 0
+      max: 99999
       initial-value: 0
 
   bags:
@@ -117,8 +126,14 @@ scenes:
 
   shopkeep-location:
     template: core.landmark-overworld
-    config: res://examples/visual-novel/scenes/shopkeep-location.yaml
+    config: res://examples/visual-novel/scenes/shopkeep/shopkeep-location.yaml
     transitions:
+      - edge: navigate.npc spawn shopkeep-cutscene
+        updates:
+          - set flag shopkeep-in-dialog to yes
+          - add 1 to attribute shopkeep-familiarity
+        when:
+          - attribute shopkeep-familiarity less than 3
       - edge: navigate.npc spawn shopkeep-cutscene
         updates:
           - set flag shopkeep-in-dialog to yes
@@ -132,37 +147,51 @@ scenes:
   # with the npc itself. dialog routing is done internally.
   shopkeep-cutscene:
     template: core.dialog-cutscene
-    config: res://examples/visual-novel/scenes/shopkeep-cutscene.yaml
+    config: res://examples/visual-novel/scenes/shopkeep/shopkeep-cutscene.yaml
     transitions:
         # when input from a user is needed, we spawn a child scene in response to the
         # dialog-interlude event.
-      - edge: dialog-interlude.question spawn shopkeep-dialog-choice
-      - edge: terminal-frame.success ends
+      - edge: dialog-interlude.shopkeep-topics spawn shopkeep-dialog-topics
+        updates:
+          - set flag shopkeep-progress to open
+        when:
+          - flag shopkeep-progress in [unseen]
+      - edge: dialog-interlude.shopkeep-topics spawn shopkeep-dialog-topics
+      - edge: dialog-interlude.buy-flag-options spawn shopkeep-buy-flag-options
+      - edge: terminal-frame.purchase-farewell ends
         updates:
           - set flag shopkeep-in-dialog to no
-      - edge: terminal-frame.fail ends
-        updates:
-          - set flag shopkeep-in-dialog to no
-      - edge: terminal-frame.open ends
+      - edge: terminal-frame.nevermind ends
         updates:
           - set flag shopkeep-in-dialog to no
 
-  # create the scene for letting the player make a choice within the dialog cutscene. create
-  # transitions for each option, and for each option, update the associated flag to the
-  # appropriate state.
-  shopkeep-dialog-choice:
+  # create a scene for selecting what topic to discuss with the shopkeep npc
+  shopkeep-dialog-topics:
     template: core.menu
-    config: res://examples/visual-novel/scenes/shopkeep-dialog-choice.yaml
+    config: res://examples/visual-novel/scenes/shopkeep/shopkeep-dialog-topics.yaml
     transitions:
-      - edge: terminal-select.success ends
+      # omitted transitions will default based on the template config, so adding transitions
+      # like these isn't necessary but allows for adding updates and conditional logic.
+      - edge: terminal-select.ask-for-flags ends
+      - edge: terminal-select.ask-about-beans ends
+      - edge: terminal-select.hows-business ends
+      - edge: terminal-select.nevermind ends
+
+  # create a scene for the different ways buying a flag could resolve
+  shopkeep-buy-flag-options:
+    template: core.menu
+    config: res://examples/visual-novel/scenes/shopkeep/shopkeep-buy-flag-options.yaml
+    transitions:
+      - edge: terminal-select.heres-the-money ends
         updates:
           - set flag shopkeep-progress to success
-      - edge: terminal-select.fail ends
+      - edge: terminal-select.heres-beans ends
         updates:
-          - set flag shopkeep-progress to fail
-      - edge: terminal-select.open ends
+          - set flag shopkeep-progress to success
+      - edge: terminal-select.no-money ends
         updates:
-          - set flag shopkeep-progress to open
+          - set flag shopkeep-wants-beans to known
+      - edge: terminal-select.nevermind ends
 
   # do the same for each other npc.
   # enthusiast

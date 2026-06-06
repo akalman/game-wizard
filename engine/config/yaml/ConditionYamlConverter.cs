@@ -17,6 +17,9 @@ public class ConditionYamlConverter : IYamlTypeConverter
     {
         { ConditionType.FlagIn, @"flag {0} in \[{1}\]" },
 
+        { ConditionType.AttributeMoreThan, @"attribute {0} more than {1}" },
+        { ConditionType.AttributeLessThan, @"attribute {0} less than {1}" },
+
         { ConditionType.BagContainsMoreThan, @"bag {0} contains more than {1} {2}" },
     };
 
@@ -38,6 +41,18 @@ public class ConditionYamlConverter : IYamlTypeConverter
                     Type = updateType,
                     Target = match.Groups[1].Value,
                     ExpectedMembership = match.Groups[2].Value.Split(","),
+                },
+                ConditionType.AttributeMoreThan => new Condition
+                {
+                    Type = updateType,
+                    Target = match.Groups[1].Value,
+                    ExpectedNumber = decimal.Parse(match.Groups[2].Value),
+                },
+                ConditionType.AttributeLessThan => new Condition
+                {
+                    Type = updateType,
+                    Target = match.Groups[1].Value,
+                    ExpectedNumber = decimal.Parse(match.Groups[2].Value),
                 },
                 ConditionType.BagContainsMoreThan => new Condition
                 {

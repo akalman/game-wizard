@@ -1,0 +1,675 @@
+initial-sequence: route-intro
+
+
+style:
+  background: res://examples/visual-novel/sprites/50-px-darken.png
+  banner:
+    background: res://examples/visual-novel/sprites/dialog-banner-background.png
+    height: 50
+  characters:
+    outer-margin: 50
+  dialog-box:
+    background: res://examples/visual-novel/sprites/dialog-box-background.png
+    height: 350
+    text-margin: ( 30 20 )
+
+
+characters: characters
+outfits: outfits
+
+
+interludes:
+
+  shopkeep-topics:
+    transitions:
+      - source: terminal-select.ask-for-flags
+        action: start ask-for-flags
+      - source: terminal-select.ask-about-beans
+        action: start ask-about-beans
+      - source: terminal-select.hows-business
+        action: start hows-business
+      - source: terminal-select.nevermind
+        action: start nevermind
+
+  buy-flag-options:
+    transitions:
+      - source: terminal-select.heres-the-money
+        action: start buy-flag
+      - source: terminal-select.heres-beans
+        action: start trade-flag
+      - source: terminal-select.no-money
+        action: start no-money
+      - source: terminal-select.nevermind
+        action: start nevermind-buy-flag
+
+
+sequences:
+
+
+  route-intro:
+    transitions:
+      - action: start unseen-intro
+        when:
+          - flag shopkeep-progress in [unseen]
+      - action: start route-revisit
+        when:
+          - flag shopkeep-progress in [open]
+
+
+  unseen-intro:
+    transitions:
+      - action: interlude shopkeep-topics
+    frames:
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] This looks like a shop. Maybe someone in here
+        has a flag.
+
+      - shopkeep added to Right
+      - shopkeep puts on npc-regular-clothes
+      - shopkeep puts on npc-face-neutral
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Hello. Welcome to my flag shop. We sell
+        flags.
+
+      - |
+        mc says
+        [b]You:[/b] Oh perfect, I actually need—
+
+      - shopkeep puts on npc-face-surprised
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Wait. Hold on. You're... a customer?
+        An actual customer? Like, a person? Who came here?
+        To this shop? On purpose?
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        [b]You:[/b] I... yes? Is that unusual?
+
+      - shopkeep puts on npc-face-happy
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] It's been FOURTEEN MONTHS. I thought I
+        was a ghost. I thought maybe the shop was a ghost. I've
+        been talking to the flags. They don't talk back. I checked.
+
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Sorry. Sorry. Let me be professional. I
+        practiced for this.
+
+      - shopkeep puts on npc-face-neutral
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] [i]*ahem*[/i] Welcome to Flag Emporium.
+        Your one-stop shop for flags and flag accessories. How
+        may I help you today.
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] That was pretty good actually.
+
+      - shopkeep puts on npc-face-happy
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Thanks. I've been rehearsing it every
+        morning. Just in case. For fourteen months. Please don't
+        think about that too hard.
+
+
+  route-revisit:
+    transitions:
+      - action: start revisit-familiar
+        when:
+          - attribute shopkeep-familiarity more than 2
+      - action: start revisit-early
+    frames: []
+
+
+  revisit-early:
+    transitions:
+      - action: interlude shopkeep-topics
+    frames:
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-neutral
+      - shopkeep added to Right
+      - shopkeep puts on npc-regular-clothes
+      - shopkeep puts on npc-face-happy
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Oh! You came back! I wasn't sure if you
+        were real or just a really vivid hallucination. I get those
+        sometimes. Occupational hazard of working alone in a flag
+        shop for over a year.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        [b]You:[/b] I'm real. Definitely real. Should I be
+        concerned about you?
+
+      - shopkeep puts on npc-face-neutral
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] What? No. I'm fine. I'm great. I organized
+        all the flags by color while you were gone. And then by size.
+        And then by how they make me feel emotionally. That last
+        category took a while.
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] Right. Anyway—
+
+
+  revisit-familiar:
+    transitions:
+      - action: interlude shopkeep-topics
+    frames:
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-neutral
+      - shopkeep added to Right
+      - shopkeep puts on npc-regular-clothes
+      - shopkeep puts on npc-face-happy
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] MY BEST CUSTOMER! I would say "my only
+        customer" but that makes it sound less impressive and more
+        deeply concerning.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        [b]You:[/b] Are we... friends now? Is that what's happening
+        here?
+
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] I have been telling the flags about you.
+        They're very excited. Well, they're flags so they just hang
+        there. But I'm excited on their behalf.
+
+      - shopkeep puts on npc-face-neutral
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] I set aside a special flag for you. I call
+        her "Preferred Client Relations." She's mostly blue. Very
+        dignified.
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] You name your inventory?
+
+      - shopkeep puts on npc-face-angry
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] For CATALOGUING PURPOSES. It's professional.
+        It's an industry standard practice that I invented and am the
+        only practitioner of.
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] Sure. What do we got today?
+
+
+  ask-for-flags:
+    transitions:
+      - action: interlude buy-flag-options
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] So I need a flag. What have you got?
+
+      - shopkeep puts on npc-face-happy
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Oh I'm glad you asked. I have a VERY
+        curated selection. You're looking at premium rectangular
+        fabric experiences. Each flag hand-selected by me from a
+        catalog I found behind a dumpster.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        [b]You:[/b] Behind a—
+
+      - shopkeep puts on npc-face-neutral
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] It was a NICE dumpster. Very reputable.
+        Anyway. Flags start at $7.99. That's the introductory
+        price. The "getting to know flags" price.
+
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Very reasonable when you consider that most
+        people go their whole lives without owning a single flag.
+        Imagine living like that. I shudder just thinking about it.
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] I think most people are ok with that actually.
+
+      - shopkeep puts on npc-face-weirded-out
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Most people are wrong. So. $7.99?
+
+
+  buy-flag:
+    transitions:
+      - action: start purchase-farewell
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] Here you go. $7.99. For a flag. This is how
+        I'm spending my money today.
+
+      - shopkeep puts on npc-face-surprised
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Oh wow. Money. I forgot what money looked
+        like. I've just been staring at flags for so long everything
+        starts to look like flags. Let me just...
+
+      - shopkeep puts on npc-face-happy
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Excellent. A wise investment. You won't
+        regret this. Well, you might. But the flag won't.
+
+      - shopkeep puts on npc-face-neutral
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Here's your flag. I picked a good one for
+        you. Her name is "Enterprise Value." She's mostly blue.
+        Very assertive energy. She's going to do great things with
+        you, I can feel it.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        [b]You:[/b] You named— and "she"? Are you ok? Like
+        genuinely?
+
+      - shopkeep puts on npc-face-angry
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] I name them for INVENTORY PURPOSES. That's
+        COMPLETELY different from that flag enthusiast across town.
+        What they do is a HOBBY. What I do is BUSINESS. Enterprise
+        Value is a PROFESSIONAL.
+
+
+  trade-flag:
+    transitions:
+      - action: start purchase-farewell
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] I managed to find three cans of beans. Here.
+
+      - shopkeep puts on npc-face-surprised
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Three cans! THREE!! Do you have any idea
+        what this means?!
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        [b]You:[/b] That you... have beans now?
+
+      - shopkeep puts on npc-face-happy
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] I can eat for DAYS! Maybe a whole WEEK if
+        I ration correctly and don't stress-eat during the quiet
+        hours! Which is all of the hours! They're all quiet!
+
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] You've earned yourself a flag, my friend.
+        And I don't use the word "friend" lightly. I also don't use
+        it accurately since we've spoken like three times. But still.
+
+      - shopkeep puts on npc-face-neutral
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Here. Take "Fiscal Responsibility." She's
+        mostly red. Very assertive. She was on the top shelf. Well,
+        there's only one shelf. But she was on the top PART of it.
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] "She?" You know what, I'm not going to ask.
+        Thanks for the flag.
+
+
+  purchase-farewell:
+    transitions:
+      - action: end
+    frames:
+      - shopkeep puts on npc-face-happy
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Thank you. Truly. You are my favorite
+        customer. You are also my only customer. But you'd still be
+        my favorite even if there were others. Probably.
+
+      - shopkeep puts on npc-face-weirded-out
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Take good care of her. Write to me. Or
+        visit. Please visit. I'm going to be here. I'm always here.
+        There is nowhere else for me.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        [b]You:[/b] I got a flag. From a profoundly lonely person.
+        Cool. Adding that to the list of weird interactions today.
+        Future me better appreciate this.
+
+
+  no-money:
+    transitions:
+      - action: interlude shopkeep-topics
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] I don't actually have any money. Like, at all.
+        I was on my way to get coffee and then my future self showed
+        up and now I'm buying flags. It's been a whole day.
+
+      - shopkeep puts on npc-face-weirded-out
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Future self? Yeah, that tracks. This town
+        has a whole thing with time stuff. Last week a dog walked in
+        here and I'm still not fully convinced it wasn't a time
+        traveler.
+
+      - mc puts on mc-face-surprised
+      - |
+        mc says
+        [b]You:[/b] Did... did the dog buy a flag?
+
+      - shopkeep puts on npc-face-neutral
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] No. It just stared at me for forty-five
+        minutes straight and then left. Honestly it was the most
+        social interaction I'd had in weeks. I almost named it.
+
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] ANYWAY. Tell you what. I am running
+        CRITICALLY low on beans. I'm down to my last can and it's
+        dented so I'm not sure it even counts anymore.
+
+      - shopkeep puts on npc-face-happy
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] You bring me 3 cans of beans and I'll
+        trade you a flag. Premium quality. Top shelf selection.
+        Well, there's only one shelf. But the flags on it are
+        very nice.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        [b]You:[/b] Where am I supposed to find cans of beans
+        just lying around?
+
+      - shopkeep puts on npc-face-neutral
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] That's the beautiful thing about this
+        town. Beans are everywhere. People just leave them lying
+        around in random places. I don't know why. Nobody knows
+        why. We've all just accepted it as a fundamental property
+        of the universe, like gravity or tax evasion.
+
+
+  nevermind-buy-flag:
+    transitions:
+      - action: interlude shopkeep-topics
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] Actually, let me think about this for a minute.
+
+      - shopkeep puts on npc-face-neutral
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Take your time. I've got nothing but time.
+        That's literally all I have. Time, flags, and one dented
+        can of beans that might be expired. I'm afraid to check.
+
+
+  ask-about-beans:
+    transitions:
+      - action: interlude shopkeep-topics
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] Any tips on where I can find beans? You seem
+        like someone who knows their beans.
+
+      - shopkeep puts on npc-face-happy
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Oh, you flatter me. But yes. I am something
+        of a bean scholar. It comes with the territory when your
+        entire diet is beans. Flag retail and bean awareness go
+        hand in hand.
+
+      - shopkeep puts on npc-face-neutral
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] My professional advice: just look around.
+        Click on things. Poke around the different areas. Beans
+        tend to show up in places you'd least expect. And also in
+        places you'd most expect. They're really just kind of
+        everywhere. It's an infestation but like a helpful one.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        [b]You:[/b] That's not very specific advice.
+
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Listen, if I knew exactly where all the
+        beans were would I be running a flag shop with zero customers
+        eating one dented can of beans for every meal? Use your
+        critical thinking skills. I believe in you.
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] Fair point. I'll keep poking around.
+
+
+  hows-business:
+    transitions:
+      - action: start route-hows-business
+    frames: []
+
+  route-hows-business:
+    transitions:
+      - action: start hows-business-first
+        when:
+          - attribute shopkeep-familiarity less than 3
+      - action: start hows-business-repeat
+
+  hows-business-first:
+    transitions:
+      - action: interlude shopkeep-topics
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] So how's business going? You know, generally?
+
+      - shopkeep puts on npc-face-neutral
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Great question. Do you want the honest
+        answer or the professional answer?
+
+      - |
+        mc says
+        [b]You:[/b] Let's go with honest.
+
+      - shopkeep puts on npc-face-weirded-out
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] You are my first customer in fourteen
+        months. I have eaten nothing but beans since March. I have
+        had full conversations with a flag I named "Regional
+        Manager." Regional Manager doesn't judge me. Regional
+        Manager understands.
+
+      - mc puts on mc-face-surprised
+      - |
+        mc says
+        [b]You:[/b] Oh. Oh no.
+
+      - shopkeep puts on npc-face-neutral
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] The professional answer is "steady."
+        Business is "steady." That's what I would have said.
+        "Steady." You chose wrong.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        [b]You:[/b] Yeah I'm getting that. Is there anyone you can
+        talk to? Like a friend or family or a therapist or—
+
+      - shopkeep puts on npc-face-happy
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] I'm talking to YOU! Right now! This is
+        the most fun I've had since I accidentally locked myself
+        in the supply closet for three days and had to befriend a
+        spider. His name was Kevin. Kevin is gone now. I don't
+        want to talk about Kevin.
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] I think we should go back to talking about
+        flags. Flags feel safer.
+
+      - shopkeep puts on npc-face-neutral
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Yes. Flags. Safe territory. What else
+        can I do for you?
+
+
+  hows-business-repeat:
+    transitions:
+      - action: interlude shopkeep-topics
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] So how's business been since last time?
+
+      - shopkeep puts on npc-face-neutral
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Well let's see. Since you left, I
+        rearranged the entire shop twice. I wrote a business plan.
+        I wrote a counter-business plan to argue with the first
+        one. I won the argument. Then I felt bad for the business
+        plan that lost so I compromised with it.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        [b]You:[/b] You compromised... with your own business plan?
+
+      - shopkeep puts on npc-face-happy
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] It's called management. You wouldn't
+        understand. The point is, the flags are in a new order
+        now and everyone is happier. By everyone I mean me. The
+        flags didn't have input. They never do.
+
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Oh! And I also had a bird fly in through
+        the window. It knocked over three flags and left. I filed
+        an incident report. With myself. Into a drawer that I
+        never open.
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] You know what? I'm rooting for you. I really am.
+
+      - shopkeep puts on npc-face-surprised
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] That... that might be the nicest thing
+        anyone has ever said to me. The bar is very low. But you
+        cleared it. Barely. But you cleared it.
+
+
+  nevermind:
+    transitions:
+      - action: end
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        [b]You:[/b] I should get going. I'll come back later.
+
+      - shopkeep puts on npc-face-weirded-out
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] You'll be back? You PROMISE you'll be
+        back? That's not just something people say right before
+        they disappear forever and leave me alone with my flags
+        and my thoughts?
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        [b]You:[/b] I... yes? I still need a flag so I kind of
+        have to come back.
+
+      - shopkeep puts on npc-face-happy
+      - |
+        shopkeep says
+        [b]Shopkeep:[/b] Right! The flag! Business reasons!
+        Professional obligation! That's why you're coming back!
+        Not because of my sparkling personality or anything!
+        Ha ha! I'll be here! I'm always here! There is nowhere
+        else!

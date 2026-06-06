@@ -1,0 +1,37 @@
+initial-page: buy-flag-options
+
+
+style:
+  background: res://examples/visual-novel/sprites/50-px-darken.png
+  options:
+    sprite: res://examples/visual-novel/sprites/dialog-choice-button.png
+    size: ( 800 200 )
+
+
+pages:
+
+  buy-flag-options:
+    cancel-action: none
+    options:
+      heres-the-money:
+        action: end
+        label: |
+          "Fine. Here's $7.99. I can't believe I'm doing this."
+        when:
+          - attribute money more than 798
+      heres-beans:
+        action: end
+        label: |
+          "I got three cans of beans with your name on them."
+        when:
+          - bag inventory contains more than 2 can-of-beans
+      no-money:
+        action: end
+        label: |
+          "I don't have any money. Or dignity, apparently."
+        when:
+          - attribute shopkeep-familiarity more than 2
+      nevermind:
+        action: end
+        label: |
+          "Let me think about it."
