@@ -8,6 +8,7 @@ public class GameConfig
     public string InitialScene { get; set; }
     public GameState State { get; set; }
 
+    public IDictionary<string, string> Database { get; set; } = new Dictionary<string, string>();
     public IList<string> Modules { get; set; } = new List<string>();
     public IDictionary<string, GameScene> Scenes { get; set; } = new Dictionary<string, GameScene>();
 }

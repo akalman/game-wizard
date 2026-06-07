@@ -1,0 +1,27 @@
+map:
+  sprite: res://examples/visual-novel/sprites/shopkeep-background.png
+  scaling: fit-width
+
+
+landmarks:
+
+  npc:
+    sprite: res://examples/visual-novel/sprites/shopkeep-back.png
+    size: ( 400 750 )
+    offset: ( -0.17 -0.63 )
+    when:
+      - flag shopkeep-in-dialog in [no]
+    disabled-when:
+      - flag shopkeep-progress in [unseen,open]
+
+  can-of-beans:
+    sprite: res://examples/visual-novel/sprites/can-of-beans.png
+    size: ( 100 100 )
+    offset: ( -0.33 -0.32 )
+    when:
+      - flag found-shop-beans in [no]
+
+  back-button:
+    sprite: res://examples/visual-novel/sprites/back.png
+    size: ( 200 100 )
+    offset: ( -0.9 -0.9 )

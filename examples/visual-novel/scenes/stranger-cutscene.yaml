@@ -11,14 +11,14 @@ style:
   dialog-box:
     background: res://examples/visual-novel/sprites/dialog-box-background.png
     height: 350
-    text-margin: ( 30 20 )
+    text-size: ( 1750 230 )
+    text-offset: ( 0 40 )
+    speaker-name-size: ( 200 50 )
+    speaker-name-offset: ( -1650 -260 )
 
 
-characters:
-  mc:
-    sprite: res://examples/visual-novel/sprites/char-masc-meso.png
-  stranger:
-    sprite: res://examples/visual-novel/sprites/char-masc-meso.png
+characters: characters
+outfits: outfits
 
 
 interludes:
@@ -45,258 +45,246 @@ sequences:
     transitions:
       - action: start shared
     frames:
-      - type: add-character
-        side: left
-        character: mc
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] Ok let me just go around this corner and—
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        Ok let me just go around this corner and—
 
-      - type: add-character
-        side: right
-        character: stranger
-      - type: set-text
-        character: mc
-        text: |
-            [b]BONK.[/b]
+      - stranger added to Right
+      - stranger puts on npc-regular-clothes
+      - stranger puts on npc-face-angry
+      - mc puts on mc-face-surprised
+      - |
+        mc says
+        [b]BONK.[/b]
 
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] OW! Oh god I'm so sorry I didn't see you
-            there I— my toast! I dropped my toast!
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        OW! Oh god I'm so sorry I didn't see you
+        there I— my toast! I dropped my toast!
 
-      - type: set-text
-        character: stranger
-        text: |
-            [b]Stranger:[/b] No. No no no. Stop. You didn't say
-            the line.
+      - |
+        stranger says
+        No. No no no. Stop. You didn't say
+        the line.
 
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] ...the line? What line? I just physically
-            collided with you.
+      - |
+        mc says
+        ...the line? What line? I just physically
+        collided with you.
 
-      - type: set-text
-        character: stranger
-        text: |
-            [b]Stranger:[/b] When you crash into someone at a corner
-            you have to SAY THE LINE. Everyone knows this. It's like
-            the most important part. The crash means nothing without
-            the line.
+      - |
+        stranger says
+        When you crash into someone at a corner
+        you have to SAY THE LINE. Everyone knows this. It's like
+        the most important part. The crash means nothing without
+        the line.
 
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] I genuinely have no idea what you're talking
-            about.
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        I genuinely have no idea what you're talking
+        about.
 
-      - type: set-text
-        character: stranger
-        text: |
-            [b]Stranger:[/b] Ok look. I'll give you a flag if you
-            do this right. But you have to say the line. I've been
-            standing at this corner ALL DAY waiting for someone to
-            crash into me and say it.
+      - stranger puts on npc-face-weirded-out
+      - |
+        stranger says
+        Ok look. I'll give you a flag if you
+        do this right. But you have to say the line. I've been
+        standing at this corner ALL DAY waiting for someone to
+        crash into me and say it.
 
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] That's... honestly kind of sad.
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        That's... honestly kind of sad.
 
-      - type: set-text
-        character: stranger
-        text: |
-            [b]Stranger:[/b] It's not SAD it's TRADITION. Now. Let's
-            try this again.
+      - stranger puts on npc-face-angry
+      - |
+        stranger says
+        It's not SAD it's TRADITION. Now. Let's
+        try this again.
 
   revisit:
     transitions:
       - action: start shared
     frames:
-      - type: add-character
-        side: left
-        character: mc
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] Ok, the corner person. Let me just—
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        Ok, the corner person. Let me just—
 
-      - type: add-character
-        side: right
-        character: stranger
-      - type: set-text
-        character: mc
-        text: |
-            [b]BONK.[/b]
+      - stranger added to Right
+      - stranger puts on npc-regular-clothes
+      - stranger puts on npc-face-weirded-out
+      - mc puts on mc-face-surprised
+      - |
+        mc says
+        [b]BONK.[/b]
 
-      - type: set-text
-        character: stranger
-        text: |
-            [b]Stranger:[/b] Good, you're back. Very committed
-            crash this time. Really felt that one in my ribs. Now
-            are you ready to say the line?
+      - stranger puts on npc-face-happy
+      - |
+        stranger says
+        Good, you're back. Very committed
+        crash this time. Really felt that one in my ribs. Now
+        are you ready to say the line?
 
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] I'm going to be honest, I walked away last
-            time and still have no idea what the line is. But let's
-            do this.
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        I'm going to be honest, I walked away last
+        time and still have no idea what the line is. But let's
+        do this.
 
   shared:
     transitions:
       - action: interlude question
     frames:
-      - type: set-text
-        character: stranger
-        text: |
-            [b]Stranger:[/b] Ok. The scene is set. You've just
-            rounded a corner at speed and crashed directly into me,
-            a stranger. Now. What do you say?
+      - stranger puts on npc-face-neutral
+      - |
+        stranger says
+        Ok. The scene is set. You've just
+        rounded a corner at speed and crashed directly into me,
+        a stranger. Now. What do you say?
 
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] Can I get a hint?
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        Can I get a hint?
 
-      - type: set-text
-        character: stranger
-        text: |
-            [b]Stranger:[/b] NO HINTS. This is about INSTINCT. It's
-            about what your HEART tells you to say when you slam into
-            a stranger at a corner. Just pick one. You'll know the
-            right answer when you feel it.
+      - stranger puts on npc-face-angry
+      - |
+        stranger says
+        NO HINTS. This is about INSTINCT. It's
+        about what your HEART tells you to say when you slam into
+        a stranger at a corner. Just pick one. You'll know the
+        right answer when you feel it.
 
   success:
     transitions:
       - action: end
     frames:
-      - type: set-text
-        character: stranger
-        text: |
-            [b]Stranger:[/b] ...
+      - stranger puts on npc-face-surprised
+      - |
+        stranger says
+        ...
 
-      - type: set-text
-        character: stranger
-        text: |
-            [b]Stranger:[/b] YES!! "I'M LATE! I'M LATE!" THAT'S
-            THE LINE!! YOU SAID IT!! OH MY GOD!!
+      - stranger puts on npc-face-happy
+      - |
+        stranger says
+        YES!! "I'M LATE! I'M LATE!" THAT'S
+        THE LINE!! YOU SAID IT!! OH MY GOD!!
 
-      - type: set-text
-        character: stranger
-        text: |
-            [b]Stranger:[/b] Do you know how LONG I've been standing
-            at this corner?! WEEKS! And nobody ever says the line!!
-            They just say "sorry" or "ow" like ANIMALS!!
+      - |
+        stranger says
+        Do you know how LONG I've been standing
+        at this corner?! WEEKS! And nobody ever says the line!!
+        They just say "sorry" or "ow" like ANIMALS!!
 
-      - type: set-text
-        character: stranger
-        text: |
-            [b]Stranger:[/b] Here! Take this flag! You've earned it!
-            You are a person of CULTURE and TASTE and PROPER
-            CORNER-COLLISION ETIQUETTE!
+      - |
+        stranger says
+        Here! Take this flag! You've earned it!
+        You are a person of CULTURE and TASTE and PROPER
+        CORNER-COLLISION ETIQUETTE!
 
-      - type: remove-character
-        character: stranger
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] Got a flag because I said "I'm late" after
-            bumping into someone. Sure. This is the reality I'm
-            trying to save. Ok. Now they can finally go to school
-            I guess.
+      - stranger removed
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        Got a flag because I said "I'm late" after
+        bumping into someone. Sure. This is the reality I'm
+        trying to save. Ok. Now they can finally go to school
+        I guess.
 
   fail:
     transitions:
       - action: end
     frames:
-      - type: set-text
-        character: stranger
-        text: |
-            [b]Stranger:[/b] ...what?
+      - stranger puts on npc-face-surprised
+      - |
+        stranger says
+        ...what?
 
-      - type: set-text
-        character: stranger
-        text: |
-            [b]Stranger:[/b] That's... ok I need a minute. I need
-            to go process that. Stay right here. I'll be back. I
-            just need to go around the corner and think about what
-            you just said to me.
+      - stranger puts on npc-face-weirded-out
+      - |
+        stranger says
+        That's... ok I need a minute. I need
+        to go process that. Stay right here. I'll be back. I
+        just need to go around the corner and think about what
+        you just said to me.
 
-      - type: remove-character
-        character: stranger
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] Ok. I'll just wait here I guess. They
-            seemed pretty shaken up. Maybe I should have just
-            said the line.
+      - stranger removed
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        Ok. I'll just wait here I guess. They
+        seemed pretty shaken up. Maybe I should have just
+        said the line.
 
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] ...they've been gone for a while. Let me
-            go check around the corner.
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        ...they've been gone for a while. Let me
+        go check around the corner.
 
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] Oh. Oh no. They're dead. They are actually
-            dead. On the ground. Behind the corner. What.
+      - mc puts on mc-face-surprised
+      - |
+        mc says
+        Oh. Oh no. They're dead. They are actually
+        dead. On the ground. Behind the corner. What.
 
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] Did... did I do that?! Was it the thing I
-            said?! That's not how that's supposed to work!! It's
-            just a THING PEOPLE SAY!
+      - |
+        mc says
+        Did... did I do that?! Was it the thing I
+        said?! That's not how that's supposed to work!! It's
+        just a THING PEOPLE SAY!
 
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] Ok I need to leave. Right now. Before
-            someone sees me standing next to a dead stranger behind
-            a corner. No flag. No nothing. I'm just going to walk
-            away very quickly and never speak of this again.
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        Ok I need to leave. Right now. Before
+        someone sees me standing next to a dead stranger behind
+        a corner. No flag. No nothing. I'm just going to walk
+        away very quickly and never speak of this again.
 
   open:
     transitions:
       - action: end
     frames:
-      - type: set-text
-        character: stranger
-        text: |
-            [b]Stranger:[/b] What did you just say to me?
+      - stranger puts on npc-face-surprised
+      - |
+        stranger says
+        What did you just say to me?
 
-      - type: set-text
-        character: stranger
-        text: |
-            [b]Stranger:[/b] How do you know about that?! WHO SENT
-            YOU?! I KNEW they were watching! I KNEW the corner was
-            compromised!
+      - stranger puts on npc-face-angry
+      - |
+        stranger says
+        How do you know about that?! WHO SENT
+        YOU?! I KNEW they were watching! I KNEW the corner was
+        compromised!
 
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] I don't— I literally just said sounds! I
-            was guessing! I don't know what any of this is!
+      - mc puts on mc-face-surprised
+      - |
+        mc says
+        I don't— I literally just said sounds! I
+        was guessing! I don't know what any of this is!
 
-      - type: set-text
-        character: stranger
-        text: |
-            [b]Stranger:[/b] Leave. NOW. And don't come back until
-            you've lost their trail. I can't be seen with you while
-            they're listening. Go. Walk around. Act natural. Come
-            back when you're CLEAN.
+      - |
+        stranger says
+        Leave. NOW. And don't come back until
+        you've lost their trail. I can't be seen with you while
+        they're listening. Go. Walk around. Act natural. Come
+        back when you're CLEAN.
 
-      - type: remove-character
-        character: stranger
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] I don't know who "they" are. I don't know
-            what trail I'm losing. But sure. I'll go walk around
-            and come back and pretend that accomplished something.
+      - stranger removed
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        I don't know who "they" are. I don't know
+        what trail I'm losing. But sure. I'll go walk around
+        and come back and pretend that accomplished something.

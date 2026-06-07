@@ -6,16 +6,14 @@ namespace GameWizard.Core.DialogCutscene;
 public class DialogConfig
 {
     public string InitialSequence { get; set; }
+
     public DialogStyle Style { get; set; }
 
-    public IDictionary<string, DialogCharacter> Characters { get; set; } = new Dictionary<string, DialogCharacter>();
+    public string Characters { get; set; }
+    public string Outfits { get; set; }
+
     public IDictionary<string, DialogInterlude> Interludes { get; set; } = new Dictionary<string, DialogInterlude>();
     public IDictionary<string, DialogSequence> Sequences { get; set; } = new Dictionary<string, DialogSequence>();
-}
-
-public class DialogCharacter
-{
-    public string Sprite { get; set; }
 }
 
 public class DialogInterlude

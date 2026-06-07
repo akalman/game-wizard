@@ -48,6 +48,11 @@ public class DialogFrameYamlConverter : IYamlTypeConverter
                 Character = properties["character"],
                 Text = properties["text"],
             },
+            "set-outfit" => new SetOutfitFrame
+            {
+                Character = properties["character"],
+                Outfit = properties["outfit"],
+            },
             _ => throw new InvalidDialogException(),
         };
     }

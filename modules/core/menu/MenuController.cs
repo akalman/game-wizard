@@ -29,7 +29,7 @@ public partial class MenuController : TemplateController<MenuConfig>
         return false;
     }
 
-    public override void HandleFocus(string sourceScene, string outputId)
+    public override void HandleFocusUpdated(string sourceScene, string outputId, FocusState updatedState)
     {
 
     }
@@ -53,6 +53,7 @@ public partial class MenuController : TemplateController<MenuConfig>
 
             labelNode.Text = option.Label;
             labelNode.CustomMinimumSize = Config.Style.Options.Size;
+            optionNode.Visible = option.When.Evaluate(Game.State);
 
             OptionsContainer.AddChild(optionNode);
         }

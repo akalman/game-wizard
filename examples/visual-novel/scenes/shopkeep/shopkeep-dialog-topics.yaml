@@ -1,0 +1,38 @@
+initial-page: dialog-topics
+
+
+style:
+  background: res://examples/visual-novel/sprites/50-px-darken.png
+  options:
+    sprite: res://examples/visual-novel/sprites/dialog-choice-button.png
+    size: ( 800 200 )
+
+
+pages:
+
+  dialog-topics:
+    cancel-action: none
+    options:
+      ask-for-flags:
+        action: end
+        label: |
+          "Got any flags?"
+        when:
+          - flag shopkeep-progress in [open]
+      ask-about-beans:
+        action: end
+        label: |
+          "So about those beans..."
+        when:
+          - flag shopkeep-progress in [open]
+          - flag shopkeep-wants-beans in [known]
+      hows-business:
+        action: end
+        label: |
+          "How's business going?"
+        when:
+          - flag shopkeep-progress in [open]
+      nevermind:
+        action: end
+        label: |
+          "I gotta go, I'll see you later."

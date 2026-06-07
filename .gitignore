@@ -21,3 +21,8 @@ mono_crash.*.json
 
 # Godot build artifacts
 *.exe
+
+# Art locks
+*.kra-autosave.kra
+*.kra~
+*.png~

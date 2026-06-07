@@ -1,67 +1,97 @@
 [gd_scene format=3 uid="uid://bipy6tcfotchy"]
 
 [ext_resource type="Script" uid="uid://cbaci7nb8k1vs" path="res://modules/core/dialog-cutscene/DialogCutsceneController.cs" id="1_4gkjp"]
+[ext_resource type="FontFile" uid="uid://vr4kx3jld5i2" path="res://modules/core/Roboto-VariableFont_wdth,wght.ttf" id="2_i5ac8"]
 
-[node name="DialogCutscene" type="Node2D" unique_id=798146964 node_paths=PackedStringArray("Background", "BannerContainer", "BannerBackground", "CharacterMargin", "LeftCharactersContainer", "RightCharactersContainer", "DialogBoxContainer", "DialogBoxBackground", "DialogBoxMargin", "DialogBox")]
+[node name="DialogCutscene" type="Node2D" unique_id=798146964 node_paths=PackedStringArray("Background", "BannerContainer", "BannerBackground", "CharacterMargin", "LeftCharactersContainer", "RightCharactersContainer", "DialogBoxContainer", "DialogBoxBackground", "DialogBoxTextContainer", "DialogBoxText", "DialogBoxSpeakerLabel")]
 script = ExtResource("1_4gkjp")
 Background = NodePath("DialogBackground")
-BannerContainer = NodePath("RegionsContainer/BannerContainer")
-BannerBackground = NodePath("RegionsContainer/BannerContainer/BannerBackground")
-CharacterMargin = NodePath("RegionsContainer/CharacterMargin")
-LeftCharactersContainer = NodePath("RegionsContainer/CharacterMargin/CharacterContainer/LeftCharacters")
-RightCharactersContainer = NodePath("RegionsContainer/CharacterMargin/CharacterContainer/RightCharacters")
-DialogBoxContainer = NodePath("RegionsContainer/DialogBoxContainer")
-DialogBoxBackground = NodePath("RegionsContainer/DialogBoxContainer/DialogBoxBackground")
-DialogBoxMargin = NodePath("RegionsContainer/DialogBoxContainer/DialogTextContainer")
-DialogBox = NodePath("RegionsContainer/DialogBoxContainer/DialogTextContainer/DialogText")
+BannerContainer = NodePath("BannerContainer")
+BannerBackground = NodePath("BannerContainer/BannerBackground")
+CharacterMargin = NodePath("CharacterMargin")
+LeftCharactersContainer = NodePath("CharacterMargin/CharacterContainer/LeftCharacters")
+RightCharactersContainer = NodePath("CharacterMargin/CharacterContainer/RightCharacters")
+DialogBoxContainer = NodePath("DialogBoxContainer")
+DialogBoxBackground = NodePath("DialogBoxContainer/DialogBoxBackground")
+DialogBoxTextContainer = NodePath("DialogBoxContainer/DialogTextContainer")
+DialogBoxText = NodePath("DialogBoxContainer/DialogTextContainer/MarginContainer/CenterContainer/DialogText")
+DialogBoxSpeakerLabel = NodePath("DialogBoxContainer/DialogTextContainer/MarginContainer2/CenterContainer/Label")
 
 [node name="DialogBackground" type="TextureRect" parent="." unique_id=457966090]
 
-[node name="RegionsContainer" type="VBoxContainer" parent="." unique_id=947715457]
+[node name="CharacterMargin" type="MarginContainer" parent="." unique_id=1870542799]
+custom_minimum_size = Vector2(1920, 1080)
 offset_right = 1920.0
-offset_bottom = 1080.0
 
-[node name="BannerContainer" type="CenterContainer" parent="RegionsContainer" unique_id=2109689007]
+[node name="CharacterContainer" type="HBoxContainer" parent="CharacterMargin" unique_id=1986644590]
 layout_mode = 2
 
-[node name="BannerBackground" type="TextureRect" parent="RegionsContainer/BannerContainer" unique_id=759776938]
-layout_mode = 2
-
-[node name="CharacterMargin" type="MarginContainer" parent="RegionsContainer" unique_id=1870542799]
-layout_mode = 2
-
-[node name="CharacterContainer" type="HBoxContainer" parent="RegionsContainer/CharacterMargin" unique_id=1986644590]
-layout_mode = 2
-
-[node name="LeftCharacters" type="HBoxContainer" parent="RegionsContainer/CharacterMargin/CharacterContainer" unique_id=711332397]
+[node name="LeftCharacters" type="HBoxContainer" parent="CharacterMargin/CharacterContainer" unique_id=711332397]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="RightCharacters" type="HBoxContainer" parent="RegionsContainer/CharacterMargin/CharacterContainer" unique_id=486689489]
+[node name="RightCharacters" type="HBoxContainer" parent="CharacterMargin/CharacterContainer" unique_id=486689489]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 2
 
-[node name="DialogBoxContainer" type="CenterContainer" parent="RegionsContainer" unique_id=243571838]
+[node name="BannerContainer" type="CenterContainer" parent="." unique_id=2109689007]
+offset_right = 1920.0
+
+[node name="BannerBackground" type="TextureRect" parent="BannerContainer" unique_id=759776938]
 layout_mode = 2
 
-[node name="DialogBoxBackground" type="TextureRect" parent="RegionsContainer/DialogBoxContainer" unique_id=1414012128]
+[node name="DialogBoxContainer" type="CenterContainer" parent="." unique_id=243571838]
+anchors_preset = -1
+offset_top = 1080.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="DialogBoxBackground" type="TextureRect" parent="DialogBoxContainer" unique_id=1414012128]
 layout_mode = 2
 
-[node name="DialogTextContainer" type="MarginContainer" parent="RegionsContainer/DialogBoxContainer" unique_id=1961098388]
-custom_minimum_size = Vector2(1920, 0)
+[node name="DialogTextContainer" type="CenterContainer" parent="DialogBoxContainer" unique_id=1625221010]
 layout_mode = 2
 
-[node name="DialogText" type="RichTextLabel" parent="RegionsContainer/DialogBoxContainer/DialogTextContainer" unique_id=902223652]
+[node name="MarginContainer" type="MarginContainer" parent="DialogBoxContainer/DialogTextContainer" unique_id=1954940082]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="DialogBoxContainer/DialogTextContainer/MarginContainer" unique_id=1943261694]
+layout_mode = 2
+
+[node name="DialogText" type="RichTextLabel" parent="DialogBoxContainer/DialogTextContainer/MarginContainer/CenterContainer" unique_id=902223652]
 clip_contents = false
 layout_mode = 2
 theme_override_colors/default_color = Color(0.8, 0.8, 0.8, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.5882353)
 theme_override_constants/outline_size = 10
+theme_override_fonts/normal_font = ExtResource("2_i5ac8")
 theme_override_font_sizes/normal_font_size = 38
 theme_override_font_sizes/bold_font_size = 38
 theme_override_font_sizes/bold_italics_font_size = 38
 theme_override_font_sizes/italics_font_size = 38
 theme_override_font_sizes/mono_font_size = 38
 bbcode_enabled = true
+scroll_active = false
+
+[node name="MarginContainer2" type="MarginContainer" parent="DialogBoxContainer/DialogTextContainer" unique_id=1976814605]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="DialogBoxContainer/DialogTextContainer/MarginContainer2" unique_id=1541664472]
+layout_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="DialogBoxContainer/DialogTextContainer/MarginContainer2/CenterContainer" unique_id=1493489512]
+clip_contents = false
+layout_mode = 2
+theme_override_colors/default_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.5882353)
+theme_override_constants/outline_size = 10
+theme_override_fonts/normal_font = ExtResource("2_i5ac8")
+theme_override_font_sizes/normal_font_size = 38
+theme_override_font_sizes/bold_font_size = 38
+theme_override_font_sizes/bold_italics_font_size = 38
+theme_override_font_sizes/italics_font_size = 38
+theme_override_font_sizes/mono_font_size = 38
 scroll_active = false

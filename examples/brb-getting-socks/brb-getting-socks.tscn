@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dwjanip2ug4y4"]
+
+[node name="BrbGettingSocks" type="Node2D" unique_id=228594844]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1460064149]
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_colors/default_color = Color(0.68307734, 0.6830774, 0.68307734, 1)
+theme_override_font_sizes/normal_font_size = 182
+text = "BRB GETTING SOCKS"
+horizontal_alignment = 1
+vertical_alignment = 1

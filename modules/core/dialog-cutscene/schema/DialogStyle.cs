@@ -25,5 +25,8 @@ public class DialogBoxStyle
 {
     public string Background { get; set; }
     public int Height { get; set; }
-    public Vector2 TextMargin { get; set; }
+    public Vector2 TextSize { get; set; }
+    public Vector2 TextOffset { get; set; }
+    public Vector2 SpeakerNameSize { get; set; }
+    public Vector2 SpeakerNameOffset { get; set; }
 }

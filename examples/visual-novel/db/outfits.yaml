@@ -1,0 +1,77 @@
+interfaces: [ core.dialog-cutscene.outfit ]
+
+
+fields:
+  character: database-list
+  layer: number
+  sprites: string-list
+
+
+entries:
+
+  mc-regular-clothes:
+    characters: [ mc, future-mc ]
+    layer: 1
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-a-pants-a.png
+      - res://examples/visual-novel/sprites/characters/body-a-shirt-a.png
+      - res://examples/visual-novel/sprites/characters/body-a-hair-a.png
+
+  mc-face-neutral:
+    characters: [ mc, future-mc ]
+    layer: 2
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-a-face-neutral.png
+  mc-face-angry:
+    characters: [ mc, future-mc ]
+    layer: 2
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-a-face-angry.png
+  mc-face-happy:
+    characters: [ mc, future-mc ]
+    layer: 2
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-a-face-happy.png
+  mc-face-surprised:
+    characters: [ mc, future-mc ]
+    layer: 2
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-a-face-surprised.png
+  mc-face-weirded-out:
+    characters: [ mc, future-mc ]
+    layer: 2
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-a-face-weirded-out.png
+
+  npc-regular-clothes:
+    characters: [ shopkeep, enthusiast, stranger ]
+    layer: 1
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-b-pants-a.png
+      - res://examples/visual-novel/sprites/characters/body-b-shirt-a.png
+
+  npc-face-neutral:
+    characters: [ shopkeep, enthusiast, stranger ]
+    layer: 2
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-b-face-neutral.png
+  npc-face-angry:
+    characters: [ shopkeep, enthusiast, stranger ]
+    layer: 2
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-b-face-angry.png
+  npc-face-happy:
+    characters: [ shopkeep, enthusiast, stranger ]
+    layer: 2
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-b-face-happy.png
+  npc-face-surprised:
+    characters: [ shopkeep, enthusiast, stranger ]
+    layer: 2
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-b-face-surprised.png
+  npc-face-weirded-out:
+    characters: [ shopkeep, enthusiast, stranger ]
+    layer: 2
+    sprites:
+      - res://examples/visual-novel/sprites/characters/body-b-face-weirded-out.png

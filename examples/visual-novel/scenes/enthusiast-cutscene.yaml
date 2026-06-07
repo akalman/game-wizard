@@ -11,14 +11,14 @@ style:
   dialog-box:
     background: res://examples/visual-novel/sprites/dialog-box-background.png
     height: 350
-    text-margin: ( 30 20 )
+    text-size: ( 1750 230 )
+    text-offset: ( 0 40 )
+    speaker-name-size: ( 200 50 )
+    speaker-name-offset: ( -1650 -260 )
 
 
-characters:
-  mc:
-    sprite: res://examples/visual-novel/sprites/char-masc-meso.png
-  enthusiast:
-    sprite: res://examples/visual-novel/sprites/char-masc-meso.png
+characters: characters
+outfits: outfits
 
 
 interludes:
@@ -45,217 +45,203 @@ sequences:
     transitions:
       - action: start shared
     frames:
-      - type: add-character
-        side: left
-        character: mc
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] There's someone over here surrounded by...
-            are those all flags? That's like a hundred flags. Why
-            does one person need that many flags.
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        There's someone over here surrounded by...
+        are those all flags? That's like a hundred flags. Why
+        does one person need that many flags.
 
-      - type: add-character
-        side: right
-        character: enthusiast
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] HELLO!! Do you like FLAGS?!
-            I LOVE flags!! I have 247 of them!! Each one is
-            special and unique and I have named every single one!!
+      - enthusiast added to Right
+      - enthusiast puts on npc-regular-clothes
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        HELLO!! Do you like FLAGS?!
+        I LOVE flags!! I have 247 of them!! Each one is
+        special and unique and I have named every single one!!
 
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] Oh god.
+      - mc puts on mc-face-surprised
+      - |
+        mc says
+        Oh god.
 
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] This one is Gerald! This one is
-            Flag McFlagface! This one is just called "The Incident"
-            and I don't like to talk about why!
+      - |
+        enthusiast says
+        This one is Gerald! This one is
+        Flag McFlagface! This one is just called "The Incident"
+        and I don't like to talk about why!
 
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] Look, I actually need a flag. It's kind of
-            an emergency. A me-from-the-future kind of emergency.
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        Look, I actually need a flag. It's kind of
+        an emergency. A me-from-the-future kind of emergency.
 
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] Oh I could NEVER just give away
-            one of my flags! They're my CHILDREN! Well, not literally.
-            That would be weird. They're rectangles.
+      - enthusiast puts on npc-face-weirded-out
+      - |
+        enthusiast says
+        Oh I could NEVER just give away
+        one of my flags! They're my CHILDREN! Well, not literally.
+        That would be weird. They're rectangles.
 
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] BUT! If you can prove to me that
-            you truly APPRECIATE flags, I might be willing to part
-            with one. Maybe. It'll be hard. I'll probably cry.
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        BUT! If you can prove to me that
+        you truly APPRECIATE flags, I might be willing to part
+        with one. Maybe. It'll be hard. I'll probably cry.
 
   revisit:
     transitions:
       - action: start shared
     frames:
-      - type: add-character
-        side: left
-        character: mc
-      - type: add-character
-        side: right
-        character: enthusiast
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] YOU'RE BACK!! I knew you couldn't
-            stay away from the flags!! Nobody can!! They're just
-            so rectangular and wonderful!!
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-neutral
+      - enthusiast added to Right
+      - enthusiast puts on npc-regular-clothes
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        YOU'RE BACK!! I knew you couldn't
+        stay away from the flags!! Nobody can!! They're just
+        so rectangular and wonderful!!
 
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] Yeah. Couldn't stop thinking about those
-            flags. Haunted by them, actually. In a bad way.
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        Yeah. Couldn't stop thinking about those
+        flags. Haunted by them, actually. In a bad way.
 
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] That's the SPIRIT!! Let's pick
-            up right where we left off!! I've been practicing my
-            flag quiz questions while you were gone!!
+      - |
+        enthusiast says
+        That's the SPIRIT!! Let's pick
+        up right where we left off!! I've been practicing my
+        flag quiz questions while you were gone!!
 
   shared:
     transitions:
       - action: interlude question
     frames:
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] OK so here's the deal! I will
-            ask you ONE question about flags, and your answer will
-            determine if you are WORTHY of flag ownership!
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        OK so here's the deal! I will
+        ask you ONE question about flags, and your answer will
+        determine if you are WORTHY of flag ownership!
 
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] One question? That's it?
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        One question? That's it?
 
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] One question is all I NEED!
-            You can tell EVERYTHING about a person by how they
-            feel about flags! It's basically a personality test!
+      - |
+        enthusiast says
+        One question is all I NEED!
+        You can tell EVERYTHING about a person by how they
+        feel about flags! It's basically a personality test!
 
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] Here it is: What is the BEST
-            thing about flags?
+      - enthusiast puts on npc-face-surprised
+      - |
+        enthusiast says
+        Here it is: What is the BEST
+        thing about flags?
 
   success:
     transitions:
       - action: end
     frames:
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] ...
+      - enthusiast puts on npc-face-surprised
+      - |
+        enthusiast says
+        ...
 
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] That... that is the most
-            BEAUTIFUL answer I have EVER heard. You GET it.
-            You really GET flags.
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        That... that is the most
+        BEAUTIFUL answer I have EVER heard. You GET it.
+        You really GET flags.
 
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] I'm not crying! My eyes are
-            just flapping in the wind! Like a flag! Which is
-            BEAUTIFUL as you CORRECTLY identified!
+      - |
+        enthusiast says
+        I'm not crying! My eyes are
+        just flapping in the wind! Like a flag! Which is
+        BEAUTIFUL as you CORRECTLY identified!
 
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] Here! Take Gerald! He's my
-            favorite but I know he'd want to be with someone who
-            truly understands the flapping arts!
+      - |
+        enthusiast says
+        Here! Take Gerald! He's my
+        favorite but I know he'd want to be with someone who
+        truly understands the flapping arts!
 
-      - type: remove-character
-        character: enthusiast
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] I got... Gerald. Cool. I have a flag named
-            Gerald now. This is my life. I'm collecting named
-            rectangles to save reality.
+      - enthusiast removed
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        I got... Gerald. Cool. I have a flag named
+        Gerald now. This is my life. I'm collecting named
+        rectangles to save reality.
 
   fail:
     transitions:
       - action: end
     frames:
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] ...
+      - enthusiast puts on npc-face-surprised
+      - |
+        enthusiast says
+        ...
 
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] Cloth... on a stick? CLOTH?!
-            ON A STICK?!?!
+      - enthusiast puts on npc-face-angry
+      - |
+        enthusiast says
+        Cloth... on a stick? CLOTH?!
+        ON A STICK?!?!
 
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] Gerald is NOT "cloth on a stick"!
-            Gerald is a SYMBOL! Gerald is ART! Gerald has a BACKSTORY
-            and a FAVORITE COLOR and it's CRIMSON!
+      - |
+        enthusiast says
+        Gerald is NOT "cloth on a stick"!
+        Gerald is a SYMBOL! Gerald is ART! Gerald has a BACKSTORY
+        and a FAVORITE COLOR and it's CRIMSON!
 
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] I would NEVER give a flag to
-            someone like you! NEVER! Now if you'll excuse me I need
-            to go apologize to my flags for making them hear that!
+      - |
+        enthusiast says
+        I would NEVER give a flag to
+        someone like you! NEVER! Now if you'll excuse me I need
+        to go apologize to my flags for making them hear that!
 
-      - type: remove-character
-        character: enthusiast
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] I feel like I should feel bad but also that
-            person definitely has too many flags. Anyway. No flag
-            from here I guess. Future me is going to be annoyed.
+      - enthusiast removed
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        I feel like I should feel bad but also that
+        person definitely has too many flags. Anyway. No flag
+        from here I guess. Future me is going to be annoyed.
 
   open:
     transitions:
       - action: end
     frames:
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] REFLECT?! Yes!! Take ALL the
-            time you need! Flags deserve CONTEMPLATION! They deserve
-            MEDITATION! They deserve a RETREAT!
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        REFLECT?! Yes!! Take ALL the
+        time you need! Flags deserve CONTEMPLATION! They deserve
+        MEDITATION! They deserve a RETREAT!
 
-      - type: set-text
-        character: enthusiast
-        text: |
-            [b]Flag Enthusiast:[/b] Go out there and REALLY think
-            about what flags mean to you! And when you come back,
-            I'll be here! With my 247 friends!
+      - |
+        enthusiast says
+        Go out there and REALLY think
+        about what flags mean to you! And when you come back,
+        I'll be here! With my 247 friends!
 
-      - type: remove-character
-        character: enthusiast
-      - type: set-text
-        character: mc
-        text: |
-            [b]You:[/b] Right. I'm going to go "reflect on flags."
-            And by that I mean go literally anywhere else and then
-            come back and guess a better answer.
+      - enthusiast removed
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        Right. I'm going to go "reflect on flags."
+        And by that I mean go literally anywhere else and then
+        come back and guess a better answer.

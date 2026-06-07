@@ -8,5 +8,10 @@ public class ConfigRepository(IConfigLoader loader) : IConfigRepository
     {
         return Loader.Load<T>(path);
     }
+
+    public T Convert<T>(string content)
+    {
+        return Loader.Convert<T>(content);
+    }
 }
 

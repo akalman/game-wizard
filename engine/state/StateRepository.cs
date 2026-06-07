@@ -5,6 +5,10 @@ namespace GameWizard.Engine.State;
 
 public class StateRepository : IStateRepository
 {
+    private FlagFacade Flags { get; set; } = new();
+    private AttributeFacade Attributes { get; set; } = new();
+    private BagFacade Bags { get; set; } = new();
+
     private GameState Definition { get; set; }
     public bool IsInitialized { get; set; }
 
@@ -27,6 +31,12 @@ public class StateRepository : IStateRepository
         foreach (var (flagId, flag) in Definition.Flags)
             Current.Flags[flagId] = flag.InitialValue;
 
+        foreach (var (attributeId, attribute) in Definition.Attributes)
+            Current.Attributes[attributeId] = attribute.InitialValue;
+
+        foreach (var (bagId, bag) in Definition.Bags)
+            Current.Bags[bagId] = new Dictionary<string, int>();
+
         IsLoaded = true;
     }
 
@@ -35,51 +45,46 @@ public class StateRepository : IStateRepository
         throw new System.NotImplementedException();
     }
 
-    public string ReadFlag(string flagId)
+    public string ReadFlag(string stateId)
     {
         if (!IsInitialized)
-            throw new GameWizardInternalException($"Tried to read flag {flagId} when state was uninitialized.");
+            throw new GameWizardInternalException($"Tried to read flag {stateId} when state was uninitialized.");
 
         if (!IsLoaded)
-            throw new InvalidGameStateException($"Tried to read flag {flagId} when state was unloaded.");
+            throw new InvalidGameStateException($"Tried to read flag {stateId} when state was unloaded.");
 
-        if (!Definition.Flags.ContainsKey(flagId))
-            throw new InvalidGameStateException($"Tried to read undefined flag {flagId}.");
+        return Flags.GetFlag(Definition, Current, stateId);
+    }
 
-        if (!Current.Flags.ContainsKey(flagId))
-            throw new GameWizardInternalException($"Could not find flag {flagId} in loaded state.");
+    public decimal ReadAttribute(string stateId)
+    {
+        return Attributes.GetAttribute(Definition, Current, stateId);
+    }
 
-        return Current.Flags[flagId];
+    public int NumInBag(string stateId, string itemId)
+    {
+        return Bags.GetNumInBag(Definition, Current, stateId, itemId);
     }
 
     public void Update(StateUpdate update)
     {
         if (!IsInitialized)
-            throw new GameWizardInternalException($"Tried to read state {update.Name} when state was uninitialized.");
+            throw new GameWizardInternalException($"Tried to read state {update.StateName} when state was uninitialized.");
 
         if (!IsLoaded)
-            throw new InvalidGameStateException($"Tried to read state {update.Name} when state was unloaded.");
+            throw new InvalidGameStateException($"Tried to read state {update.StateName} when state was unloaded.");
 
         switch (update.Type)
         {
-            case StateUpdateType.SetFlag:
-                if (!Definition.Flags.ContainsKey(update.Name))
-                    throw new InvalidGameStateException($"Tried to read undefined flag {update.Name}.");
-
-                if (!Definition.Flags[update.Name].Values.Contains(update.FlagValue))
-                    throw new GameWizardInternalException($"Could not find flag {update.Name} in loaded state.");
-
-                if (!Current.Flags.ContainsKey(update.Name))
-                    throw new GameWizardInternalException($"Could not find flag {update.Name} in loaded state.");
-
-                Current.Flags[update.Name] = update.FlagValue;
+            case var flag when Flags.Accepts(flag):
+                Flags.Update(Definition, Current, update);
+                break;
+            case var attribute when Attributes.Accepts(attribute):
+                Attributes.Update(Definition, Current, update);
+                break;
+            case var bag when Bags.Accepts(bag):
+                Bags.Update(Definition, Current, update);
                 break;
         }
     }
-
-    private class SaveState
-    {
-        public IDictionary<string, string> Flags { get; set; } = new Dictionary<string, string>();
-    }
 }
-
