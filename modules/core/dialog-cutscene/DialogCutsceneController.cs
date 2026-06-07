@@ -22,8 +22,9 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
 
     [Export] public CenterContainer DialogBoxContainer { get; set; }
     [Export] public TextureRect DialogBoxBackground { get; set; }
-    [Export] public MarginContainer DialogBoxMargin { get; set; }
-    [Export] public RichTextLabel DialogBox { get; set; }
+    [Export] public CenterContainer DialogBoxTextContainer { get; set; }
+    [Export] public RichTextLabel DialogBoxText { get; set; }
+    [Export] public RichTextLabel DialogBoxSpeakerLabel { get; set; }
 
     private IDictionary<string, (MarginContainer, HorizontalDirection)> LoadedCharacters { get; } =
         new Dictionary<string, (MarginContainer, HorizontalDirection)>();
@@ -102,16 +103,30 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
         }
 
         DialogBoxContainer.CustomMinimumSize = Vector2.Down * Config.Style.DialogBox.Height;
-        DialogBoxMargin.CustomMinimumSize += Vector2.Down * Config.Style.DialogBox.Height;
+        DialogBoxTextContainer.CustomMinimumSize = Vector2.Right * 1920 + Vector2.Down * Config.Style.DialogBox.Height;
+
+        DialogBoxText.CustomMinimumSize = Config.Style.DialogBox.TextSize;
+        DialogBoxText.GetParent<CenterContainer>().GetParent<MarginContainer>()
+            .AddThemeConstantOverride("margin_left", (int) Config.Style.DialogBox.TextOffset.X);
+        DialogBoxText.GetParent<CenterContainer>().GetParent<MarginContainer>()
+            .AddThemeConstantOverride("margin_top", (int) Config.Style.DialogBox.TextOffset.Y);
+
+        DialogBoxSpeakerLabel.CustomMinimumSize = Config.Style.DialogBox.SpeakerNameSize;
+        DialogBoxSpeakerLabel.GetParent<CenterContainer>().GetParent<MarginContainer>()
+            .AddThemeConstantOverride("margin_left", (int) Config.Style.DialogBox.SpeakerNameOffset.X);
+        DialogBoxSpeakerLabel.GetParent<CenterContainer>().GetParent<MarginContainer>()
+            .AddThemeConstantOverride("margin_top", (int) Config.Style.DialogBox.SpeakerNameOffset.Y);
+
         if (!Config.Style.DialogBox.Background.IsNullOrEmpty())
             DialogBoxBackground.Texture = GD.Load<Texture2D>(Config.Style.DialogBox.Background);
-        if (Config.Style.DialogBox.TextMargin != Vector2.Zero)
-        {
-            DialogBoxMargin.AddThemeConstantOverride("margin_left", (int) Config.Style.DialogBox.TextMargin.X);
-            DialogBoxMargin.AddThemeConstantOverride("margin_right", (int) Config.Style.DialogBox.TextMargin.X);
-            DialogBoxMargin.AddThemeConstantOverride("margin_top", (int) Config.Style.DialogBox.TextMargin.Y);
-            DialogBoxMargin.AddThemeConstantOverride("margin_bottom", (int) Config.Style.DialogBox.TextMargin.Y);
-        }
+
+        // if (Config.Style.DialogBox.TextSize != Vector2.Zero)
+        // {
+        //     DialogBoxTextContainer.AddThemeConstantOverride("margin_left", (int) Config.Style.DialogBox.TextSize.X);
+        //     DialogBoxTextContainer.AddThemeConstantOverride("margin_right", (int) Config.Style.DialogBox.TextSize.X);
+        //     DialogBoxTextContainer.AddThemeConstantOverride("margin_top", (int) Config.Style.DialogBox.TextSize.Y);
+        //     DialogBoxTextContainer.AddThemeConstantOverride("margin_bottom", (int) Config.Style.DialogBox.TextSize.Y);
+        // }
 
     }
 
@@ -280,13 +295,13 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
     private void SetText(string text, string characterId)
     {
         Animating = true;
-        DialogBox.Text = text;
-        DialogBox.VisibleCharacters = 0;
+        DialogBoxText.Text = text;
+        DialogBoxText.VisibleCharacters = 0;
 
         var speakId = Guid.NewGuid();
         var speakTween = GetTree().CreateTween();
         CurrentAnimations[speakId] = speakTween;
-        speakTween.TweenProperty(DialogBox, "visible_characters", text.Length, 0.05 * text.Length)
+        speakTween.TweenProperty(DialogBoxText, "visible_characters", text.Length, 0.05 * text.Length)
             .SetTrans(Tween.TransitionType.Linear)
             .SetEase(Tween.EaseType.InOut);
         speakTween.TweenCallback(Callable.From(() =>
@@ -294,6 +309,9 @@ public partial class DialogCutsceneController : TemplateController<DialogConfig>
             CurrentAnimations.Remove(speakId);
             Animating = false;
         }));
+
+        var speaker = Game.Db.ReadDb(Config.Characters, characterId);
+        DialogBoxSpeakerLabel.Text = speaker.Get<string>("display-name");
     }
 
     private void ProcessTransition(TransitionAction action)

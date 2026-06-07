@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cbaci7nb8k1vs" path="res://modules/core/dialog-cutscene/DialogCutsceneController.cs" id="1_4gkjp"]
 [ext_resource type="FontFile" uid="uid://vr4kx3jld5i2" path="res://modules/core/Roboto-VariableFont_wdth,wght.ttf" id="2_i5ac8"]
 
-[node name="DialogCutscene" type="Node2D" unique_id=798146964 node_paths=PackedStringArray("Background", "BannerContainer", "BannerBackground", "CharacterMargin", "LeftCharactersContainer", "RightCharactersContainer", "DialogBoxContainer", "DialogBoxBackground", "DialogBoxMargin", "DialogBox")]
+[node name="DialogCutscene" type="Node2D" unique_id=798146964 node_paths=PackedStringArray("Background", "BannerContainer", "BannerBackground", "CharacterMargin", "LeftCharactersContainer", "RightCharactersContainer", "DialogBoxContainer", "DialogBoxBackground", "DialogBoxTextContainer", "DialogBoxText", "DialogBoxSpeakerLabel")]
 script = ExtResource("1_4gkjp")
 Background = NodePath("DialogBackground")
 BannerContainer = NodePath("BannerContainer")
@@ -13,8 +13,9 @@ LeftCharactersContainer = NodePath("CharacterMargin/CharacterContainer/LeftChara
 RightCharactersContainer = NodePath("CharacterMargin/CharacterContainer/RightCharacters")
 DialogBoxContainer = NodePath("DialogBoxContainer")
 DialogBoxBackground = NodePath("DialogBoxContainer/DialogBoxBackground")
-DialogBoxMargin = NodePath("DialogBoxContainer/DialogTextContainer")
-DialogBox = NodePath("DialogBoxContainer/DialogTextContainer/DialogText")
+DialogBoxTextContainer = NodePath("DialogBoxContainer/DialogTextContainer")
+DialogBoxText = NodePath("DialogBoxContainer/DialogTextContainer/MarginContainer/CenterContainer/DialogText")
+DialogBoxSpeakerLabel = NodePath("DialogBoxContainer/DialogTextContainer/MarginContainer2/CenterContainer/Label")
 
 [node name="DialogBackground" type="TextureRect" parent="." unique_id=457966090]
 
@@ -51,11 +52,16 @@ grow_vertical = 0
 [node name="DialogBoxBackground" type="TextureRect" parent="DialogBoxContainer" unique_id=1414012128]
 layout_mode = 2
 
-[node name="DialogTextContainer" type="MarginContainer" parent="DialogBoxContainer" unique_id=1961098388]
-custom_minimum_size = Vector2(1920, 0)
+[node name="DialogTextContainer" type="CenterContainer" parent="DialogBoxContainer" unique_id=1625221010]
 layout_mode = 2
 
-[node name="DialogText" type="RichTextLabel" parent="DialogBoxContainer/DialogTextContainer" unique_id=902223652]
+[node name="MarginContainer" type="MarginContainer" parent="DialogBoxContainer/DialogTextContainer" unique_id=1954940082]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="DialogBoxContainer/DialogTextContainer/MarginContainer" unique_id=1943261694]
+layout_mode = 2
+
+[node name="DialogText" type="RichTextLabel" parent="DialogBoxContainer/DialogTextContainer/MarginContainer/CenterContainer" unique_id=902223652]
 clip_contents = false
 layout_mode = 2
 theme_override_colors/default_color = Color(0.8, 0.8, 0.8, 1)
@@ -68,4 +74,24 @@ theme_override_font_sizes/bold_italics_font_size = 38
 theme_override_font_sizes/italics_font_size = 38
 theme_override_font_sizes/mono_font_size = 38
 bbcode_enabled = true
+scroll_active = false
+
+[node name="MarginContainer2" type="MarginContainer" parent="DialogBoxContainer/DialogTextContainer" unique_id=1976814605]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="DialogBoxContainer/DialogTextContainer/MarginContainer2" unique_id=1541664472]
+layout_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="DialogBoxContainer/DialogTextContainer/MarginContainer2/CenterContainer" unique_id=1493489512]
+clip_contents = false
+layout_mode = 2
+theme_override_colors/default_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.5882353)
+theme_override_constants/outline_size = 10
+theme_override_fonts/normal_font = ExtResource("2_i5ac8")
+theme_override_font_sizes/normal_font_size = 38
+theme_override_font_sizes/bold_font_size = 38
+theme_override_font_sizes/bold_italics_font_size = 38
+theme_override_font_sizes/italics_font_size = 38
+theme_override_font_sizes/mono_font_size = 38
 scroll_active = false

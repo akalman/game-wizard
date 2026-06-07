@@ -11,7 +11,10 @@ style:
   dialog-box:
     background: res://examples/visual-novel/sprites/dialog-box-background.png
     height: 350
-    text-margin: ( 30 20 )
+    text-size: ( 1750 230 )
+    text-offset: ( 0 40 )
+    speaker-name-size: ( 200 50 )
+    speaker-name-offset: ( -1650 -260 )
 
 
 characters: characters
@@ -29,7 +32,7 @@ sequences:
       - mc puts on mc-face-happy
       - |
         mc says
-        [b]You:[/b] I did it! I got all three flags! From a
+        I did it! I got all three flags! From a
         lonely shopkeep, an unhinged flag enthusiast, and a
         person who's been lurking at a corner waiting for
         someone to crash into them!
@@ -39,31 +42,31 @@ sequences:
       - future-mc puts on mc-face-neutral
       - |
         future-mc says
-        [b]Future You:[/b] Oh hey nice you actually did it.
+        Oh hey nice you actually did it.
         I'm honestly surprised. I figured you'd mess up at
         least one of them.
 
       - mc puts on mc-face-weirded-out
       - |
         mc says
-        [b]You:[/b] Thanks for the vote of confidence. So
+        Thanks for the vote of confidence. So
         is reality saved now?
 
       - future-mc puts on mc-face-happy
       - |
         future-mc says
-        [b]Future You:[/b] Yep! Spacetime is intact! The
+        Yep! Spacetime is intact! The
         timeline is preserved! Everything is exactly as it
         should be! Probably! I'm not a scientist!
 
       - mc puts on mc-face-neutral
       - |
         mc says
-        [b]You:[/b] Great. Can I go get my coffee now?
+        Great. Can I go get my coffee now?
 
       - |
         future-mc says
-        [b]Future You:[/b] Yeah go for it. You earned it.
+        Yeah go for it. You earned it.
         I already had mine. It was pretty good. You're gonna
         love it. Later, me!
 
@@ -71,7 +74,7 @@ sequences:
       - mc puts on mc-face-happy
       - |
         mc says
-        [b]You:[/b] Well that's that. I saved reality by being
+        Well that's that. I saved reality by being
         nice to people and answering questions correctly. What
         a day. What a weird, weird day.
 

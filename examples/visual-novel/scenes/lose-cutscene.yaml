@@ -11,7 +11,10 @@ style:
   dialog-box:
     background: res://examples/visual-novel/sprites/dialog-box-background.png
     height: 350
-    text-margin: ( 30 20 )
+    text-size: ( 1750 230 )
+    text-offset: ( 0 40 )
+    speaker-name-size: ( 200 50 )
+    speaker-name-offset: ( -1650 -260 )
 
 
 characters: characters
@@ -29,7 +32,7 @@ sequences:
       - mc puts on mc-face-weirded-out
       - |
         mc says
-        [b]You:[/b] Ok so I talked to everyone and I definitely
+        Ok so I talked to everyone and I definitely
         did not get all three flags. Some of those conversations
         did not go great.
 
@@ -38,36 +41,36 @@ sequences:
       - future-mc puts on mc-face-angry
       - |
         future-mc says
-        [b]Future You:[/b] Yeah I can see that. I'm literally
+        Yeah I can see that. I'm literally
         flickering right now. That's not a good sign for the
         whole "reality staying intact" thing.
 
       - |
         mc says
-        [b]You:[/b] In my defense, one of those people had 247
+        In my defense, one of those people had 247
         named flags and I panicked.
 
       - future-mc puts on mc-face-neutral
       - |
         future-mc says
-        [b]Future You:[/b] Well this is awkward. Reality is
+        Well this is awkward. Reality is
         going to collapse now. The good news is it'll be quick.
         The bad news is everything. Everything is the bad news.
 
       - |
         mc says
-        [b]You:[/b] So... no coffee then?
+        So... no coffee then?
 
       - |
         future-mc says
-        [b]Future You:[/b] No coffee. No anything. It was nice
+        No coffee. No anything. It was nice
         being us though. For the like twenty minutes it lasted.
         Bye, me.
 
       - future-mc removed
       - |
         mc says
-        [b]You:[/b] Well. That's the end of everything I guess.
+        Well. That's the end of everything I guess.
         Should have been nicer to people. Lesson l-
 
   end:
