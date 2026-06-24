@@ -29,6 +29,10 @@ interludes:
         action: start tell-me-about-flags
       - source: terminal-select.how-many-flags
         action: start how-many-flags
+      - source: terminal-select.trade-for-rock
+        action: start trade-for-rock
+      - source: terminal-select.deliver-rock
+        action: start deliver-rock
       - source: terminal-select.flag-test
         action: start flag-test-intro
       - source: terminal-select.nevermind
@@ -235,6 +239,34 @@ sequences:
         247 flags later here we are! ZERO
         regrets! Well, maybe one. "The Incident." But we don't
         talk about "The Incident."
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        Is there anything you love MORE than flags?
+        Like, anything at all?
+
+      - enthusiast puts on npc-face-surprised
+      - |
+        enthusiast says
+        MORE than flags?! That's like asking if
+        there's anything better than BREATHING! But... well...
+        there IS one thing.
+
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        ROCKS! Beautiful, smooth, PERFECT rocks!
+        A really good rock is the ONLY thing I'd even CONSIDER
+        trading a flag for! But it would have to be PERFECT.
+        Absolutely FLAWLESS. I have STANDARDS.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        Flags AND rocks. You have very specific
+        passions. I'll keep the rock thing in mind though.
+        You never know.
 
 
   how-many-flags:
@@ -443,6 +475,155 @@ sequences:
         When you're ready, just let me
         know! I'll be right here! With my 247 friends! Well,
         248 if you count "Surprise!"
+
+
+  trade-for-rock:
+    transitions:
+      - action: interlude enthusiast-topics
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        So you mentioned something about rocks being
+        the only thing you'd trade a flag for...
+
+      - enthusiast puts on npc-face-surprised
+      - |
+        enthusiast says
+        You... you REMEMBERED that?! Nobody
+        ever listens when I talk about my interests! Most people
+        just glaze over around flag number thirty-seven!
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        Hard to forget someone describing rocks as
+        the only rival to their rectangle empire.
+
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        OK so here's the deal! I COULD part
+        with a flag—maybe—POSSIBLY—if you brought me a PERFECT
+        rock. Not a good rock. Not a great rock. PERFECT.
+
+      - |
+        enthusiast says
+        It has to be smooth! Symmetrical! It has
+        to practically GLOW with geological excellence! I'll
+        KNOW it when I see it! My rock sense is IMPECCABLE!
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        Your rock sense. Of course. And where
+        exactly do I find a "perfect" rock?
+
+      - enthusiast puts on npc-face-neutral
+      - |
+        enthusiast says
+        There's an old mine near town! You'll
+        need a pickaxe though. I think the shopkeep might have
+        one. They have all sorts of weird stuff in that shop.
+        Mostly flags but also some other things probably.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        Great. I'm going mining now. For rocks. To
+        trade for a flag. To save reality. This is the most
+        normal chain of events I've ever been part of.
+
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        I'll be RIGHT here waiting! Me and
+        Gerald! Gerald is going to be SO excited to meet his
+        new rock sibling! They're going to be BEST FRIENDS!
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        Rocks and flags can't be friends. They're
+        inanimate objects. Both of them. Neither has opinions.
+
+      - enthusiast puts on npc-face-angry
+      - |
+        enthusiast says
+        That's what EVERYONE says until they
+        see Gerald and a really good rock next to each other!
+        The CHEMISTRY is UNDENIABLE!
+
+
+  deliver-rock:
+    transitions:
+      - action: start trade-success
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        I found a rock. And not just any rock. THE
+        rock. It's perfect. Smooth. Symmetrical. It practically
+        glows.
+
+      - enthusiast puts on npc-face-surprised
+      - |
+        enthusiast says
+        Let me see... let me SEE...
+
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        OH. MY. This is... this is EVERYTHING!
+        This is the most beautiful rock I have EVER seen! And
+        I've seen at LEAST twelve rocks in my life!
+
+      - |
+        enthusiast says
+        It's SMOOTH! It's ROUND! It has the energy
+        of a thousand flags compressed into mineral form! I can
+        FEEL it vibrating with geological PASSION!
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        I don't think rocks vibrate. That might be
+        a medical issue if your hands are—
+
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        A DEAL IS A DEAL! You brought me
+        the perfect rock, so I will give you... oh this is
+        hard... I will give you a flag. A REAL flag. From my
+        COLLECTION.
+
+      - |
+        enthusiast says
+        Take Gerald! He's my favorite but he
+        would want to be with someone who understands the
+        sacred bond between flags and rocks. You GET it. I
+        can tell.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        I absolutely do not "get it" but I will
+        take Gerald. Thank you.
+
+
+  trade-success:
+    transitions:
+      - action: end
+    frames:
+      - enthusiast removed
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        I traded a rock for a flag named Gerald.
+        That sentence made sense to exactly one person in this
+        town and it wasn't me. But hey—flag acquired. Future
+        me better appreciate the mining I did for this.
 
 
   nevermind:

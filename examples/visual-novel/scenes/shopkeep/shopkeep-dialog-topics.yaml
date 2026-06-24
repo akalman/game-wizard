@@ -26,6 +26,14 @@ pages:
         when:
           - flag shopkeep-progress in [open]
           - flag shopkeep-wants-beans in [known]
+      ask-for-pickaxe:
+        action: end
+        label: |
+          "Got any pickaxes lying around?"
+        when:
+          - flag shopkeep-progress in [open]
+          - flag enthusiast-agreed-trade in [yes]
+          - bag inventory contains less than 1 pickaxe
       hows-business:
         action: end
         label: |

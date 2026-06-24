@@ -21,6 +21,7 @@ public class ConditionYamlConverter : IYamlTypeConverter
         { ConditionType.AttributeLessThan, @"attribute {0} less than {1}" },
 
         { ConditionType.BagContainsMoreThan, @"bag {0} contains more than {1} {2}" },
+        { ConditionType.BagContainsLessThan, @"bag {0} contains less than {1} {2}" },
     };
 
     public bool Accepts(Type type) => type == typeof(Condition);
@@ -55,6 +56,14 @@ public class ConditionYamlConverter : IYamlTypeConverter
                     ExpectedNumber = decimal.Parse(match.Groups[2].Value),
                 },
                 ConditionType.BagContainsMoreThan => new Condition
+                {
+                    Type = updateType,
+                    BagTarget = match.Groups[1].Value,
+                    Target = match.Groups[3].Value,
+                    ExpectedNumber = decimal.Parse(match.Groups[2].Value),
+                    ExpectedMembership = match.Groups[2].Value.Split(","),
+                },
+                ConditionType.BagContainsLessThan => new Condition
                 {
                     Type = updateType,
                     BagTarget = match.Groups[1].Value,

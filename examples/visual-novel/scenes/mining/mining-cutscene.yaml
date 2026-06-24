@@ -1,0 +1,213 @@
+initial-sequence: route-mining
+
+
+style:
+  background: res://examples/visual-novel/sprites/50-px-darken.png
+  banner:
+    background: res://examples/visual-novel/sprites/dialog-banner-background.png
+    height: 50
+  characters:
+    outer-margin: 50
+  dialog-box:
+    background: res://examples/visual-novel/sprites/dialog-box-background.png
+    height: 350
+    text-size: ( 1750 230 )
+    text-offset: ( 0 40 )
+    speaker-name-size: ( 200 50 )
+    speaker-name-offset: ( -1650 -260 )
+
+
+characters: characters
+outfits: outfits
+
+
+sequences:
+
+
+  route-mining:
+    transitions:
+      - action: start mine-crumbly
+        when:
+          - attribute rocks-mined less than 1
+      - action: start mine-rough
+        when:
+          - attribute rocks-mined less than 2
+      - action: start mine-decent
+        when:
+          - attribute rocks-mined less than 3
+      - action: start mine-shiny
+        when:
+          - attribute rocks-mined less than 4
+      - action: start mine-perfect
+    frames: []
+
+
+  mine-crumbly:
+    transitions:
+      - action: start mined-crumbly
+    frames:
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        OK so apparently I mine rocks now. This is
+        what my life has become. Pickaxe in hand. Standing in
+        a mine. Looking for the "perfect rock." Let me just...
+
+      - mc puts on mc-face-angry
+      - |
+        mc says
+        [i]*CLANG*[/i]
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        Got one! It's... crumbly. Very crumbly. It's
+        basically dust held together by optimism. The enthusiast
+        is NOT going to accept this as "perfect."
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        I'll keep it anyway. Maybe crumbly rocks have
+        hidden value. They don't. But maybe.
+
+  mined-crumbly:
+    transitions:
+      - action: end
+    frames: []
+
+
+  mine-rough:
+    transitions:
+      - action: start mined-rough
+    frames:
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        Round two. Surely I can find something
+        better than compressed dust. The bar is literally on
+        the ground. Underground, even. We're in a mine.
+
+      - mc puts on mc-face-angry
+      - |
+        mc says
+        [i]*CLANG*[/i]
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        This one's rough. Like sandpaper had a baby
+        with disappointment. Better than the last one though.
+        Progress! Very slow, geological progress.
+
+  mined-rough:
+    transitions:
+      - action: end
+    frames: []
+
+
+  mine-decent:
+    transitions:
+      - action: start mined-decent
+    frames:
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        Third time's the charm. Please be a good
+        rock. I can't believe I'm saying "please be a good
+        rock" out loud in a mine by myself.
+
+      - mc puts on mc-face-angry
+      - |
+        mc says
+        [i]*CLANG*[/i]
+
+      - mc puts on mc-face-surprised
+      - |
+        mc says
+        Hey, this one's actually decent! Solid.
+        Respectable. Your parents would be OK if you brought
+        this rock home. Still not "perfect" though. The
+        enthusiast has standards apparently.
+
+  mined-decent:
+    transitions:
+      - action: end
+    frames: []
+
+
+  mine-shiny:
+    transitions:
+      - action: start mined-shiny
+    frames:
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        One more try. I'm getting better at this
+        mining thing. Or the mountain is running out of bad
+        rocks. Either way I'm developing biceps.
+
+      - mc puts on mc-face-angry
+      - |
+        mc says
+        [i]*CLANG*[/i]
+
+      - mc puts on mc-face-surprised
+      - |
+        mc says
+        Ooh. Shiny! This one actually catches the
+        light. It's... beautiful? Am I developing opinions
+        about rocks? Oh no. I'm becoming the enthusiast.
+        Someone stop me.
+
+  mined-shiny:
+    transitions:
+      - action: end
+    frames: []
+
+
+  mine-perfect:
+    transitions:
+      - action: start mined-perfect
+    frames:
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        This is it. The final swing. Give me
+        something good, mountain. I believe in you. We've been
+        through a lot together, you and I.
+
+      - mc puts on mc-face-angry
+      - |
+        mc says
+        [i]*CLANG*[/i]
+
+      - mc puts on mc-face-surprised
+      - |
+        mc says
+        Oh. OH. This is it. This is THE rock.
+        Smooth. Symmetrical. It practically glows. If the
+        enthusiast doesn't accept this as "perfect" I'm going
+        to eat it out of spite.
+
+      - mc puts on mc-face-happy
+      - |
+        mc says
+        I should bring this back to the enthusiast.
+        One perfect rock, as requested. In exchange for one
+        flag named Gerald. What a completely normal transaction.
+
+  mined-perfect:
+    transitions:
+      - action: end
+    frames: []

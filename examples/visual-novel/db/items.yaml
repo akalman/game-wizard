@@ -4,3 +4,15 @@ fields:
 entries:
   can-of-beans:
     label: can of beans
+  pickaxe:
+    label: pickaxe
+  rock-crumbly:
+    label: crumbly rock
+  rock-rough:
+    label: rough rock
+  rock-decent:
+    label: decent rock
+  rock-shiny:
+    label: shiny rock
+  rock-perfect:
+    label: perfect rock

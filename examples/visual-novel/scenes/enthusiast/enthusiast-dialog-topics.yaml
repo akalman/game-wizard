@@ -25,6 +25,22 @@ pages:
           "How many flags do you have exactly?"
         when:
           - flag enthusiast-progress in [open]
+      trade-for-rock:
+        action: end
+        label: |
+          "So about those rocks you mentioned..."
+        when:
+          - flag enthusiast-progress in [open]
+          - flag enthusiast-knows-rocks in [yes]
+          - flag enthusiast-agreed-trade in [no]
+      deliver-rock:
+        action: end
+        label: |
+          "I found the perfect rock for you!"
+        when:
+          - flag enthusiast-progress in [open]
+          - flag enthusiast-agreed-trade in [yes]
+          - bag inventory contains more than 0 rock-perfect
       flag-test:
         action: end
         label: |
