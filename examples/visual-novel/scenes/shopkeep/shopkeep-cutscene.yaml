@@ -29,6 +29,8 @@ interludes:
         action: start ask-for-flags
       - source: terminal-select.ask-about-beans
         action: start ask-about-beans
+      - source: terminal-select.ask-for-pickaxe
+        action: start ask-for-pickaxe
       - source: terminal-select.hows-business
         action: start hows-business
       - source: terminal-select.nevermind
@@ -467,6 +469,65 @@ sequences:
         Take your time. I've got nothing but time.
         That's literally all I have. Time, flags, and one dented
         can of beans that might be expired. I'm afraid to check.
+
+
+  ask-for-pickaxe:
+    transitions:
+      - action: interlude shopkeep-topics
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        Hey, weird question. Do you sell pickaxes?
+        I need to go mining for rocks. Long story.
+
+      - shopkeep puts on npc-face-surprised
+      - |
+        shopkeep says
+        A pickaxe? In a FLAG shop? What kind of
+        establishment do you think I'm running here?
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        I mean, you sell flags. A pickaxe isn't
+        that much weirder—
+
+      - shopkeep puts on npc-face-neutral
+      - |
+        shopkeep says
+        ...actually hold on. I think there IS one
+        in the back. Behind the stack of unsold novelty flags
+        from last year's festival. Nobody bought any. I cried
+        about it for three days. Unrelated.
+
+      - shopkeep puts on npc-face-happy
+      - |
+        shopkeep says
+        HERE! Take it! Free of charge! Consider
+        it a loyalty reward for being my only customer. I've been
+        meaning to start a rewards program. You're at Platinum
+        tier. Which is also the only tier.
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        Thanks. I now own a pickaxe from a flag
+        shop. Adding that to the ever-growing list of sentences
+        I never expected to say today.
+
+      - shopkeep puts on npc-face-weirded-out
+      - |
+        shopkeep says
+        Just promise me you won't use it to mine
+        flags. That would be DEEPLY disrespectful. Flags are
+        grown, not mined. That's just basic flag science.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        I promise I will only mine rocks with it.
+        Flag science is safe.
 
 
   ask-about-beans:

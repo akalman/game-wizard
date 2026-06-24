@@ -26,6 +26,14 @@ landmarks:
     when:
       - flag stranger-progress in [unseen,open]
 
+  mining-landmark:
+    sprite: res://examples/visual-novel/sprites/mining-landmark.png
+    size: ( 200 200 )
+    offset: ( 0.0 -0.5 )
+    when:
+      - bag inventory contains more than 0 pickaxe
+      - attribute rocks-mined less than 5
+
   ending-landmark:
     sprite: res://examples/visual-novel/sprites/world-map-landmark.png
     size: ( 200 200 )

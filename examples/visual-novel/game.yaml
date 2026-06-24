@@ -68,6 +68,15 @@ state:
       values: [ yes, no ]
       initial-value: no
 
+    enthusiast-knows-rocks:
+      values: [ yes, no ]
+      initial-value: no
+
+    enthusiast-agreed-trade:
+      values: [ yes, no ]
+      initial-value: no
+
+
   attributes:
     shopkeep-familiarity:
       min: 0
@@ -87,6 +96,11 @@ state:
     money:
       min: 0
       max: 99999
+      initial-value: 0
+
+    rocks-mined:
+      min: 0
+      max: 5
       initial-value: 0
 
   bags:
@@ -134,6 +148,7 @@ scenes:
         - flag shopkeep-progress in [success]
         - flag enthusiast-progress in [success]
         - flag stranger-progress in [success]
+      - edge: navigate.mining-landmark spawn mining-cutscene
       - edge: navigate.ending-landmark spawn lose-cutscene
 
   shopkeep-location:
@@ -186,6 +201,9 @@ scenes:
       # like these isn't necessary but allows for adding updates and conditional logic.
       - edge: terminal-select.ask-for-flags ends
       - edge: terminal-select.ask-about-beans ends
+      - edge: terminal-select.ask-for-pickaxe ends
+        updates:
+          - add 1 of item pickaxe to bag inventory
       - edge: terminal-select.hows-business ends
       - edge: terminal-select.nevermind ends
 
@@ -240,6 +258,11 @@ scenes:
       - edge: terminal-frame.success ends
         updates:
           - set flag enthusiast-in-dialog to no
+      - edge: terminal-frame.trade-success ends
+        updates:
+          - set flag enthusiast-progress to success
+          - set flag enthusiast-in-dialog to no
+          - remove 1 of item rock-perfect from bag inventory
       - edge: terminal-frame.fail ends
         updates:
           - set flag enthusiast-in-dialog to no
@@ -253,6 +276,12 @@ scenes:
     config: res://examples/visual-novel/scenes/enthusiast/enthusiast-dialog-topics.yaml
     transitions:
       - edge: terminal-select.tell-me-about-flags ends
+        updates:
+          - set flag enthusiast-knows-rocks to yes
+      - edge: terminal-select.trade-for-rock ends
+        updates:
+          - set flag enthusiast-agreed-trade to yes
+      - edge: terminal-select.deliver-rock ends
       - edge: terminal-select.flag-test ends
       - edge: terminal-select.how-many-flags ends
       - edge: terminal-select.nevermind ends
@@ -358,6 +387,44 @@ scenes:
       - edge: terminal-select.wrong-festival ends
         updates:
           - set flag stranger-asked-festival to yes
+
+  # create a mining cutscene that awards rocks of increasing quality. the mining landmark
+  # on the world map is only visible once the player has a pickaxe, and disappears after
+  # all five rocks have been mined.
+  mining-cutscene:
+    template: core.dialog-cutscene
+    config: res://examples/visual-novel/scenes/mining/mining-cutscene.yaml
+    transitions:
+      - edge: terminal-frame.mined-crumbly ends
+        when:
+          - attribute rocks-mined less than 1
+        updates:
+          - add 1 of item rock-crumbly to bag inventory
+          - add 1 to attribute rocks-mined
+      - edge: terminal-frame.mined-rough ends
+        when:
+          - attribute rocks-mined less than 2
+        updates:
+          - add 1 of item rock-rough to bag inventory
+          - add 1 to attribute rocks-mined
+      - edge: terminal-frame.mined-decent ends
+        when:
+          - attribute rocks-mined less than 3
+        updates:
+          - add 1 of item rock-decent to bag inventory
+          - add 1 to attribute rocks-mined
+      - edge: terminal-frame.mined-shiny ends
+        when:
+          - attribute rocks-mined less than 4
+        updates:
+          - add 1 of item rock-shiny to bag inventory
+          - add 1 to attribute rocks-mined
+      - edge: terminal-frame.mined-perfect ends
+        when:
+          - attribute rocks-mined less than 5
+        updates:
+          - add 1 of item rock-perfect to bag inventory
+          - add 1 to attribute rocks-mined
 
   # define the ending cutscenes. use quit event action.
   win-cutscene:

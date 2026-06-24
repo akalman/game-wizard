@@ -20,6 +20,7 @@ public static class GameWizardExtensions
                 ConditionType.AttributeLessThan => state.ReadAttribute(condition.Target) < condition.ExpectedNumber,
                 ConditionType.AttributeMoreThan => state.ReadAttribute(condition.Target) > condition.ExpectedNumber,
                 ConditionType.BagContainsMoreThan => state.NumInBag(condition.BagTarget, condition.Target) > condition.ExpectedNumber,
+                ConditionType.BagContainsLessThan => state.NumInBag(condition.BagTarget, condition.Target) < condition.ExpectedNumber,
                 _ => throw new GameWizardInternalException($"Encountered unexpected condition type {condition.Type}."),
             };
         });
