@@ -27,51 +27,44 @@ sequences:
     transitions:
       - action: start end
     frames:
-      - mc added to Left
-      - mc puts on mc-regular-clothes
-      - mc puts on mc-face-weirded-out
-      - |
-        mc says
-        Ok so I talked to everyone and I definitely
-        did not get all three flags. Some of those conversations
-        did not go great.
+      - mc enters: on Left
+      - mc puts on: mc-regular-clothes
+      - mc puts on: mc-face-weirded-out
+      - mc says: |
+          Ok so I talked to everyone and I definitely
+          did not get all three flags. Some of those conversations
+          did not go great.
 
-      - future-mc added to Right
-      - future-mc puts on mc-regular-clothes
-      - future-mc puts on mc-face-angry
-      - |
-        future-mc says
-        Yeah I can see that. I'm literally
-        flickering right now. That's not a good sign for the
-        whole "reality staying intact" thing.
+      - future-mc enters: on Right
+      - future-mc puts on: mc-regular-clothes
+      - future-mc puts on: mc-face-angry
+      - future-mc says: |
+          Yeah I can see that. I'm literally
+          flickering right now. That's not a good sign for the
+          whole "reality staying intact" thing.
 
-      - |
-        mc says
-        In my defense, one of those people had 247
-        named flags and I panicked.
+      - mc says: |
+          In my defense, one of those people had 247
+          named flags and I panicked.
 
-      - future-mc puts on mc-face-neutral
-      - |
-        future-mc says
-        Well this is awkward. Reality is
-        going to collapse now. The good news is it'll be quick.
-        The bad news is everything. Everything is the bad news.
+      - future-mc puts on: mc-face-neutral
+      - future-mc says: |
+          Well this is awkward. Reality is
+          going to collapse now. The good news is it'll be quick.
+          The bad news is everything. Everything is the bad news.
 
-      - |
-        mc says
-        So... no coffee then?
+      - mc says: |
+          So... no coffee then?
 
-      - |
-        future-mc says
-        No coffee. No anything. It was nice
-        being us though. For the like twenty minutes it lasted.
-        Bye, me.
+      - future-mc says: |
+          No coffee. No anything. It was nice
+          being us though. For the like twenty minutes it lasted.
+          Bye, me.
 
-      - future-mc removed
-      - |
-        mc says
-        Well. That's the end of everything I guess.
-        Should have been nicer to people. Lesson l-
+      - future-mc leaves:
+      - mc says: |
+          Well. That's the end of everything I guess.
+          Should have been nicer to people. Lesson l-
 
   end:
     transitions:

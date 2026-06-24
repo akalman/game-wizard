@@ -7,7 +7,10 @@ namespace GameWizard.Core.DialogCutscene;
 
 public class AddCharacterFrameParser : GrammarTypeMapper<AddCharacterFrame>
 {
-    public string Grammar => @"[id:character] added to [word:side]";
+    public IDictionary<string, string> Grammar => new Dictionary<string, string>
+    {
+        ["[id:character] enters"] = "on [word:side]",
+    };
 
     public AddCharacterFrame Map(IDictionary<string, string> captures) => new()
     {
@@ -18,7 +21,10 @@ public class AddCharacterFrameParser : GrammarTypeMapper<AddCharacterFrame>
 
 public class RemoveCharacterFrameParser : GrammarTypeMapper<RemoveCharacterFrame>
 {
-    public string Grammar => @"[id:character] removed";
+    public IDictionary<string, string> Grammar => new Dictionary<string, string>
+    {
+        ["[id:character] leaves"] = string.Empty,
+    };
 
     public RemoveCharacterFrame Map(IDictionary<string, string> captures) => new()
     {
@@ -28,7 +34,10 @@ public class RemoveCharacterFrameParser : GrammarTypeMapper<RemoveCharacterFrame
 
 public class SetOutfitFrameParser : GrammarTypeMapper<SetOutfitFrame>
 {
-    public string Grammar => @"[id:character] puts on [id:outfit]";
+    public IDictionary<string, string> Grammar => new Dictionary<string, string>
+    {
+        ["[id:character] puts on"] = "[id:outfit]",
+    };
 
     public SetOutfitFrame Map(IDictionary<string, string> captures) => new()
     {
@@ -39,7 +48,10 @@ public class SetOutfitFrameParser : GrammarTypeMapper<SetOutfitFrame>
 
 public class SetTextFrameParser : GrammarTypeMapper<SetTextFrame>
 {
-    public string Grammar => @"[id:character] says [ml-text:text]";
+    public IDictionary<string, string> Grammar => new Dictionary<string, string>
+    {
+        ["[id:character] says"] = "[text:text]",
+    };
 
     public SetTextFrame Map(IDictionary<string, string> captures) => new()
     {
