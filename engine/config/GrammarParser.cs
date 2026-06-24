@@ -8,22 +8,58 @@ public class GrammarParser<T>(IList<GrammarTypeMapper<T>> typeMappers)
 {
     public IList<GrammarTypeMapper<T>> TypeMappers { get; } = typeMappers;
 
-    public T Parse(string input)
+    public T Parse(IDictionary<string, string> input)
     {
+        var captures = new Dictionary<string, string>();
         foreach (var mapper in TypeMappers)
         {
-            var (pattern, groups) = ExtractPattern(mapper.Grammar);
-            var match = Regex.Match(input, pattern, RegexOptions.Singleline);
-            if (match.Success)
-            {
-                var captures = new Dictionary<string, string>();
-                foreach (var group in groups)
-                    captures.Add(group, match.Groups[group].Value);
+            if (TryParseForMapper(input, mapper, captures))
                 return mapper.Map(captures);
-            }
         }
 
         throw new GameWizardInternalException($"Did not find a matching grammar for input: {input}");
+    }
+
+    private bool TryParseForMapper(IDictionary<string, string> input, GrammarTypeMapper<T> mapper, IDictionary<string, string> result)
+    {
+        var captures = new Dictionary<string, string>();
+        foreach (var (keyGrammar, valueGrammar) in mapper.Grammar)
+        {
+            if (!TryParseLineForMapper(input, keyGrammar, valueGrammar, captures))
+                return false;
+        }
+
+        result.Clear();
+        foreach (var (key, value) in captures)
+            result[key] = value;
+        return true;
+    }
+
+    private bool TryParseLineForMapper(
+        IDictionary<string, string> input,
+        string keyGrammar,
+        string valueGrammar,
+        IDictionary<string, string> captures)
+    {
+        var (keyPattern, keyGroups) = ExtractPattern(keyGrammar);
+        foreach (var (key, value) in input)
+        {
+            var keyMatch = Regex.Match(key, keyPattern, RegexOptions.Singleline);
+            if (keyMatch.Success)
+            {
+                var (valuePattern, valueGroups) = ExtractPattern(valueGrammar);
+                var valueMatch = Regex.Match(value, valuePattern, RegexOptions.Singleline);
+                if (!valueMatch.Success)
+                    return false;
+                foreach (var group in keyGroups)
+                    captures.Add(group, keyMatch.Groups[group].Value);
+                foreach (var group in valueGroups)
+                    captures.Add(group, valueMatch.Groups[group].Value);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private (string pattern, List<string> groups) ExtractPattern(string grammar)
@@ -52,11 +88,12 @@ public class GrammarParser<T>(IList<GrammarTypeMapper<T>> typeMappers)
         { "id", name => @" (?<" + name + @">[.\w-]+)" },
         { "word", name => @" (?<" + name + @">\w+)" },
         { "ml-text", name => @"\n(?<" + name + @">.*)" },
+        { "text", name => @"(?<" + name + @">.*)" },
     };
 }
 
 public interface GrammarTypeMapper<out T>
 {
-    public string Grammar { get; }
+    public IDictionary<string, string> Grammar { get; }
     public T Map(IDictionary<string, string> captures);
 }

@@ -9,22 +9,16 @@ landmarks:
     sprite: res://examples/visual-novel/sprites/world-map-landmark.png
     size: ( 200 200 )
     offset: ( -0.25 -0.7 )
-    when:
-      - flag shopkeep-progress in [unseen,open]
 
   enthusiast-landmark:
     sprite: res://examples/visual-novel/sprites/world-map-landmark.png
     size: ( 200 200 )
     offset: ( 0.4 -0.2 )
-    when:
-      - flag enthusiast-progress in [unseen,open]
 
   stranger-landmark:
     sprite: res://examples/visual-novel/sprites/world-map-landmark.png
     size: ( 200 200 )
     offset: ( -0.65 0.45 )
-    when:
-      - flag stranger-progress in [unseen,open]
 
   mining-landmark:
     sprite: res://examples/visual-novel/sprites/mining-landmark.png

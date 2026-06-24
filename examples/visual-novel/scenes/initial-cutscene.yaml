@@ -27,69 +27,60 @@ sequences:
     transitions:
       - action: start done
     frames:
-      - mc added to Left
-      - mc puts on mc-regular-clothes
-      - mc puts on mc-face-happy
-      - |
-        mc says
-        Oh boy I sure do love walking outside in the
-        outdoors outside to get coffee in the outside because there's
-        coffee.
+      - mc enters: on Left
+      - mc puts on: mc-regular-clothes
+      - mc puts on: mc-face-happy
+      - mc says: |
+          Oh boy I sure do love walking outside in the
+          outdoors outside to get coffee in the outside because there's
+          coffee.
 
-      - mc puts on mc-face-surprised
-      - |
-        mc says
-        OH SHIT! AHH THE SUN ITS SO BRIGHT!
+      - mc puts on: mc-face-surprised
+      - mc says: |
+          OH SHIT! AHH THE SUN ITS SO BRIGHT!
 
-      - mc puts on mc-face-weirded-out
-      - |
-        mc says
-        Oh wait that isn't the sun.  What
-        is that? It looks like... me???
+      - mc puts on: mc-face-weirded-out
+      - mc says: |
+          Oh wait that isn't the sun.  What
+          is that? It looks like... me???
 
-      - future-mc added to Right
-      - future-mc puts on mc-regular-clothes
-      - future-mc puts on mc-face-angry
-      - |
-        future-mc says
-        Hello.  It's me, you from the future.
-        Listen.  You really fucked up.  I was not supposed to come
-        back in time.  Nice going.  Now if you don't perfectly
-        recreate my actions we're going to collapse spacetime and
-        destroy reality.
+      - future-mc enters: on Right
+      - future-mc puts on: mc-regular-clothes
+      - future-mc puts on: mc-face-angry
+      - future-mc says: |
+          Hello.  It's me, you from the future.
+          Listen.  You really fucked up.  I was not supposed to come
+          back in time.  Nice going.  Now if you don't perfectly
+          recreate my actions we're going to collapse spacetime and
+          destroy reality.
 
-      - |
-        mc says
-        Uhh, but I haven't done anything?
+      - mc says: |
+          Uhh, but I haven't done anything?
 
-      - |
-        mc says
-        Don't worry. You will. But I'm here to make
-        sure you don't, watch: "Hey. Don't."
+      - future-mc says: |
+          Don't worry. You will. But I'm here to make
+          sure you don't, watch: "Hey. Don't."
 
-      - future-mc puts on mc-face-neutral
-      - |
-        mc says
-        Uhh...
+      - future-mc puts on: mc-face-neutral
+      - mc says: |
+          Uhh...
 
-      - future-mc puts on mc-face-angry
-      - |
-        future-mc says
-        No time. Listen. You need to go and get the three
-        flags from people around here. You need to do it because I did it.
-        Don't ask me why I did it, I'm you so ask yourself.
+      - future-mc puts on: mc-face-angry
+      - future-mc says: |
+          No time. Listen. You need to go and get the three
+          flags from people around here. You need to do it because I did it.
+          Don't ask me why I did it, I'm you so ask yourself.
 
-      - future-mc puts on mc-face-neutral
-      - |
-        mc says
-        Ok but who do I need to get these flags from?  Also flags?
+      - future-mc puts on: mc-face-neutral
+      - mc says: |
+          Ok but who do I need to get these flags from?  Also flags?
 
-      - future-mc puts on mc-face-angry
-      - |
-        future-mc says
-        Just go talk to people ok? There's only three buttons
-        and they all talk to someone so you literally can't not talk to them. I'm
-        gonna go get some coffee.
+      - future-mc puts on: mc-face-angry
+      - future-mc says: |
+          Just go talk to people ok? There's only three buttons
+          and they all talk to someone so you literally can't not talk to them. I'm
+          gonna go get some coffee.
+
 
   done:
     transitions:
