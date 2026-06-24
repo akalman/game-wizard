@@ -1,0 +1,469 @@
+initial-sequence: route-intro
+
+
+style:
+  background: res://examples/visual-novel/sprites/50-px-darken.png
+  banner:
+    background: res://examples/visual-novel/sprites/dialog-banner-background.png
+    height: 50
+  characters:
+    outer-margin: 50
+  dialog-box:
+    background: res://examples/visual-novel/sprites/dialog-box-background.png
+    height: 350
+    text-size: ( 1750 230 )
+    text-offset: ( 0 40 )
+    speaker-name-size: ( 200 50 )
+    speaker-name-offset: ( -1650 -260 )
+
+
+characters: characters
+outfits: outfits
+
+
+interludes:
+
+  enthusiast-topics:
+    transitions:
+      - source: terminal-select.tell-me-about-flags
+        action: start tell-me-about-flags
+      - source: terminal-select.how-many-flags
+        action: start how-many-flags
+      - source: terminal-select.flag-test
+        action: start flag-test-intro
+      - source: terminal-select.nevermind
+        action: start nevermind
+
+  flag-quiz:
+    transitions:
+      - source: terminal-select.success
+        action: start success
+      - source: terminal-select.fail
+        action: start fail
+      - source: terminal-select.open
+        action: start open
+
+
+sequences:
+
+
+  route-intro:
+    transitions:
+      - action: start unseen-intro
+        when:
+          - flag enthusiast-progress in [unseen]
+      - action: start route-revisit
+    frames: []
+
+
+  unseen-intro:
+    transitions:
+      - action: interlude enthusiast-topics
+    frames:
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        There's someone over here surrounded by...
+        are those all flags? That's like a hundred flags. Why
+        does one person need that many flags.
+
+      - enthusiast added to Right
+      - enthusiast puts on npc-regular-clothes
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        HELLO!! Do you like FLAGS?!
+        I LOVE flags!! I have 247 of them!! Each one is
+        special and unique and I have named every single one!!
+
+      - mc puts on mc-face-surprised
+      - |
+        mc says
+        Oh god.
+
+      - |
+        enthusiast says
+        This one is Gerald! This one is
+        Flag McFlagface! This one is just called "The Incident"
+        and I don't like to talk about why!
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        Look, I actually need a flag. It's kind of
+        an emergency. A me-from-the-future kind of emergency.
+
+      - enthusiast puts on npc-face-weirded-out
+      - |
+        enthusiast says
+        Oh I could NEVER just give away
+        one of my flags! They're my CHILDREN! Well, not literally.
+        That would be weird. They're rectangles.
+
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        BUT! If you can prove to me that
+        you truly APPRECIATE flags, I might be willing to part
+        with one. Maybe. It'll be hard. I'll probably cry.
+
+      - enthusiast puts on npc-face-neutral
+      - |
+        enthusiast says
+        Feel free to chat with me first!
+        Get to know the flags! Understand their ESSENCE! Then
+        when you're ready, I'll give you THE TEST.
+
+
+  route-revisit:
+    transitions:
+      - action: start revisit-familiar
+        when:
+          - attribute enthusiast-familiarity more than 2
+      - action: start revisit-early
+    frames: []
+
+
+  revisit-early:
+    transitions:
+      - action: interlude enthusiast-topics
+    frames:
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-neutral
+      - enthusiast added to Right
+      - enthusiast puts on npc-regular-clothes
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        YOU'RE BACK!! I knew you couldn't
+        stay away from the flags!! Nobody can!! They're just
+        so rectangular and wonderful!!
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        Yeah. Couldn't stop thinking about those
+        flags. Haunted by them, actually. In a bad way.
+
+      - enthusiast puts on npc-face-neutral
+      - |
+        enthusiast says
+        That's the SPIRIT!! What shall
+        we talk about today?!
+
+
+  revisit-familiar:
+    transitions:
+      - action: interlude enthusiast-topics
+    frames:
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-neutral
+      - enthusiast added to Right
+      - enthusiast puts on npc-regular-clothes
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        MY FAVORITE FLAG FRIEND!! I've
+        been telling the flags about you! Gerald is especially
+        excited! He's been practicing his flapping!
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        Gerald is a flag. Gerald does not have
+        opinions or the ability to practice things.
+
+      - enthusiast puts on npc-face-angry
+      - |
+        enthusiast says
+        Gerald has MORE emotional depth
+        than most people I've met! He's been through a LOT!
+        Don't let the rectangle shape fool you!
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        Fine. Gerald is a complex rectangle. What
+        do you want to talk about?
+
+
+  tell-me-about-flags:
+    transitions:
+      - action: interlude enthusiast-topics
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        So tell me about your flag collection.
+
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        OH I thought you'd NEVER ASK!! Ok so
+        it all started when I was seven and I found a flag in
+        a ditch. It was wet and had a boot print on it and it
+        was the most BEAUTIFUL thing I had ever seen.
+
+      - |
+        enthusiast says
+        That was Flag Number One. I call her
+        "Origin Story." She's retired now. Lives in a display
+        case. I make sure she has good lighting. She deserves
+        it after everything she's been through.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        You found a dirty flag in a ditch and that
+        started... all of this?
+
+      - enthusiast puts on npc-face-neutral
+      - |
+        enthusiast says
+        Some people see a dirty flag in a ditch.
+        I saw POTENTIAL. I saw BEAUTY. I saw a rectangle that
+        needed a HOME. And from that day forward I made it my
+        mission to give every flag the love it deserves.
+
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        247 flags later here we are! ZERO
+        regrets! Well, maybe one. "The Incident." But we don't
+        talk about "The Incident."
+
+
+  how-many-flags:
+    transitions:
+      - action: start route-how-many-flags
+    frames: []
+
+  route-how-many-flags:
+    transitions:
+      - action: start how-many-flags-first
+        when:
+          - attribute enthusiast-familiarity less than 3
+      - action: start how-many-flags-repeat
+    frames: []
+
+  how-many-flags-first:
+    transitions:
+      - action: interlude enthusiast-topics
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        You said 247 flags? Have you actually
+        counted them all?
+
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        COUNTED? I have a SPREADSHEET! With
+        COLUMNS! Each flag has a name, a birthday, a personality
+        profile, and a favorite food!
+
+      - mc puts on mc-face-surprised
+      - |
+        mc says
+        Flags have... favorite foods?
+
+      - enthusiast puts on npc-face-neutral
+      - |
+        enthusiast says
+        Of course! Gerald likes pasta. Flag
+        McFlagface is more of a sushi fan. "The Incident"
+        doesn't eat. "The Incident" only consumes.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        That last one is deeply concerning.
+
+      - enthusiast puts on npc-face-weirded-out
+      - |
+        enthusiast says
+        Yeah "The Incident" is in timeout
+        right now. We don't talk about "The Incident." What
+        else would you like to know?
+
+  how-many-flags-repeat:
+    transitions:
+      - action: interlude enthusiast-topics
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        Still 247 flags?
+
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        248 actually!! I found one in my
+        couch cushions this morning! I named her "Surprise!"
+        She's mostly lint but I see potential!
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        I'm not sure lint qualifies as a flag.
+
+      - enthusiast puts on npc-face-angry
+      - |
+        enthusiast says
+        ALL rectangular fabric is a flag
+        if you BELIEVE in it hard enough! That's literally the
+        first rule of flag enthusiasm! I wrote it on a flag!
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        Of course you did.
+
+
+  flag-test-intro:
+    transitions:
+      - action: interlude flag-quiz
+    frames:
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        OK so here's the deal! I will
+        ask you ONE question about flags, and your answer will
+        determine if you are WORTHY of flag ownership!
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        One question? That's it?
+
+      - |
+        enthusiast says
+        One question is all I NEED!
+        You can tell EVERYTHING about a person by how they
+        feel about flags! It's basically a personality test!
+
+      - enthusiast puts on npc-face-surprised
+      - |
+        enthusiast says
+        Here it is: What is the BEST
+        thing about flags?
+
+
+  success:
+    transitions:
+      - action: end
+    frames:
+      - enthusiast puts on npc-face-surprised
+      - |
+        enthusiast says
+        ...
+
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        That... that is the most
+        BEAUTIFUL answer I have EVER heard. You GET it.
+        You really GET flags.
+
+      - |
+        enthusiast says
+        I'm not crying! My eyes are
+        just flapping in the wind! Like a flag! Which is
+        BEAUTIFUL as you CORRECTLY identified!
+
+      - |
+        enthusiast says
+        Here! Take Gerald! He's my
+        favorite but I know he'd want to be with someone who
+        truly understands the flapping arts!
+
+      - enthusiast removed
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        I got... Gerald. Cool. I have a flag named
+        Gerald now. This is my life. I'm collecting named
+        rectangles to save reality.
+
+
+  fail:
+    transitions:
+      - action: end
+    frames:
+      - enthusiast puts on npc-face-surprised
+      - |
+        enthusiast says
+        ...
+
+      - enthusiast puts on npc-face-angry
+      - |
+        enthusiast says
+        Cloth... on a stick? CLOTH?!
+        ON A STICK?!?!
+
+      - |
+        enthusiast says
+        Gerald is NOT "cloth on a stick"!
+        Gerald is a SYMBOL! Gerald is ART! Gerald has a BACKSTORY
+        and a FAVORITE COLOR and it's CRIMSON!
+
+      - |
+        enthusiast says
+        I would NEVER give a flag to
+        someone like you! NEVER! Now if you'll excuse me I need
+        to go apologize to my flags for making them hear that!
+
+      - enthusiast removed
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        I feel like I should feel bad but also that
+        person definitely has too many flags. Anyway. No flag
+        from here I guess. Future me is going to be annoyed.
+
+
+  open:
+    transitions:
+      - action: interlude enthusiast-topics
+    frames:
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        REFLECT?! Yes!! Take ALL the
+        time you need! Flags deserve CONTEMPLATION! They deserve
+        MEDITATION! They deserve a RETREAT!
+
+      - |
+        enthusiast says
+        When you're ready, just let me
+        know! I'll be right here! With my 247 friends! Well,
+        248 if you count "Surprise!"
+
+
+  nevermind:
+    transitions:
+      - action: end
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        I should get going. I need to think about
+        flags some more.
+
+      - enthusiast puts on npc-face-happy
+      - |
+        enthusiast says
+        YES! Go CONTEMPLATE! Let the
+        flags SPEAK to you! When you come back I'll be here!
+        We'll ALL be here! Me and my 247 best friends!
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        Right. All 247 of them. In a yard. I'll
+        be back when I've sufficiently... contemplated.

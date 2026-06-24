@@ -1,0 +1,37 @@
+initial-page: dialog-topics
+
+
+style:
+  background: res://examples/visual-novel/sprites/50-px-darken.png
+  options:
+    sprite: res://examples/visual-novel/sprites/dialog-choice-button.png
+    size: ( 800 200 )
+
+
+pages:
+
+  dialog-topics:
+    cancel-action: none
+    options:
+      tell-me-about-flags:
+        action: end
+        label: |
+          "Tell me about your flag collection."
+        when:
+          - flag enthusiast-progress in [open]
+      how-many-flags:
+        action: end
+        label: |
+          "How many flags do you have exactly?"
+        when:
+          - flag enthusiast-progress in [open]
+      flag-test:
+        action: end
+        label: |
+          "I'm ready for the flag test."
+        when:
+          - flag enthusiast-progress in [open]
+      nevermind:
+        action: end
+        label: |
+          "I gotta go, I'll be back later."
