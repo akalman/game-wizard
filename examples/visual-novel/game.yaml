@@ -56,6 +56,18 @@ state:
       values: [ yes, no ]
       initial-value: no
 
+    stranger-asked-transfer:
+      values: [ yes, no ]
+      initial-value: no
+
+    stranger-asked-rooftop:
+      values: [ yes, no ]
+      initial-value: no
+
+    stranger-asked-festival:
+      values: [ yes, no ]
+      initial-value: no
+
   attributes:
     shopkeep-familiarity:
       min: 0
@@ -195,25 +207,16 @@ scenes:
 
   # do the same for each other npc.
   # enthusiast
-  enthusiast-cutscene:
-    template: core.dialog-cutscene
-    config: res://examples/visual-novel/scenes/enthusiast-cutscene.yaml
-    transitions:
-      - edge: dialog-interlude.question spawn enthusiast-dialog-choice
-      - edge: terminal-frame.success ends
-        updates:
-          - set flag enthusiast-in-dialog to no
-      - edge: terminal-frame.fail ends
-        updates:
-          - set flag enthusiast-in-dialog to no
-      - edge: terminal-frame.open ends
-        updates:
-          - set flag enthusiast-in-dialog to no
-
   enthusiast-location:
     template: core.landmark-overworld
-    config: res://examples/visual-novel/scenes/enthusiast-location.yaml
+    config: res://examples/visual-novel/scenes/enthusiast/enthusiast-location.yaml
     transitions:
+      - edge: navigate.npc spawn enthusiast-cutscene
+        updates:
+          - set flag enthusiast-in-dialog to yes
+          - add 1 to attribute enthusiast-familiarity
+        when:
+          - attribute enthusiast-familiarity less than 3
       - edge: navigate.npc spawn enthusiast-cutscene
         updates:
           - set flag enthusiast-in-dialog to yes
@@ -223,9 +226,41 @@ scenes:
           - add 1 of item can-of-beans to bag inventory
           - set flag found-house-beans to yes
 
-  enthusiast-dialog-choice:
+  enthusiast-cutscene:
+    template: core.dialog-cutscene
+    config: res://examples/visual-novel/scenes/enthusiast/enthusiast-cutscene.yaml
+    transitions:
+      - edge: dialog-interlude.enthusiast-topics spawn enthusiast-dialog-topics
+        updates:
+          - set flag enthusiast-progress to open
+        when:
+          - flag enthusiast-progress in [unseen]
+      - edge: dialog-interlude.enthusiast-topics spawn enthusiast-dialog-topics
+      - edge: dialog-interlude.flag-quiz spawn enthusiast-flag-quiz
+      - edge: terminal-frame.success ends
+        updates:
+          - set flag enthusiast-in-dialog to no
+      - edge: terminal-frame.fail ends
+        updates:
+          - set flag enthusiast-in-dialog to no
+      - edge: terminal-frame.nevermind ends
+        updates:
+          - set flag enthusiast-in-dialog to no
+
+  # create a scene for selecting what topic to discuss with the enthusiast npc
+  enthusiast-dialog-topics:
     template: core.menu
-    config: res://examples/visual-novel/scenes/enthusiast-dialog-choice.yaml
+    config: res://examples/visual-novel/scenes/enthusiast/enthusiast-dialog-topics.yaml
+    transitions:
+      - edge: terminal-select.tell-me-about-flags ends
+      - edge: terminal-select.flag-test ends
+      - edge: terminal-select.how-many-flags ends
+      - edge: terminal-select.nevermind ends
+
+  # create a scene for the flag worthiness quiz
+  enthusiast-flag-quiz:
+    template: core.menu
+    config: res://examples/visual-novel/scenes/enthusiast/enthusiast-flag-quiz.yaml
     transitions:
       - edge: terminal-select.success ends
         updates:
@@ -234,28 +269,11 @@ scenes:
         updates:
           - set flag enthusiast-progress to fail
       - edge: terminal-select.open ends
-        updates:
-          - set flag enthusiast-progress to open
 
   # stranger
-  stranger-cutscene:
-    template: core.dialog-cutscene
-    config: res://examples/visual-novel/scenes/stranger-cutscene.yaml
-    transitions:
-      - edge: dialog-interlude.question spawn stranger-dialog-choice
-      - edge: terminal-frame.success ends
-        updates:
-          - set flag stranger-in-dialog to no
-      - edge: terminal-frame.fail ends
-        updates:
-          - set flag stranger-in-dialog to no
-      - edge: terminal-frame.open ends
-        updates:
-          - set flag stranger-in-dialog to no
-
   stranger-location:
     template: core.landmark-overworld
-    config: res://examples/visual-novel/scenes/stranger-location.yaml
+    config: res://examples/visual-novel/scenes/stranger/stranger-location.yaml
     transitions:
       - edge: navigate.npc spawn stranger-cutscene
         updates:
@@ -266,19 +284,80 @@ scenes:
           - add 1 of item can-of-beans to bag inventory
           - set flag found-sign-beans to yes
 
-  stranger-dialog-choice:
-    template: core.menu
-    config: res://examples/visual-novel/scenes/stranger-dialog-choice.yaml
+  stranger-cutscene:
+    template: core.dialog-cutscene
+    config: res://examples/visual-novel/scenes/stranger/stranger-cutscene.yaml
     transitions:
-      - edge: terminal-select.success ends
-        updates:
-          - set flag stranger-progress to success
-      - edge: terminal-select.fail ends
-        updates:
-          - set flag stranger-progress to fail
-      - edge: terminal-select.open ends
+      - edge: dialog-interlude.stranger-topics spawn stranger-dialog-topics
         updates:
           - set flag stranger-progress to open
+        when:
+          - flag stranger-progress in [unseen]
+      - edge: dialog-interlude.stranger-topics spawn stranger-dialog-topics
+      - edge: dialog-interlude.quiz-transfer spawn stranger-quiz-transfer
+      - edge: dialog-interlude.quiz-rooftop spawn stranger-quiz-rooftop
+      - edge: dialog-interlude.quiz-festival spawn stranger-quiz-festival
+      - edge: terminal-frame.success ends
+        updates:
+          - set flag stranger-progress to success
+          - set flag stranger-in-dialog to no
+      - edge: terminal-frame.fail ends
+        updates:
+          - set flag stranger-progress to fail
+          - set flag stranger-in-dialog to no
+      - edge: terminal-frame.nevermind ends
+        updates:
+          - set flag stranger-in-dialog to no
+
+  # create a scene for selecting what topic to discuss with the stranger npc
+  stranger-dialog-topics:
+    template: core.menu
+    config: res://examples/visual-novel/scenes/stranger/stranger-dialog-topics.yaml
+    transitions:
+      - edge: terminal-select.about-corners ends
+      - edge: terminal-select.quiz-transfer ends
+      - edge: terminal-select.quiz-rooftop ends
+      - edge: terminal-select.quiz-festival ends
+      - edge: terminal-select.ask-for-flag ends
+      - edge: terminal-select.nevermind ends
+
+  # create scenes for each stranger etiquette quiz. correct answers increase
+  # favorability, incorrect answers do not.
+  stranger-quiz-transfer:
+    template: core.menu
+    config: res://examples/visual-novel/scenes/stranger/stranger-quiz-transfer.yaml
+    transitions:
+      - edge: terminal-select.right-transfer ends
+        updates:
+          - add 1 to attribute stranger-familiarity
+          - set flag stranger-asked-transfer to yes
+      - edge: terminal-select.wrong-transfer ends
+        updates:
+          - set flag stranger-asked-transfer to yes
+
+  stranger-quiz-rooftop:
+    template: core.menu
+    config: res://examples/visual-novel/scenes/stranger/stranger-quiz-rooftop.yaml
+    transitions:
+      - edge: terminal-select.right-rooftop ends
+        updates:
+          - add 1 to attribute stranger-familiarity
+          - set flag stranger-asked-rooftop to yes
+      - edge: terminal-select.wrong-rooftop ends
+        updates:
+          - set flag stranger-asked-rooftop to yes
+
+  stranger-quiz-festival:
+    template: core.menu
+    config: res://examples/visual-novel/scenes/stranger/stranger-quiz-festival.yaml
+    transitions:
+      - edge: terminal-select.right-festival ends
+        updates:
+          - add 1 to attribute stranger-familiarity
+          - set flag stranger-asked-festival to yes
+      - edge: terminal-select.wrong-festival ends
+        updates:
+          - set flag stranger-asked-festival to yes
 
   # define the ending cutscenes. use quit event action.
   win-cutscene:

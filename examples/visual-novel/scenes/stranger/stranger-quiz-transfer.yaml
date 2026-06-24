@@ -1,0 +1,23 @@
+initial-page: quiz
+
+
+style:
+  background: res://examples/visual-novel/sprites/50-px-darken.png
+  options:
+    sprite: res://examples/visual-novel/sprites/dialog-choice-button.png
+    size: ( 800 200 )
+
+
+pages:
+
+  quiz:
+    cancel-action: none
+    options:
+      right-transfer:
+        action: end
+        label: |
+          "Drop everything and show them around. Best friends by sunset."
+      wrong-transfer:
+        action: end
+        label: |
+          "Wave from across the room. Mind your own business."

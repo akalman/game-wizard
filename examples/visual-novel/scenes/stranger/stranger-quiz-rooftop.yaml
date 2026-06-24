@@ -1,0 +1,23 @@
+initial-page: quiz
+
+
+style:
+  background: res://examples/visual-novel/sprites/50-px-darken.png
+  options:
+    sprite: res://examples/visual-novel/sprites/dialog-choice-button.png
+    size: ( 800 200 )
+
+
+pages:
+
+  quiz:
+    cancel-action: none
+    options:
+      right-rooftop:
+        action: end
+        label: |
+          "The rooftop. Wind in your hair. Contemplating existence."
+      wrong-rooftop:
+        action: end
+        label: |
+          "The cafeteria, like everyone else."

@@ -1,0 +1,699 @@
+initial-sequence: route-intro
+
+
+style:
+  background: res://examples/visual-novel/sprites/50-px-darken.png
+  banner:
+    background: res://examples/visual-novel/sprites/dialog-banner-background.png
+    height: 50
+  characters:
+    outer-margin: 50
+  dialog-box:
+    background: res://examples/visual-novel/sprites/dialog-box-background.png
+    height: 350
+    text-size: ( 1750 230 )
+    text-offset: ( 0 40 )
+    speaker-name-size: ( 200 50 )
+    speaker-name-offset: ( -1650 -260 )
+
+
+characters: characters
+outfits: outfits
+
+
+interludes:
+
+  stranger-topics:
+    transitions:
+      - source: terminal-select.about-corners
+        action: start about-corners
+      - source: terminal-select.quiz-transfer
+        action: start quiz-transfer-intro
+      - source: terminal-select.quiz-rooftop
+        action: start quiz-rooftop-intro
+      - source: terminal-select.quiz-festival
+        action: start quiz-festival-intro
+      - source: terminal-select.ask-for-flag
+        action: start route-ask-for-flag
+      - source: terminal-select.nevermind
+        action: start nevermind
+
+  quiz-transfer:
+    transitions:
+      - source: terminal-select.right-transfer
+        action: start quiz-transfer-right
+      - source: terminal-select.wrong-transfer
+        action: start quiz-transfer-wrong
+
+  quiz-rooftop:
+    transitions:
+      - source: terminal-select.right-rooftop
+        action: start quiz-rooftop-right
+      - source: terminal-select.wrong-rooftop
+        action: start quiz-rooftop-wrong
+
+  quiz-festival:
+    transitions:
+      - source: terminal-select.right-festival
+        action: start quiz-festival-right
+      - source: terminal-select.wrong-festival
+        action: start quiz-festival-wrong
+
+
+sequences:
+
+
+  route-intro:
+    transitions:
+      - action: start unseen-intro
+        when:
+          - flag stranger-progress in [unseen]
+      - action: start revisit
+    frames: []
+
+
+  unseen-intro:
+    transitions:
+      - action: interlude stranger-topics
+    frames:
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        Ok let me just go around this corner and—
+
+      - stranger added to Right
+      - stranger puts on npc-regular-clothes
+      - stranger puts on npc-face-angry
+      - mc puts on mc-face-surprised
+      - |
+        mc says
+        [b]BONK.[/b]
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        OW! Oh god I'm so sorry I didn't see you
+        there I—
+
+      - |
+        stranger says
+        No no no. Stop. Don't apologize. That was
+        actually a PERFECT collision. Good angle. Good speed. I
+        felt that in my SOUL.
+
+      - mc puts on mc-face-surprised
+      - |
+        mc says
+        ...thank you?
+
+      - stranger puts on npc-face-neutral
+      - |
+        stranger says
+        But a collision is only the BEGINNING. There
+        are PROTOCOLS. TRADITIONS. You can't just crash into someone
+        and walk away like nothing happened. There's a whole SYSTEM.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        A system? For bumping into people?
+
+      - stranger puts on npc-face-angry
+      - |
+        stranger says
+        For bumping into SPECIFIC people at SPECIFIC
+        corners in SPECIFIC ways! It's not random! Nothing is random!
+        Every collision is a NARRATIVE OPPORTUNITY!
+
+      - stranger puts on npc-face-neutral
+      - |
+        stranger says
+        Listen. I have a flag. You want it. But I
+        can't just GIVE it to someone who doesn't understand the
+        protocols. I need to know you GET IT.
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        Get what exactly?
+
+      - |
+        stranger says
+        The way things are SUPPOSED to work. The
+        unwritten rules. The proper etiquette for EVERY situation.
+        I'll need to test you first. Prove to me you understand,
+        and the flag is yours.
+
+
+  revisit:
+    transitions:
+      - action: interlude stranger-topics
+    frames:
+      - mc added to Left
+      - mc puts on mc-regular-clothes
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        Ok, back to the corner. Let me just—
+
+      - stranger added to Right
+      - stranger puts on npc-regular-clothes
+      - stranger puts on npc-face-weirded-out
+      - mc puts on mc-face-surprised
+      - |
+        mc says
+        [b]BONK.[/b]
+
+      - stranger puts on npc-face-happy
+      - |
+        stranger says
+        Excellent form! You're really committing
+        to the crash now. I can feel your dedication. The corner
+        approves.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        The corner has opinions?
+
+      - stranger puts on npc-face-neutral
+      - |
+        stranger says
+        The corner has STANDARDS. Now then. What
+        would you like to discuss?
+
+
+  about-corners:
+    transitions:
+      - action: interlude stranger-topics
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        So what's the deal with this corner? Why do
+        you just... stand here all day?
+
+      - stranger puts on npc-face-happy
+      - |
+        stranger says
+        This corner is EVERYTHING. Corners are where
+        things HAPPEN. Where paths CROSS. Where lives CHANGE
+        FOREVER. You round a corner and suddenly everything is
+        DIFFERENT.
+
+      - stranger puts on npc-face-neutral
+      - |
+        stranger says
+        Think about it. Someone new shows up—a
+        transfer, a newcomer, whatever—and what happens? You don't
+        just IGNORE them. You take them under your wing. Day one.
+        By sunset you're INSEPARABLE. That's how it WORKS.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        I don't think that's how most people
+        experience meeting someone new.
+
+      - stranger puts on npc-face-angry
+      - |
+        stranger says
+        Most people are DOING IT WRONG. And don't
+        get me STARTED on lunch. There is exactly ONE correct
+        place to eat and it involves OPEN SKY and WIND. Not walls.
+        Not fluorescent lights. WIND.
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        You have very specific opinions about lunch.
+
+      - stranger puts on npc-face-neutral
+      - |
+        stranger says
+        And when something big is coming? You don't
+        sit around making PLANS. You TRAIN. You push yourself
+        BEYOND your limits. You discover something HIDDEN inside
+        you at the EXACT moment it matters most.
+
+      - |
+        stranger says
+        These aren't opinions. They're the natural
+        order. The way things are MEANT to be. If you understand
+        that, we'll get along just fine.
+
+
+  quiz-transfer-intro:
+    transitions:
+      - action: interlude quiz-transfer
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        So tell me about proper introductions.
+
+      - stranger puts on npc-face-neutral
+      - |
+        stranger says
+        Ah. The most fundamental protocol. Listen
+        carefully because I will only explain this once.
+
+      - |
+        stranger says
+        Scenario: Someone new arrives. First day.
+        They've never been here before. They don't know anyone.
+        They're standing there, alone, uncertain. What do you do?
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        What do I...?
+
+      - stranger puts on npc-face-angry
+      - |
+        stranger says
+        No hesitation! INSTINCT! What does your
+        HEART tell you?!
+
+
+  quiz-transfer-right:
+    transitions:
+      - action: interlude stranger-topics
+    frames:
+      - stranger puts on npc-face-surprised
+      - |
+        stranger says
+        ...
+
+      - stranger puts on npc-face-happy
+      - |
+        stranger says
+        YES! You DROP EVERYTHING and SHOW THEM
+        AROUND! You become their FIRST FRIEND! By sunset you're
+        INSEPARABLE! That's EXACTLY right!
+
+      - |
+        stranger says
+        I'm starting to think you might actually
+        understand the protocols. There may be hope for you yet.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        I just picked the one that sounded like
+        what you'd want to hear.
+
+      - stranger puts on npc-face-neutral
+      - |
+        stranger says
+        Doesn't matter. You got it right. That's
+        what counts. What else do you want to know?
+
+
+  quiz-transfer-wrong:
+    transitions:
+      - action: interlude stranger-topics
+    frames:
+      - stranger puts on npc-face-surprised
+      - |
+        stranger says
+        ...WAVE? Just WAVE?
+
+      - stranger puts on npc-face-angry
+      - |
+        stranger says
+        You see someone arrive somewhere NEW and
+        UNFAMILIAR and your response is to WAVE? From a DISTANCE?
+        Like a LIGHTHOUSE?
+
+      - |
+        stranger says
+        That's not a greeting. That's a weather
+        pattern. I'm very disappointed in you right now.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        I feel like waving is a perfectly normal—
+
+      - stranger puts on npc-face-neutral
+      - |
+        stranger says
+        We'll move on. I'm going to pretend that
+        didn't happen. For both our sakes.
+
+
+  quiz-rooftop-intro:
+    transitions:
+      - action: interlude quiz-rooftop
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        What about lunch? You mentioned something
+        about the sky earlier.
+
+      - stranger puts on npc-face-neutral
+      - |
+        stranger says
+        Ah yes. The eternal question. One of the
+        most important decisions a person faces every single day.
+
+      - |
+        stranger says
+        Where. Do. You. Eat. Lunch. Think carefully.
+        This says more about you than any personality test ever
+        could.
+
+
+  quiz-rooftop-right:
+    transitions:
+      - action: interlude stranger-topics
+    frames:
+      - stranger puts on npc-face-surprised
+      - |
+        stranger says
+        ...
+
+      - stranger puts on npc-face-happy
+      - |
+        stranger says
+        THE ROOFTOP! Of COURSE! Wind in your hair!
+        Sky above you! The philosophical weight of existence
+        pressing gently on your bento box! PERFECT!
+
+      - |
+        stranger says
+        You can see the whole world from up there.
+        Or at least the parking lot. But it FEELS like the whole
+        world and that's what matters.
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        I've actually never eaten on a rooftop but
+        it does sound kind of nice.
+
+      - stranger puts on npc-face-neutral
+      - |
+        stranger says
+        It's not "nice." It's CORRECT. There's a
+        difference. One is a feeling and the other is a fact.
+
+
+  quiz-rooftop-wrong:
+    transitions:
+      - action: interlude stranger-topics
+    frames:
+      - stranger puts on npc-face-surprised
+      - |
+        stranger says
+        The... the CAFETERIA?
+
+      - stranger puts on npc-face-angry
+      - |
+        stranger says
+        A room with NO VIEW and FLUORESCENT LIGHTS
+        and the collective aroma of forty different microwaved
+        meals? You would eat there? ON PURPOSE?
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        It has tables. And chairs. It's literally
+        designed for eating.
+
+      - stranger puts on npc-face-weirded-out
+      - |
+        stranger says
+        So is a prison. Doesn't mean you should
+        ENJOY it. I need a moment.
+
+
+  quiz-festival-intro:
+    transitions:
+      - action: interlude quiz-festival
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        What about big events? Any protocols for
+        those?
+
+      - stranger puts on npc-face-neutral
+      - |
+        stranger says
+        Oh this is a GOOD one. Possibly the most
+        important protocol of all.
+
+      - |
+        stranger says
+        Imagine: A big event is coming. Something
+        important. High stakes. Everyone is counting on you.
+        How do you prepare?
+
+
+  quiz-festival-right:
+    transitions:
+      - action: interlude stranger-topics
+    frames:
+      - stranger puts on npc-face-surprised
+      - |
+        stranger says
+        ...
+
+      - stranger puts on npc-face-happy
+      - |
+        stranger says
+        A TRAINING MONTAGE! YES! You push yourself
+        BEYOND YOUR LIMITS! You DISCOVER something HIDDEN inside
+        you at the EXACT MOMENT it matters most! That's the ONLY
+        way to do it!
+
+      - |
+        stranger says
+        I once spent three weeks preparing for a
+        corner collision by running into walls at increasing
+        speeds. Did I discover a hidden power? No. Did I get
+        a concussion? Yes. Was it WORTH IT? ABSOLUTELY.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        Please see a doctor.
+
+      - stranger puts on npc-face-neutral
+      - |
+        stranger says
+        Doctors don't understand the protocols.
+        But YOU might. And that's what matters.
+
+
+  quiz-festival-wrong:
+    transitions:
+      - action: interlude stranger-topics
+    frames:
+      - stranger puts on npc-face-surprised
+      - |
+        stranger says
+        Make a LIST? And PLAN AHEAD?
+
+      - stranger puts on npc-face-angry
+      - |
+        stranger says
+        Where's the DRAMA in that?! Where's the
+        last-minute REVELATION?! Where's the moment where you
+        discover your TRUE POTENTIAL against all odds?!
+
+      - |
+        stranger says
+        You can't discover hidden power with a
+        SPREADSHEET! That's not how ANY of this works!
+
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        I think spreadsheets are actually pretty
+        effective for—
+
+      - stranger puts on npc-face-weirded-out
+      - |
+        stranger says
+        Stop. Please. You're hurting me with your
+        efficiency. Let's talk about something else.
+
+
+  route-ask-for-flag:
+    transitions:
+      - action: start ask-for-flag-worthy
+        when:
+          - attribute stranger-familiarity more than 1
+      - action: start ask-for-flag-failed
+        when:
+          - flag stranger-asked-transfer in [yes]
+          - flag stranger-asked-rooftop in [yes]
+          - flag stranger-asked-festival in [yes]
+      - action: start ask-for-flag-not-worthy
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        So... about that flag you mentioned. Any
+        chance I've proven myself worthy?
+
+
+  ask-for-flag-worthy:
+    transitions:
+      - action: start success
+    frames:
+      - stranger puts on npc-face-surprised
+      - |
+        stranger says
+        ...
+
+      - stranger puts on npc-face-happy
+      - |
+        stranger says
+        You know what? I've been testing you. And
+        you... you actually GET IT. You understand the protocols.
+        The traditions. The PROPER WAY things are supposed to go.
+
+      - |
+        stranger says
+        I've been standing at this corner for WEEKS
+        waiting for someone who understands. And here you are.
+        Crashing into me. Getting the answers right. BELIEVING
+        in rooftop lunches.
+
+
+  success:
+    transitions:
+      - action: end
+    frames:
+      - stranger puts on npc-face-neutral
+      - |
+        stranger says
+        Here. Take this flag. I call her "Protocol
+        Omega." I don't know what that means but it sounds
+        important and that's what matters.
+
+      - stranger removed
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        Got a flag from someone who stands at corners
+        all day and quizzes people on unwritten social rules that
+        nobody else seems to know about. My life is a series of
+        increasingly bizarre transactions. Future me better
+        appreciate this.
+
+
+  ask-for-flag-failed:
+    transitions:
+      - action: start fail
+    frames:
+      - stranger puts on npc-face-weirded-out
+      - |
+        stranger says
+        I've asked you everything I needed to ask.
+        And I have to be honest with you. You just... don't
+        get it.
+
+      - stranger puts on npc-face-angry
+      - |
+        stranger says
+        I WANTED to believe! I really did! But you
+        can't fake an understanding of the protocols! They're
+        either IN you or they're NOT! And they are NOT!
+
+      - |
+        stranger says
+        I can't give this flag to someone who
+        doesn't understand the fundamentals. Protocol Omega
+        deserves someone who GETS IT. And you don't. I'm sorry.
+        Actually no. I'm not sorry. The PROTOCOLS aren't sorry.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        So I failed the corner person's unwritten
+        etiquette exam. That's... honestly kind of fair. I
+        genuinely did not understand any of that.
+
+
+  fail:
+    transitions:
+      - action: end
+    frames:
+      - stranger puts on npc-face-neutral
+      - |
+        stranger says
+        You should go. The corner doesn't want you
+        here anymore. I don't make the rules. Well, I do. But
+        the corner AGREES with me. We discussed it.
+
+      - stranger removed
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        The corner has formally rejected me. Adding
+        that to the list of things I never expected to happen
+        today. No flag from here. Future me is going to be
+        very disappointed.
+
+
+  ask-for-flag-not-worthy:
+    transitions:
+      - action: interlude stranger-topics
+    frames:
+      - stranger puts on npc-face-weirded-out
+      - |
+        stranger says
+        Hmm. You're not there yet. I can FEEL it.
+        There's still too much "regular person" energy coming off
+        of you. It's unsettling.
+
+      - |
+        stranger says
+        You need to understand more of the protocols
+        first. Keep talking to me. Ask the right questions. ABSORB
+        the knowledge.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        Right. More protocol absorption. That's
+        definitely a normal thing to do with my afternoon.
+
+
+  nevermind:
+    transitions:
+      - action: end
+    frames:
+      - mc puts on mc-face-neutral
+      - |
+        mc says
+        I need to go process everything you've told
+        me. It's a lot to take in.
+
+      - stranger puts on npc-face-neutral
+      - |
+        stranger says
+        Go. Reflect. Let the protocols wash over
+        you like a gentle breeze on a rooftop during lunch. Which
+        is the CORRECT place to eat, by the way.
+
+      - mc puts on mc-face-weirded-out
+      - |
+        mc says
+        Yeah, you mentioned that. Multiple times.
+        I'll be back.
+
+      - stranger puts on npc-face-happy
+      - |
+        stranger says
+        I'll be here. At the corner. As always.
+        The corner and I are one. We have an understanding.
+        Don't think about that too hard.
