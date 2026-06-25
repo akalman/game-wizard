@@ -67,7 +67,7 @@ sequences:
     transitions:
       - action: start unseen-intro
         when:
-          - flag stranger-progress in [unseen]
+          - flag stranger-progress: in [unseen]
       - action: start revisit
     frames: []
 
@@ -465,12 +465,12 @@ sequences:
     transitions:
       - action: start ask-for-flag-worthy
         when:
-          - attribute stranger-familiarity more than 1
+          - attribute stranger-familiarity: more than 1
       - action: start ask-for-flag-failed
         when:
-          - flag stranger-asked-transfer in [yes]
-          - flag stranger-asked-rooftop in [yes]
-          - flag stranger-asked-festival in [yes]
+          - flag stranger-asked-transfer: in [yes]
+          - flag stranger-asked-rooftop: in [yes]
+          - flag stranger-asked-festival: in [yes]
       - action: start ask-for-flag-not-worthy
     frames:
       - mc puts on: mc-face-neutral

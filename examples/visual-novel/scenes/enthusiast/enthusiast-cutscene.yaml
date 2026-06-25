@@ -55,7 +55,7 @@ sequences:
     transitions:
       - action: start unseen-intro
         when:
-          - flag enthusiast-progress in [unseen]
+          - flag enthusiast-progress: in [unseen]
       - action: start route-revisit
     frames: []
 
@@ -117,7 +117,7 @@ sequences:
     transitions:
       - action: start revisit-familiar
         when:
-          - attribute enthusiast-familiarity more than 2
+          - attribute enthusiast-familiarity: more than 2
       - action: start revisit-early
     frames: []
 
@@ -253,7 +253,7 @@ sequences:
     transitions:
       - action: start how-many-flags-first
         when:
-          - attribute enthusiast-familiarity less than 3
+          - attribute enthusiast-familiarity: less than 3
       - action: start how-many-flags-repeat
     frames: []
 

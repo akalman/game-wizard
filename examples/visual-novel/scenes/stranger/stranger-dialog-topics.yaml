@@ -18,34 +18,34 @@ pages:
         label: |
           "Why do you stand at this corner all day?"
         when:
-          - flag stranger-progress in [open]
+          - flag stranger-progress: in [open]
       quiz-transfer:
         action: end
         label: |
           "Teach me about proper introductions."
         when:
-          - flag stranger-progress in [open]
-          - flag stranger-asked-transfer in [no]
+          - flag stranger-progress: in [open]
+          - flag stranger-asked-transfer: in [no]
       quiz-rooftop:
         action: end
         label: |
           "What's the correct way to eat lunch?"
         when:
-          - flag stranger-progress in [open]
-          - flag stranger-asked-rooftop in [no]
+          - flag stranger-progress: in [open]
+          - flag stranger-asked-rooftop: in [no]
       quiz-festival:
         action: end
         label: |
           "How should I prepare for a big event?"
         when:
-          - flag stranger-progress in [open]
-          - flag stranger-asked-festival in [no]
+          - flag stranger-progress: in [open]
+          - flag stranger-asked-festival: in [no]
       ask-for-flag:
         action: end
         label: |
           "So about that flag..."
         when:
-          - flag stranger-progress in [open]
+          - flag stranger-progress: in [open]
       nevermind:
         action: end
         label: |

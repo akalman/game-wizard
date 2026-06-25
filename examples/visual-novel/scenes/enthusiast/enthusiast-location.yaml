@@ -10,14 +10,14 @@ landmarks:
     size: ( 200 450 )
     offset: ( -0.4 -0.25 )
     when:
-      - flag enthusiast-in-dialog in [no]
+      - flag enthusiast-in-dialog: in [no]
 
   can-of-beans:
     sprite: res://examples/visual-novel/sprites/can-of-beans.png
     size: ( 20 20 )
     offset: ( -0.33 -0.12 )
     when:
-      - flag found-house-beans in [no]
+      - flag found-house-beans: in [no]
 
   back-button:
     sprite: res://examples/visual-novel/sprites/back.png

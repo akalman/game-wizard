@@ -26,7 +26,7 @@ public class InterludeTransition
     public string Source { get; set; }
     public TransitionAction Action { get; set; }
 
-    public IList<Condition> When { get; set; } = new List<Condition>();
+    public IList<ICondition> When { get; set; } = new List<ICondition>();
 }
 
 public class DialogSequence
@@ -39,7 +39,7 @@ public class SequenceTransition
 {
     public TransitionAction Action { get; set; }
 
-    public IList<Condition> When { get; set; } = new List<Condition>();
+    public IList<ICondition> When { get; set; } = new List<ICondition>();
 }
 
 public class TransitionAction

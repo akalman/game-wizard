@@ -25,14 +25,14 @@ landmarks:
     size: ( 200 200 )
     offset: ( 0.0 -0.5 )
     when:
-      - bag inventory contains more than 0 pickaxe
-      - attribute rocks-mined less than 5
+      - bag inventory: more than 0 pickaxe
+      - attribute rocks-mined: less than 5
 
   ending-landmark:
     sprite: res://examples/visual-novel/sprites/world-map-landmark.png
     size: ( 200 200 )
     offset: ( 0.4 0.4 )
     when:
-      - flag shopkeep-progress in [success,fail]
-      - flag enthusiast-progress in [success,fail]
-      - flag stranger-progress in [success,fail]
+      - flag shopkeep-progress: in [success,fail]
+      - flag enthusiast-progress: in [success,fail]
+      - flag stranger-progress: in [success,fail]

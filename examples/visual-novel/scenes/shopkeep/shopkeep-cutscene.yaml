@@ -55,10 +55,10 @@ sequences:
     transitions:
       - action: start unseen-intro
         when:
-          - flag shopkeep-progress in [unseen]
+          - flag shopkeep-progress: in [unseen]
       - action: start route-revisit
         when:
-          - flag shopkeep-progress in [open]
+          - flag shopkeep-progress: in [open]
 
 
   unseen-intro:
@@ -123,7 +123,7 @@ sequences:
     transitions:
       - action: start revisit-familiar
         when:
-          - attribute shopkeep-familiarity more than 2
+          - attribute shopkeep-familiarity: more than 2
       - action: start revisit-early
     frames: []
 
@@ -516,7 +516,7 @@ sequences:
     transitions:
       - action: start hows-business-first
         when:
-          - attribute shopkeep-familiarity less than 3
+          - attribute shopkeep-familiarity: less than 3
       - action: start hows-business-repeat
 
   hows-business-first:
