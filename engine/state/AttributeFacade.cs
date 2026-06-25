@@ -1,18 +1,14 @@
-using System.Collections.Generic;
 using GameWizard.Engine.Schema.Game;
 
 namespace GameWizard.Engine.State;
 
 public class AttributeFacade : StateFacade
 {
-    protected override IDictionary<StateUpdateType, StateFacadeUpdateFunc> GetUpdaters()
+    public AttributeFacade()
     {
-        return new Dictionary<StateUpdateType, StateFacadeUpdateFunc>
-        {
-            { StateUpdateType.SetAttribute, SetAttribute },
-            { StateUpdateType.AddAttribute, AddAttribute },
-            { StateUpdateType.SubtractAttribute, SubtractAttribute },
-        };
+        RegisterUpdater<SetAttributeUpdate>(SetAttribute);
+        RegisterUpdater<AddToAttributeUpdate>(AddAttribute);
+        RegisterUpdater<SubtractFromAttributeUpdate>(SubtractAttribute);
     }
 
     public decimal GetAttribute(GameState definition, SaveState state, string stateId)
@@ -22,32 +18,32 @@ public class AttributeFacade : StateFacade
         return state.Attributes[stateId];
     }
 
-    private void SetAttribute(GameState definition, SaveState state, StateUpdate update)
+    private void SetAttribute(GameState definition, SaveState state, SetAttributeUpdate update)
     {
-        ValidateUpdateValid(definition, state, update.StateName);
-        ValidateUpdateInRange(update.StateName, definition.Attributes[update.StateName], update.Number);
+        ValidateUpdateValid(definition, state, update.AttributeId);
+        ValidateUpdateInRange(update.AttributeId, definition.Attributes[update.AttributeId], update.Value);
 
-        state.Attributes[update.StateName] = update.Number;
+        state.Attributes[update.AttributeId] = update.Value;
     }
 
-    private void AddAttribute(GameState definition, SaveState state, StateUpdate update)
+    private void AddAttribute(GameState definition, SaveState state, AddToAttributeUpdate update)
     {
-        ValidateUpdateValid(definition, state, update.StateName);
+        ValidateUpdateValid(definition, state, update.AttributeId);
 
-        var target = state.Attributes[update.StateName] + update.Number;
-        ValidateUpdateInRange(update.StateName, definition.Attributes[update.StateName], target);
+        var target = state.Attributes[update.AttributeId] + update.Amount;
+        ValidateUpdateInRange(update.AttributeId, definition.Attributes[update.AttributeId], target);
 
-        state.Attributes[update.StateName] = target;
+        state.Attributes[update.AttributeId] = target;
     }
 
-    private void SubtractAttribute(GameState definition, SaveState state, StateUpdate update)
+    private void SubtractAttribute(GameState definition, SaveState state, SubtractFromAttributeUpdate update)
     {
-        ValidateUpdateValid(definition, state, update.StateName);
+        ValidateUpdateValid(definition, state, update.AttributeId);
 
-        var target = state.Attributes[update.StateName] - update.Number;
-        ValidateUpdateInRange(update.StateName, definition.Attributes[update.StateName], target);
+        var target = state.Attributes[update.AttributeId] - update.Amount;
+        ValidateUpdateInRange(update.AttributeId, definition.Attributes[update.AttributeId], target);
 
-        state.Attributes[update.StateName] = target;
+        state.Attributes[update.AttributeId] = target;
     }
 
     private void ValidateUpdateValid(GameState definition, SaveState state, string stateId)

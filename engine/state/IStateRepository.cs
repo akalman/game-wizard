@@ -13,5 +13,5 @@ public interface IStateRepository
     public decimal ReadAttribute(string statId);
     public int NumInBag(string bagId, string itemId);
 
-    public void Update(StateUpdate update);
+    public void Update(IStateUpdate update);
 }

@@ -47,7 +47,7 @@ public partial class GameController : Node2D
         var initLoader = new YamlConfigLoader();
         initLoader.RegisterDeserializer(GrammarParserYamlConverter<ICondition>.Create(ConditionParser.Parsers));
         initLoader.RegisterDeserializer(new GameEdgeYamlConverter());
-        initLoader.RegisterDeserializer(new GaneStateUpdateYamlConverter());
+        initLoader.RegisterDeserializer(GrammarParserYamlConverter<IStateUpdate>.Create(StateUpdateParser.Mappers));
         initLoader.RegisterDeserializer(new Vector2YamlConverter());
         var config = new ConfigRepository(initLoader);
 
@@ -80,7 +80,7 @@ public partial class GameController : Node2D
         var loader = new YamlConfigLoader();
         loader.RegisterDeserializer(GrammarParserYamlConverter<ICondition>.Create(ConditionParser.Parsers));
         loader.RegisterDeserializer(new GameEdgeYamlConverter());
-        loader.RegisterDeserializer(new GaneStateUpdateYamlConverter());
+        loader.RegisterDeserializer(GrammarParserYamlConverter<IStateUpdate>.Create(StateUpdateParser.Mappers));
         loader.RegisterDeserializer(new Vector2YamlConverter());
         loader.RegisterDeserializer(new DbEntryYamlConverter());
         foreach (var plugin in Plugins)

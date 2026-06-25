@@ -66,25 +66,18 @@ public class StateRepository : IStateRepository
         return Bags.GetNumInBag(Definition, Current, stateId, itemId);
     }
 
-    public void Update(StateUpdate update)
+    public void Update(IStateUpdate update)
     {
         if (!IsInitialized)
-            throw new GameWizardInternalException($"Tried to read state {update.StateName} when state was uninitialized.");
+            throw new GameWizardInternalException($"Tried to read state when state was uninitialized.");
 
         if (!IsLoaded)
-            throw new InvalidGameStateException($"Tried to read state {update.StateName} when state was unloaded.");
+            throw new InvalidGameStateException($"Tried to read state when state was unloaded.");
 
-        switch (update.Type)
-        {
-            case var flag when Flags.Accepts(flag):
-                Flags.Update(Definition, Current, update);
-                break;
-            case var attribute when Attributes.Accepts(attribute):
-                Attributes.Update(Definition, Current, update);
-                break;
-            case var bag when Bags.Accepts(bag):
-                Bags.Update(Definition, Current, update);
-                break;
-        }
+        if (Flags.Update(Definition, Current, update)) return;
+        if (Attributes.Update(Definition, Current, update)) return;
+        if (Bags.Update(Definition, Current, update)) return;
+
+        throw new GameWizardInternalException($"Did not find an updater for update of type {update.GetType()}");
     }
 }
