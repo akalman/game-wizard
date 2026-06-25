@@ -1,17 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using GameWizard.Engine.Schema.Game;
 
 namespace GameWizard.Engine.State;
 
 public class FlagFacade : StateFacade
 {
-    protected override IDictionary<StateUpdateType, StateFacadeUpdateFunc> GetUpdaters()
+    public FlagFacade()
     {
-        return new Dictionary<StateUpdateType, StateFacadeUpdateFunc>
-        {
-            { StateUpdateType.SetFlag, SetFlag },
-        };
+        RegisterUpdater<SetFlagUpdate>(SetFlag);
     }
 
     public string GetFlag(GameState definition, SaveState state, string flagId)
@@ -25,17 +20,17 @@ public class FlagFacade : StateFacade
         return state.Flags[flagId];
     }
 
-    private void SetFlag(GameState definition, SaveState state, StateUpdate update)
+    private void SetFlag(GameState definition, SaveState state, SetFlagUpdate update)
     {
-        if (!definition.Flags.ContainsKey(update.StateName))
-            throw new InvalidGameStateException($"Tried to read undefined flag {update.StateName}.");
+        if (!definition.Flags.ContainsKey(update.FlagId))
+            throw new InvalidGameStateException($"Tried to read undefined flag {update.FlagId}.");
 
-        if (!definition.Flags[update.StateName].Values.Contains(update.String))
-            throw new GameWizardInternalException($"Could not find flag {update.StateName} in loaded state.");
+        if (!definition.Flags[update.FlagId].Values.Contains(update.Value))
+            throw new GameWizardInternalException($"Could not find flag {update.FlagId} in loaded state.");
 
-        if (!state.Flags.ContainsKey(update.StateName))
-            throw new GameWizardInternalException($"Could not find flag {update.StateName} in loaded state.");
+        if (!state.Flags.ContainsKey(update.FlagId))
+            throw new GameWizardInternalException($"Could not find flag {update.FlagId} in loaded state.");
 
-        state.Flags[update.StateName] = update.String;
+        state.Flags[update.FlagId] = update.Value;
     }
 }

@@ -27,27 +27,3 @@ public class StateBag
 {
     public string Db { get; set; }
 }
-
-public class StateUpdate
-{
-    public StateUpdateType Type { get; set; }
-    public string StateName { get; set; }
-    public string BagItemName { get; set; }
-    public string String { get; set; }
-    public decimal Number { get; set; }
-    public string Ref { get; set; }
-}
-
-public enum StateUpdateType
-{
-    SetFlag,
-
-    SetAttribute,
-    AddAttribute,
-    SubtractAttribute,
-
-    SetAmountInBag,
-    AddToBag,
-    RemoveFromBag,
-    ClearBag,
-}

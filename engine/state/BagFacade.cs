@@ -1,20 +1,15 @@
-using System.Collections.Generic;
 using GameWizard.Engine.Schema.Game;
-using Godot;
 
 namespace GameWizard.Engine.State;
 
 public class BagFacade : StateFacade
 {
-    protected override IDictionary<StateUpdateType, StateFacadeUpdateFunc> GetUpdaters()
+    public BagFacade()
     {
-        return new Dictionary<StateUpdateType, StateFacadeUpdateFunc>
-        {
-            { StateUpdateType.SetAmountInBag, SetAmountInBag },
-            { StateUpdateType.AddToBag, AddToBag },
-            { StateUpdateType.RemoveFromBag, RemoveFromBag },
-            { StateUpdateType.ClearBag, ClearBag },
-        };
+        RegisterUpdater<SetAmountInBagUpdate>(SetAmountInBag);
+        RegisterUpdater<AddToAmountInBagUpdate>(AddToBag);
+        RegisterUpdater<SubtractFromAmountInBagUpdate>(RemoveFromBag);
+        RegisterUpdater<ClearFromBagUpdate>(ClearBag);
     }
 
     public int GetNumInBag(GameState definition, SaveState state, string stateId, string bagItemId)
@@ -24,38 +19,38 @@ public class BagFacade : StateFacade
         return state.Bags[stateId][bagItemId];
     }
 
-    private void SetAmountInBag(GameState definition, SaveState state, StateUpdate update)
+    private void SetAmountInBag(GameState definition, SaveState state, SetAmountInBagUpdate update)
     {
-        ValidateUpdateValid(definition, state, update.StateName, update.BagItemName);
+        ValidateUpdateValid(definition, state, update.BagId, update.ItemId);
 
-        state.Bags[update.StateName][update.BagItemName] = (int) update.Number;
+        state.Bags[update.BagId][update.ItemId] = (int) update.Value;
     }
 
-    private void AddToBag(GameState definition, SaveState state, StateUpdate update)
+    private void AddToBag(GameState definition, SaveState state, AddToAmountInBagUpdate update)
     {
-        ValidateUpdateValid(definition, state, update.StateName, update.BagItemName);
+        ValidateUpdateValid(definition, state, update.BagId, update.ItemId);
 
-        var target = state.Bags[update.StateName][update.BagItemName] + (int) update.Number;
-        ValidateUpdateInRange(update.StateName, target);
+        var target = state.Bags[update.BagId][update.ItemId] + (int) update.Amount;
+        ValidateUpdateInRange(update.BagId, target);
 
-        state.Bags[update.StateName][update.BagItemName] = target;
+        state.Bags[update.BagId][update.ItemId] = target;
     }
 
-    private void RemoveFromBag(GameState definition, SaveState state, StateUpdate update)
+    private void RemoveFromBag(GameState definition, SaveState state, SubtractFromAmountInBagUpdate update)
     {
-        ValidateUpdateValid(definition, state, update.StateName, update.BagItemName);
+        ValidateUpdateValid(definition, state, update.BagId, update.ItemId);
 
-        var target = state.Bags[update.StateName][update.BagItemName] - (int) update.Number;
-        ValidateUpdateInRange(update.StateName, target);
+        var target = state.Bags[update.BagId][update.ItemId] - (int) update.Amount;
+        ValidateUpdateInRange(update.BagId, target);
 
-        state.Bags[update.StateName][update.BagItemName] = target;
+        state.Bags[update.BagId][update.ItemId] = target;
     }
 
-    private void ClearBag(GameState definition, SaveState state, StateUpdate update)
+    private void ClearBag(GameState definition, SaveState state, ClearFromBagUpdate update)
     {
-        ValidateUpdateValid(definition, state, update.StateName, update.BagItemName);
+        ValidateUpdateValid(definition, state, update.BagId, update.ItemId);
 
-        state.Bags[update.StateName].Clear();
+        state.Bags[update.BagId].Clear();
     }
 
     private void ValidateUpdateValid(GameState definition, SaveState state, string stateId, string bagItemId)

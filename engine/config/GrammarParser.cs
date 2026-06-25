@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Godot;
 
 namespace GameWizard.Engine.Config;
 
@@ -17,6 +18,8 @@ public class GrammarParser<T>(IList<GrammarTypeMapper<T>> typeMappers)
                 return mapper.Map(captures);
         }
 
+        foreach (var (x,y) in input)
+            GD.PushWarning($"{x} {y}");
         throw new GameWizardInternalException($"Did not find a matching grammar for input: {input}");
     }
 
