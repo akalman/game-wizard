@@ -145,9 +145,9 @@ scenes:
       # matters here since only the first matching subscriber in this list will handle the event.
       - edge: navigate.ending-landmark spawn win-cutscene
         when:
-        - flag shopkeep-progress in [success]
-        - flag enthusiast-progress in [success]
-        - flag stranger-progress in [success]
+        - flag shopkeep-progress: in [success]
+        - flag enthusiast-progress: in [success]
+        - flag stranger-progress: in [success]
       - edge: navigate.mining-landmark spawn mining-cutscene
       - edge: navigate.ending-landmark spawn lose-cutscene
 
@@ -160,7 +160,7 @@ scenes:
           - set flag shopkeep-in-dialog to yes
           - add 1 to attribute shopkeep-familiarity
         when:
-          - attribute shopkeep-familiarity less than 3
+          - attribute shopkeep-familiarity: less than 3
       - edge: navigate.npc spawn shopkeep-cutscene
         updates:
           - set flag shopkeep-in-dialog to yes
@@ -182,7 +182,7 @@ scenes:
         updates:
           - set flag shopkeep-progress to open
         when:
-          - flag shopkeep-progress in [unseen]
+          - flag shopkeep-progress: in [unseen]
       - edge: dialog-interlude.shopkeep-topics spawn shopkeep-dialog-topics
       - edge: dialog-interlude.buy-flag-options spawn shopkeep-buy-flag-options
       - edge: terminal-frame.purchase-farewell ends
@@ -234,7 +234,7 @@ scenes:
           - set flag enthusiast-in-dialog to yes
           - add 1 to attribute enthusiast-familiarity
         when:
-          - attribute enthusiast-familiarity less than 3
+          - attribute enthusiast-familiarity: less than 3
       - edge: navigate.npc spawn enthusiast-cutscene
         updates:
           - set flag enthusiast-in-dialog to yes
@@ -252,7 +252,7 @@ scenes:
         updates:
           - set flag enthusiast-progress to open
         when:
-          - flag enthusiast-progress in [unseen]
+          - flag enthusiast-progress: in [unseen]
       - edge: dialog-interlude.enthusiast-topics spawn enthusiast-dialog-topics
       - edge: dialog-interlude.flag-quiz spawn enthusiast-flag-quiz
       - edge: terminal-frame.success ends
@@ -321,7 +321,7 @@ scenes:
         updates:
           - set flag stranger-progress to open
         when:
-          - flag stranger-progress in [unseen]
+          - flag stranger-progress: in [unseen]
       - edge: dialog-interlude.stranger-topics spawn stranger-dialog-topics
       - edge: dialog-interlude.quiz-transfer spawn stranger-quiz-transfer
       - edge: dialog-interlude.quiz-rooftop spawn stranger-quiz-rooftop
@@ -397,31 +397,31 @@ scenes:
     transitions:
       - edge: terminal-frame.mined-crumbly ends
         when:
-          - attribute rocks-mined less than 1
+          - attribute rocks-mined: less than 1
         updates:
           - add 1 of item rock-crumbly to bag inventory
           - add 1 to attribute rocks-mined
       - edge: terminal-frame.mined-rough ends
         when:
-          - attribute rocks-mined less than 2
+          - attribute rocks-mined: less than 2
         updates:
           - add 1 of item rock-rough to bag inventory
           - add 1 to attribute rocks-mined
       - edge: terminal-frame.mined-decent ends
         when:
-          - attribute rocks-mined less than 3
+          - attribute rocks-mined: less than 3
         updates:
           - add 1 of item rock-decent to bag inventory
           - add 1 to attribute rocks-mined
       - edge: terminal-frame.mined-shiny ends
         when:
-          - attribute rocks-mined less than 4
+          - attribute rocks-mined: less than 4
         updates:
           - add 1 of item rock-shiny to bag inventory
           - add 1 to attribute rocks-mined
       - edge: terminal-frame.mined-perfect ends
         when:
-          - attribute rocks-mined less than 5
+          - attribute rocks-mined: less than 5
         updates:
           - add 1 of item rock-perfect to bag inventory
           - add 1 to attribute rocks-mined

@@ -30,6 +30,5 @@ public class OverworldLandmark
     public Vector2 Size { get; set; }
     public Vector2 Offset { get; set; }
 
-    public IList<Condition> DisabledWhen { get; set; } = new List<Condition>();
-    public IList<Condition> When { get; set; } = new List<Condition>();
+    public IList<ICondition> When { get; set; } = new List<ICondition>();
 }

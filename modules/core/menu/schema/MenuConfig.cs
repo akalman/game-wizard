@@ -21,7 +21,7 @@ public class PageOption
 {
     public MenuAction Action { get; set; }
     public string Label { get; set; }
-    public IList<Condition> When { get; set; } = new List<Condition>();
+    public IList<ICondition> When { get; set; } = new List<ICondition>();
 }
 
 public class MenuAction

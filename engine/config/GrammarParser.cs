@@ -87,8 +87,10 @@ public class GrammarParser<T>(IList<GrammarTypeMapper<T>> typeMappers)
     {
         { "id", name => @" (?<" + name + @">[.\w-]+)" },
         { "word", name => @" (?<" + name + @">\w+)" },
-        { "ml-text", name => @"\n(?<" + name + @">.*)" },
-        { "text", name => @"(?<" + name + @">.*)" },
+        // { "ml-text", name => @"\n(?<" + name + @">.*)" },
+        { "text", name => @" (?<" + name + @">.*)" },
+        { "id-list", name => @" \[(?<" + name + @">(?:[.\w-]+)(?:,[.\w-]+)*)\]" },
+        { "num", name => @" (?<" + name + @">[+\d]+)" },
     };
 }
 

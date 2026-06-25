@@ -10,14 +10,14 @@ landmarks:
     size: ( 150 400 )
     offset: ( 0.4 -0.25 )
     when:
-      - flag stranger-in-dialog in [no]
+      - flag stranger-in-dialog: in [no]
 
   can-of-beans:
     sprite: res://examples/visual-novel/sprites/can-of-beans.png
     size: ( 50 50 )
     offset: ( -0.64 -0.88 )
     when:
-      - flag found-sign-beans in [no]
+      - flag found-sign-beans: in [no]
 
   back-button:
     sprite: res://examples/visual-novel/sprites/back.png

@@ -28,16 +28,16 @@ sequences:
     transitions:
       - action: start mine-crumbly
         when:
-          - attribute rocks-mined less than 1
+          - attribute rocks-mined: less than 1
       - action: start mine-rough
         when:
-          - attribute rocks-mined less than 2
+          - attribute rocks-mined: less than 2
       - action: start mine-decent
         when:
-          - attribute rocks-mined less than 3
+          - attribute rocks-mined: less than 3
       - action: start mine-shiny
         when:
-          - attribute rocks-mined less than 4
+          - attribute rocks-mined: less than 4
       - action: start mine-perfect
     frames: []
 

@@ -8,20 +8,22 @@ namespace GameWizard.Engine.Util;
 
 public static class GameWizardExtensions
 {
-    public static bool Evaluate(this IList<Condition> conditions, IStateRepository state)
+    public static bool Evaluate(this IList<ICondition> conditions, IStateRepository state)
     {
         if (conditions is null or []) return true;
 
         return conditions.All(condition =>
         {
-            return condition.Type switch
+            return condition switch
             {
-                ConditionType.FlagIn => condition.ExpectedMembership.Contains(state.ReadFlag(condition.Target)),
-                ConditionType.AttributeLessThan => state.ReadAttribute(condition.Target) < condition.ExpectedNumber,
-                ConditionType.AttributeMoreThan => state.ReadAttribute(condition.Target) > condition.ExpectedNumber,
-                ConditionType.BagContainsMoreThan => state.NumInBag(condition.BagTarget, condition.Target) > condition.ExpectedNumber,
-                ConditionType.BagContainsLessThan => state.NumInBag(condition.BagTarget, condition.Target) < condition.ExpectedNumber,
-                _ => throw new GameWizardInternalException($"Encountered unexpected condition type {condition.Type}."),
+                FlagInCondition c => c.AllowedValues.Contains(state.ReadFlag(c.FlagId)),
+                AttributeEqualsCondition c => state.ReadAttribute(c.AttributeId) == c.ExpectedValue,
+                AttributeMoreThanCondition c => state.ReadAttribute(c.AttributeId) > c.Threshold,
+                AttributeLessThanCondition c => state.ReadAttribute(c.AttributeId) < c.Threshold,
+                BagContainsMoreThanCondition c => state.NumInBag(c.BagId, c.ItemId) > c.Threshold,
+                BagContainsLessThanCondition c => state.NumInBag(c.BagId, c.ItemId) < c.Threshold,
+
+                _ => throw new GameWizardInternalException($"Encountered unexpected condition type {condition.GetType().Name}."),
             };
         });
     }

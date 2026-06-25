@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using GameWizard.Engine.Config;
 using GameWizard.Engine.Config.Yaml;
 using GameWizard.Engine.Database;
 using GameWizard.Engine.Schema.Game;
+using GameWizard.Engine.Schema.Logic;
 using GameWizard.Engine.Schema.Modules;
 using GameWizard.Engine.State;
 using GameWizard.Engine.Util;
@@ -45,7 +45,7 @@ public partial class GameController : Node2D
     {
         // create loader just for initializiation while we load modules.
         var initLoader = new YamlConfigLoader();
-        initLoader.RegisterDeserializer(new ConditionYamlConverter());
+        initLoader.RegisterDeserializer(GrammarParserYamlConverter<ICondition>.Create(ConditionParser.Parsers));
         initLoader.RegisterDeserializer(new GameEdgeYamlConverter());
         initLoader.RegisterDeserializer(new GaneStateUpdateYamlConverter());
         initLoader.RegisterDeserializer(new Vector2YamlConverter());
@@ -78,7 +78,7 @@ public partial class GameController : Node2D
 
         // create actual config loader
         var loader = new YamlConfigLoader();
-        loader.RegisterDeserializer(new ConditionYamlConverter());
+        loader.RegisterDeserializer(GrammarParserYamlConverter<ICondition>.Create(ConditionParser.Parsers));
         loader.RegisterDeserializer(new GameEdgeYamlConverter());
         loader.RegisterDeserializer(new GaneStateUpdateYamlConverter());
         loader.RegisterDeserializer(new Vector2YamlConverter());

@@ -16,7 +16,7 @@ public class SceneTransition
 {
     public Edge Edge { get; set; }
 
-    public IList<Condition> When { get; set; } = new List<Condition>();
+    public IList<ICondition> When { get; set; } = new List<ICondition>();
     public IList<StateUpdate> Updates { get; set; } = new List<StateUpdate>();
 }
 
