@@ -46,7 +46,7 @@ public partial class GameController : Node2D
         // create loader just for initializiation while we load modules.
         var initLoader = new YamlConfigLoader();
         initLoader.RegisterDeserializer(GrammarParserYamlConverter<ICondition>.Create(ConditionParser.Parsers));
-        initLoader.RegisterDeserializer(new GameEdgeYamlConverter());
+        initLoader.RegisterDeserializer(GrammarParserYamlConverter<ISceneEdge>.Create(SceneEdgeParser.Mappers));
         initLoader.RegisterDeserializer(GrammarParserYamlConverter<IStateUpdate>.Create(StateUpdateParser.Mappers));
         initLoader.RegisterDeserializer(new Vector2YamlConverter());
         var config = new ConfigRepository(initLoader);
@@ -79,7 +79,7 @@ public partial class GameController : Node2D
         // create actual config loader
         var loader = new YamlConfigLoader();
         loader.RegisterDeserializer(GrammarParserYamlConverter<ICondition>.Create(ConditionParser.Parsers));
-        loader.RegisterDeserializer(new GameEdgeYamlConverter());
+        initLoader.RegisterDeserializer(GrammarParserYamlConverter<ISceneEdge>.Create(SceneEdgeParser.Mappers));
         loader.RegisterDeserializer(GrammarParserYamlConverter<IStateUpdate>.Create(StateUpdateParser.Mappers));
         loader.RegisterDeserializer(new Vector2YamlConverter());
         loader.RegisterDeserializer(new DbEntryYamlConverter());
@@ -201,15 +201,13 @@ public partial class GameController : Node2D
         {
             var defaultType = sourceTemplate.Outputs[outputType].Default;
             GD.PushWarning($"Did not find a valid output edge for output {outputType}.{outputArg}, defaulting to {defaultType}.");
-            target = new SceneTransition
+            ISceneEdge defaultEdge = defaultType switch
             {
-                Edge = new Edge
-                {
-                    Type = defaultType,
-                    OutputId = outputType,
-                    OutputArg = outputArg,
-                },
+                EdgeType.ToParent => new ToParentEdge { OutputId = outputType, OutputArg = outputArg },
+                EdgeType.ToSelf => new ToSelfEdge { OutputId = outputType, OutputArg = outputArg },
+                _ => throw new GameWizardInternalException(),
             };
+            target = new SceneTransition { Edge = defaultEdge };
         }
 
         var output = sourceTemplate.Outputs[target.Edge.OutputId];
@@ -242,16 +240,20 @@ public partial class GameController : Node2D
             LoadedScenes[sourceSceneId].AsTemplate(sourceScene.Template).HandleFocusUpdated(sourceSceneId, $"{outputType}.{outputArg}", FocusState.Retained);
 
         // load the new scene if the edge type has one
-        if (target.Edge.Type is EdgeType.ToSibling or EdgeType.ToChild)
+        if (target.Edge is ToSiblingEdge || target.Edge is ToChildEdge)
         {
-            if (string.IsNullOrEmpty(target.Edge.Destination))
+            string destination = null;
+            if (target.Edge is ToSiblingEdge toSibling) destination = toSibling.Destination;
+            if (target.Edge is ToChildEdge toChild) destination = toChild.Destination;
+            if (string.IsNullOrEmpty(destination))
                 throw new GameWizardInternalException($"Expected edge {sourceSceneId} => {outputType}.{outputArg} to have a destination.");
-            var newController = LoadScene(target.Edge.Destination);
+
+            var newController = LoadScene(destination);
             newController.HandleFocusUpdated(sourceSceneId, $"{outputType}.{outputArg}", FocusState.Gained);
         }
 
         // inform old scene it has regained focus
-        if (target.Edge.Type is EdgeType.ToParent)
+        if (target.Edge is ToParentEdge)
             CurrentController.HandleFocusUpdated(sourceSceneId, $"{outputType}.{outputArg}", FocusState.Gained);
 
         // if we're out of loaded scenes, quit

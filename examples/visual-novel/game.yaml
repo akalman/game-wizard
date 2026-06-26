@@ -165,7 +165,7 @@ scenes:
         updates:
           - set flag shopkeep-in-dialog: to yes
       - edge: navigate.back-button ends
-      - edge: navigate.can-of-beans do nothing
+      - edge: navigate.can-of-beans does nothing
         updates:
           - add 1 can-of-beans: to bag inventory
           - set flag found-shop-beans: to yes
@@ -239,7 +239,7 @@ scenes:
         updates:
           - set flag enthusiast-in-dialog: to yes
       - edge: navigate.back-button ends
-      - edge: navigate.can-of-beans do nothing
+      - edge: navigate.can-of-beans does nothing
         updates:
           - add 1 can-of-beans: to bag inventory
           - set flag found-house-beans: to yes
@@ -308,7 +308,7 @@ scenes:
         updates:
           - set flag stranger-in-dialog: to yes
       - edge: navigate.back-button ends
-      - edge: navigate.can-of-beans do nothing
+      - edge: navigate.can-of-beans does nothing
         updates:
           - add 1 can-of-beans: to bag inventory
           - set flag found-sign-beans: to yes
@@ -431,9 +431,9 @@ scenes:
     template: core.dialog-cutscene
     config: res://examples/visual-novel/scenes/win-cutscene.yaml
     transitions:
-      - edge: terminal-frame.end quit
+      - edge: terminal-frame.end quits
   lose-cutscene:
     template: core.dialog-cutscene
     config: res://examples/visual-novel/scenes/lose-cutscene.yaml
     transitions:
-      - edge: terminal-frame.end quit
+      - edge: terminal-frame.end quits

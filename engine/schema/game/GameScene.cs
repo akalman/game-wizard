@@ -14,26 +14,8 @@ public class GameScene
 
 public class SceneTransition
 {
-    public Edge Edge { get; set; }
+    public ISceneEdge Edge { get; set; }
 
     public IList<ICondition> When { get; set; } = new List<ICondition>();
     public IList<IStateUpdate> Updates { get; set; } = new List<IStateUpdate>();
-}
-
-public class Edge
-{
-    public string OutputId { get; set; }
-    public string OutputArg { get; set; }
-    public EdgeType Type { get; set; }
-    public string Destination { get; set; }
-}
-
-public enum EdgeType
-{
-    ToSibling,
-    ToChild,
-    ToParent,
-    ToSelf,
-
-    Quit,
 }
