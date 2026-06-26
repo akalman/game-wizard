@@ -5,17 +5,17 @@ namespace GameWizard.Engine.Config;
 
 public static class ConditionParser
 {
-    public static readonly IList<GrammarTypeMapper<ICondition>> Parsers = [
-        new FlagInConditionParser(),
-        new AttributeEqualsConditionParser(),
-        new AttributeMoreThanConditionParser(),
-        new AttributeLessThanConditionParser(),
-        new BagContainsMoreThanConditionParser(),
-        new BagContainsLessThanConditionParser()
+    public static readonly IList<GrammarTypeMapper<ICondition>> Mappers = [
+        new FlagInConditionMapper(),
+        new AttributeEqualsConditionMapper(),
+        new AttributeMoreThanConditionMapper(),
+        new AttributeLessThanConditionMapper(),
+        new BagContainsMoreThanConditionMapper(),
+        new BagContainsLessThanConditionMapper()
     ];
 }
 
-public class FlagInConditionParser : GrammarTypeMapper<FlagInCondition>
+public class FlagInConditionMapper : GrammarTypeMapper<FlagInCondition>
 {
     public IDictionary<string, string> Grammar => new Dictionary<string, string>
     {
@@ -29,7 +29,7 @@ public class FlagInConditionParser : GrammarTypeMapper<FlagInCondition>
     };
 }
 
-public class AttributeEqualsConditionParser : GrammarTypeMapper<AttributeEqualsCondition>
+public class AttributeEqualsConditionMapper : GrammarTypeMapper<AttributeEqualsCondition>
 {
     public IDictionary<string, string> Grammar => new Dictionary<string, string>
     {
@@ -43,7 +43,7 @@ public class AttributeEqualsConditionParser : GrammarTypeMapper<AttributeEqualsC
     };
 }
 
-public class AttributeMoreThanConditionParser : GrammarTypeMapper<AttributeMoreThanCondition>
+public class AttributeMoreThanConditionMapper : GrammarTypeMapper<AttributeMoreThanCondition>
 {
     public IDictionary<string, string> Grammar => new Dictionary<string, string>
     {
@@ -57,7 +57,7 @@ public class AttributeMoreThanConditionParser : GrammarTypeMapper<AttributeMoreT
     };
 }
 
-public class AttributeLessThanConditionParser : GrammarTypeMapper<AttributeLessThanCondition>
+public class AttributeLessThanConditionMapper : GrammarTypeMapper<AttributeLessThanCondition>
 {
     public IDictionary<string, string> Grammar => new Dictionary<string, string>
     {
@@ -71,7 +71,7 @@ public class AttributeLessThanConditionParser : GrammarTypeMapper<AttributeLessT
     };
 }
 
-public class BagContainsMoreThanConditionParser : GrammarTypeMapper<BagContainsMoreThanCondition>
+public class BagContainsMoreThanConditionMapper : GrammarTypeMapper<BagContainsMoreThanCondition>
 {
     public IDictionary<string, string> Grammar => new Dictionary<string, string>
     {
@@ -86,7 +86,7 @@ public class BagContainsMoreThanConditionParser : GrammarTypeMapper<BagContainsM
     };
 }
 
-public class BagContainsLessThanConditionParser : GrammarTypeMapper<BagContainsLessThanCondition>
+public class BagContainsLessThanConditionMapper : GrammarTypeMapper<BagContainsLessThanCondition>
 {
     public IDictionary<string, string> Grammar => new Dictionary<string, string>
     {

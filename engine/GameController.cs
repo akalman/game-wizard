@@ -45,7 +45,7 @@ public partial class GameController : Node2D
     {
         // create loader just for initializiation while we load modules.
         var initLoader = new YamlConfigLoader();
-        initLoader.RegisterDeserializer(GrammarParserYamlConverter<ICondition>.Create(ConditionParser.Parsers));
+        initLoader.RegisterDeserializer(GrammarParserYamlConverter<ICondition>.Create(ConditionParser.Mappers));
         initLoader.RegisterDeserializer(GrammarParserYamlConverter<ISceneEdge>.Create(SceneEdgeParser.Mappers));
         initLoader.RegisterDeserializer(GrammarParserYamlConverter<IStateUpdate>.Create(StateUpdateParser.Mappers));
         initLoader.RegisterDeserializer(new Vector2YamlConverter());
@@ -78,8 +78,8 @@ public partial class GameController : Node2D
 
         // create actual config loader
         var loader = new YamlConfigLoader();
-        loader.RegisterDeserializer(GrammarParserYamlConverter<ICondition>.Create(ConditionParser.Parsers));
-        initLoader.RegisterDeserializer(GrammarParserYamlConverter<ISceneEdge>.Create(SceneEdgeParser.Mappers));
+        loader.RegisterDeserializer(GrammarParserYamlConverter<ICondition>.Create(ConditionParser.Mappers));
+        loader.RegisterDeserializer(GrammarParserYamlConverter<ISceneEdge>.Create(SceneEdgeParser.Mappers));
         loader.RegisterDeserializer(GrammarParserYamlConverter<IStateUpdate>.Create(StateUpdateParser.Mappers));
         loader.RegisterDeserializer(new Vector2YamlConverter());
         loader.RegisterDeserializer(new DbEntryYamlConverter());
