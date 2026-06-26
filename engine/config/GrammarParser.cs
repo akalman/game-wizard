@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using GameWizard.Engine.Util;
 using Godot;
 
 namespace GameWizard.Engine.Config;
@@ -67,6 +68,9 @@ public class GrammarParser<T>(IList<GrammarTypeMapper<T>> typeMappers)
 
     private (string pattern, List<string> groups) ExtractPattern(string grammar)
     {
+        if (grammar.IsNullOrEmpty())
+            return (@".*", []);
+
         var tokens = grammar.Split();
         var pattern = string.Empty;
         var groups = new List<string>();
